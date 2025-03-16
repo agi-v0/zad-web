@@ -6,6 +6,9 @@ import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 
+import { en } from '@payloadcms/translations/languages/en'
+import { ar } from '@payloadcms/translations/languages/ar'
+
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
@@ -71,6 +74,26 @@ export default buildConfig({
     ...plugins,
     // storage-adapter-placeholder
   ],
+  i18n: {
+    supportedLanguages: { en, ar },
+  },
+  localization: {
+    locales: [
+      {
+        label: 'English',
+        code: 'en',
+      },
+      {
+        label: 'Arabic',
+        code: 'ar',
+        // opt-in to setting default text-alignment on Input fields to rtl (right-to-left)
+        // when current locale is rtl
+        rtl: true,
+      },
+    ],
+    defaultLocale: 'ar', // required
+    fallback: true, // defaults to true
+  },
   secret: process.env.PAYLOAD_SECRET,
   sharp,
   typescript: {
