@@ -10,7 +10,7 @@ type Props = {
   collection: keyof typeof collectionPrefixMap
   slug: string
   req: PayloadRequest
-  locale: string
+  locale: Locale | string
 }
 
 export const generatePreviewPath = ({ collection, slug, locale }: Props) => {
@@ -18,7 +18,7 @@ export const generatePreviewPath = ({ collection, slug, locale }: Props) => {
     slug,
     collection,
     path: `${collectionPrefixMap[collection]}/${slug}`,
-    locale,
+    locale: typeof locale === 'string' ? locale : locale.code,
     previewSecret: process.env.PREVIEW_SECRET || '',
   })
 
