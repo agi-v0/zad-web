@@ -34,6 +34,9 @@ const config = {
       '8xl': '90rem',
     },
     extend: {
+      spacing: {
+        site: 'var(--site--margin)',
+      },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
@@ -105,10 +108,10 @@ const config = {
             {
               '--tw-prose-body': 'var(--text)',
               '--tw-prose-headings': 'var(--text)',
-              h1: {
-                fontWeight: 'bold',
-                marginBottom: '0.25em',
-              },
+              // h1: {
+              //   fontWeight: 'bold',
+              //   marginBottom: '0.25em',
+              // },
             },
           ],
         },
@@ -116,23 +119,28 @@ const config = {
           css: [
             {
               h1: {
-                fontSize: '2.5rem',
+                fontSize: 'var(--text-h1)',
+                fontWeight: 'bold',
               },
               h2: {
-                fontSize: '1.25rem',
-                fontWeight: 600,
+                fontSize: 'var(--text-h2)',
+                fontWeight: 'bold',
               },
-            },
-          ],
-        },
-        md: {
-          css: [
-            {
-              h1: {
-                fontSize: '3.5rem',
+              h3: {
+                fontSize: 'var(--text-h3)',
+                fontWeight: 'bold',
               },
-              h2: {
-                fontSize: '1.5rem',
+              h4: {
+                fontSize: 'var(--text-h4)',
+                fontWeight: 'bold',
+              },
+              h5: {
+                fontSize: 'var(--text-h5)',
+                fontWeight: 'bold',
+              },
+              h6: {
+                fontSize: 'var(--text-h6)',
+                fontWeight: 'bold',
               },
             },
           ],

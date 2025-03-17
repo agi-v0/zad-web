@@ -8,6 +8,7 @@ import { ContentBlock } from '@/blocks/Content01/Component'
 import { Content02Block } from '@/blocks/Content02/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
+import { LogoBlock } from '@/blocks/LogoBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -16,6 +17,7 @@ const blockComponents = {
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   content02: Content02Block,
+  logoBlock: LogoBlock,
 }
 
 export const RenderBlocks: React.FC<{
@@ -25,6 +27,7 @@ export const RenderBlocks: React.FC<{
 
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
 
+  // blocks.map((block) => block.blockType === 'logoBlock' && console.log(block))
   if (hasBlocks) {
     return (
       <Fragment>
@@ -36,7 +39,7 @@ export const RenderBlocks: React.FC<{
 
             if (Block) {
               return (
-                <div className="my-16" key={index}>
+                <div className="" key={index}>
                   {/* @ts-expect-error there may be some mismatch between the expected types here */}
                   <Block {...block} disableInnerContainer />
                 </div>
