@@ -1,4 +1,5 @@
 import { PayloadRequest, CollectionSlug } from 'payload'
+import { Locale } from 'payload'
 
 const collectionPrefixMap: Partial<Record<CollectionSlug, string>> = {
   posts: '/posts',
@@ -9,13 +10,15 @@ type Props = {
   collection: keyof typeof collectionPrefixMap
   slug: string
   req: PayloadRequest
+  locale: string
 }
 
-export const generatePreviewPath = ({ collection, slug }: Props) => {
+export const generatePreviewPath = ({ collection, slug, locale }: Props) => {
   const encodedParams = new URLSearchParams({
     slug,
     collection,
     path: `${collectionPrefixMap[collection]}/${slug}`,
+    locale,
     previewSecret: process.env.PREVIEW_SECRET || '',
   })
 

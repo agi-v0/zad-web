@@ -29,37 +29,30 @@ const config = {
   theme: {
     container: {
       center: true,
-      padding: {
-        '2xl': '2rem',
-        DEFAULT: '1rem',
-        lg: '2rem',
-        md: '2rem',
-        sm: '1rem',
-        xl: '2rem',
-      },
-      screens: {
-        '2xl': '86rem',
-        lg: '64rem',
-        md: '48rem',
-        sm: '40rem',
-        xl: '80rem',
-      },
+    },
+    maxWidth: {
+      '8xl': '90rem',
     },
     extend: {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
-      },
       colors: {
         accent: {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
         },
+        'zad-green': 'hsl(var(--zad-green))',
+        'zad-green-light': 'hsl(var(--zad-green-light))',
+        'zad-beige': 'hsl(var(--zad-beige))',
+        'zad-beige-light': 'hsl(var(--zad-beige-light))',
+        'zad-gold': 'hsl(var(--zad-gold))',
+        'zad-lime': 'hsl(var(--zad-lime))',
+        'foreground-primary': 'hsla(var(--foreground),1)',
+        'foreground-secondary': 'hsla(var(--foreground),0.7)',
+        'foreground-tertiary': 'hsla(var(--foreground),0.5)',
+        'foreground-quaternary': 'hsla(var(--foreground),0.3)',
         background: 'hsl(var(--background))',
         border: 'hsla(var(--border))',
         card: {
@@ -94,8 +87,7 @@ const config = {
         warning: 'hsl(var(--warning))',
       },
       fontFamily: {
-        mono: ['var(--font-geist-mono)'],
-        sans: ['var(--font-geist-sans)'],
+        sans: ['var(--font-graphik)'],
       },
       keyframes: {
         'accordion-down': {
@@ -114,7 +106,7 @@ const config = {
               '--tw-prose-body': 'var(--text)',
               '--tw-prose-headings': 'var(--text)',
               h1: {
-                fontWeight: 'normal',
+                fontWeight: 'bold',
                 marginBottom: '0.25em',
               },
             },
