@@ -7,7 +7,6 @@ const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
   : process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
 
-console.log('NEXT_PUBLIC_SERVER_URL: ', NEXT_PUBLIC_SERVER_URL)
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [

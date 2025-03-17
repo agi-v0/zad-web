@@ -4,7 +4,8 @@ import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Archive } from '../../blocks/ArchiveBlock/config'
 import { CallToAction } from '../../blocks/CallToAction/config'
-import { Content } from '../../blocks/Content01/config'
+import { Content } from '../../blocks/Content/config'
+import { LogoBlock } from '@/blocks/LogoBlock/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { hero } from '@/heros/config'
@@ -20,8 +21,6 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
-import { Content02 } from '@/blocks/Content02/config'
-import { LogoBlock } from '@/blocks/LogoBlock/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -79,7 +78,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, Content02, LogoBlock, MediaBlock, Archive, FormBlock],
+              blocks: [CallToAction, Content, LogoBlock, MediaBlock, Archive, FormBlock],
               required: true,
               admin: {
                 initCollapsed: true,

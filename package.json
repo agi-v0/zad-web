@@ -19,6 +19,9 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
   },
   "dependencies": {
+    "@iconify-json/ri": "^1.2.5",
+    "@iconify/json": "^2.2.317",
+    "@iconify/utils": "^2.3.0",
     "@payloadcms/db-mongodb": "^3.28.1",
     "@payloadcms/db-postgres": "latest",
     "@payloadcms/live-preview-react": "latest",

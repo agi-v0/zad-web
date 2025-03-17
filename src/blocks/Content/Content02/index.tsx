@@ -3,12 +3,12 @@ import { cn } from '@/utilities/ui'
 import React, { useState } from 'react'
 import RichText from '@/components/RichText'
 
-import type { Content02Block as Content02BlockProps } from '@/payload-types'
+import type { ContentBlock } from '@/payload-types'
 
-import { CMSLink } from '../../components/Link'
+import { CMSLink } from '../../../components/Link'
 import { Media } from '@/components/Media'
 
-export const Content02Block: React.FC<Content02BlockProps> = (props) => {
+export const Content02: React.FC<ContentBlock> = (props) => {
   const { richText, list } = props
   const [activeAccordionId, setActiveAccordionId] = useState<string>(
     list && list.length > 0 && list?.[0]?.id ? list[0].id : '',
@@ -36,9 +36,11 @@ export const Content02Block: React.FC<Content02BlockProps> = (props) => {
                   onClick={() => setActiveAccordionId(String(item.id))}
                 >
                   <h3 className="text-foreground-primary text-body-l text-start font-bold">
-                    {item.title}
+                    {item.heading}
                   </h3>
-                  {item.text && <RichText className="m-0" data={item.text} enableGutter={false} />}
+                  {item.content && (
+                    <RichText className="m-0" data={item.content} enableGutter={false} />
+                  )}
                 </button>
               ))}
             </div>
