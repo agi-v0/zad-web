@@ -4,20 +4,20 @@ import type { Page } from '@/payload-types'
 
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
-import { ContentBlock } from '@/blocks/Content/Content01'
-import { Content02Block } from '@/blocks/Content/Content02'
+import { RenderContent } from '@/blocks/Content/RenderContent'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { LogoBlock } from '@/blocks/LogoBlock/Component'
+import { StatsBlock } from './StatsBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
-  content: ContentBlock,
+  content: RenderContent,
   cta: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
-  content02: Content02Block,
   logoBlock: LogoBlock,
+  statsBlock: StatsBlock,
 }
 
 export const RenderBlocks: React.FC<{

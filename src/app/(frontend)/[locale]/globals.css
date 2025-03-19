@@ -98,11 +98,16 @@
   body {
     @apply flex min-h-[100vh] flex-col bg-background text-foreground;
   }
+  iconify-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+  }
 }
 
 @layer components {
   .section {
-    @apply max-w-8xl mx-auto w-full;
+    @apply mx-auto w-full max-w-8xl;
     padding-inline: var(--site--margin);
   }
 
@@ -152,12 +157,6 @@ html[data-theme='light'] {
   opacity: initial;
 }
 
-[dir='rtl'] {
-  .prose {
-    text-align: right;
-  }
-}
-
 /* size variables */
 :root {
   --site--margin: clamp(1.5rem, 0.406rem + 5.47vw, 5rem);
@@ -167,13 +166,13 @@ html[data-theme='light'] {
   --spacing-sm: clamp(1rem, 0.844rem + 0.78vw, 1.5rem);
   --spacing-xs: clamp(0.5rem, 0.344rem + 0.78vw, 1rem);
 
-  --text-display: clamp(3.78rem, 3.008rem + 3.86vw, 6.25rem);
-  --text-h1: clamp(3rem, 2.532rem + 2.34vw, 4.5rem);
-  --text-h2: clamp(2.38rem, 2.112rem + 1.34vw, 3.24rem);
-  --text-h3: clamp(1.89rem, 1.752rem + 0.69vw, 2.33rem);
-  --text-h4: clamp(1.5rem, 1.444rem + 0.28vw, 1.68rem);
-  --text-h5: clamp(1.19rem, 1.184rem + 0.03vw, 1.21rem);
-  --text-h6: clamp(0.87rem, 0.962rem + -0.11vw, 0.94rem);
+  --text-display: clamp(3.17rem, 2.468rem + 3.51vw, 5.63rem);
+  --text-h1: clamp(2.54rem, 1.98rem + 2.8vw, 4.5rem);
+  --text-h2: clamp(2.03rem, 1.582rem + 2.24vw, 3.6rem);
+  --text-h3: clamp(1.63rem, 1.272rem + 1.79vw, 2.88rem);
+  --text-h4: clamp(1.3rem, 1.014rem + 1.43vw, 2.3rem);
+  --text-h5: clamp(1.04rem, 0.812rem + 1.14vw, 1.84rem);
+  --text-h6: clamp(0.83rem, 0.648rem + 0.91vw, 1.47rem);
   --text-body-large: clamp(1.14rem, 1.102rem + 0.19vw, 1.26rem);
   --text-body-main: clamp(1rem, 0.984rem + 0.08vw, 1.05rem);
   --text-body-small: clamp(0.875rem, 0.875rem + 0vw, 0.875rem);

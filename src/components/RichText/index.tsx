@@ -68,11 +68,10 @@ export default function RichText(props: Props) {
       converters={jsxConverters}
       className={cn(
         'payload-richtext',
-        'prose-h1:text-h1, prose-h2:text-h2, prose-h3:text-h3, prose-h4:text-h4, prose-h5:text-h5, prose-h6:text-h6',
         {
           container: enableGutter,
           'max-w-none': !enableGutter,
-          'prose dark:prose-invert': enableProse,
+          'prose prose-gray dark:prose-invert': enableProse,
         },
         className,
       )}

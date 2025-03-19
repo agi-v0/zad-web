@@ -70,6 +70,7 @@ export interface Config {
     posts: Post;
     media: Media;
     categories: Category;
+    faq: Faq;
     users: User;
     redirects: Redirect;
     forms: Form;
@@ -86,6 +87,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    faq: FaqSelect<false> | FaqSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -190,7 +192,7 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | LogoBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (CallToActionBlock | ContentBlock | LogoBlock | StatsBlock | MediaBlock | ArchiveBlock | FormBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -437,7 +439,7 @@ export interface CallToActionBlock {
  * via the `definition` "ContentBlock".
  */
 export interface ContentBlock {
-  variant: '1' | '2' | '3';
+  variant: '1' | '2' | '3' | '4';
   richText?: {
     root: {
       type: string;
@@ -460,6 +462,7 @@ export interface ContentBlock {
          * Select an icon from the Remix icon set. You can preview all available icons at https://remixicon.com/
          */
         icon?: string | null;
+        tag?: string | null;
         heading?: string | null;
         content?: {
           root: {
@@ -477,7 +480,6 @@ export interface ContentBlock {
           [k: string]: unknown;
         } | null;
         media?: (number | null) | Media;
-        enableLink?: boolean | null;
         link?: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
@@ -533,6 +535,38 @@ export interface LogoBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'logoBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock".
+ */
+export interface StatsBlock {
+  caption?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  list?:
+    | {
+        number: string;
+        unit?: string | null;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'statsBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -779,6 +813,31 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq".
+ */
+export interface Faq {
+  id: number;
+  question?: string | null;
+  answer?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -966,6 +1025,10 @@ export interface PayloadLockedDocument {
         value: number | Category;
       } | null)
     | ({
+        relationTo: 'faq';
+        value: number | Faq;
+      } | null)
+    | ({
         relationTo: 'users';
         value: number | User;
       } | null)
@@ -1065,6 +1128,7 @@ export interface PagesSelect<T extends boolean = true> {
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         logoBlock?: T | LogoBlockSelect<T>;
+        statsBlock?: T | StatsBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
@@ -1119,10 +1183,10 @@ export interface ContentBlockSelect<T extends boolean = true> {
     | {
         size?: T;
         icon?: T;
+        tag?: T;
         heading?: T;
         content?: T;
         media?: T;
-        enableLink?: T;
         link?:
           | T
           | {
@@ -1148,6 +1212,23 @@ export interface LogoBlockSelect<T extends boolean = true> {
     | T
     | {
         media?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock_select".
+ */
+export interface StatsBlockSelect<T extends boolean = true> {
+  caption?: T;
+  list?:
+    | T
+    | {
+        number?: T;
+        unit?: T;
+        description?: T;
         id?: T;
       };
   id?: T;
@@ -1328,6 +1409,16 @@ export interface CategoriesSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq_select".
+ */
+export interface FaqSelect<T extends boolean = true> {
+  question?: T;
+  answer?: T;
   updatedAt?: T;
   createdAt?: T;
 }

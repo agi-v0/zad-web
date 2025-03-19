@@ -36,6 +36,10 @@ const config = {
     extend: {
       spacing: {
         site: 'var(--site--margin)',
+        sm: 'var(--spacing-sm)',
+        md: 'var(--spacing-md)',
+        lg: 'var(--spacing-lg)',
+        xl: 'var(--spacing-xl)',
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -52,10 +56,10 @@ const config = {
         'zad-beige-light': 'hsl(var(--zad-beige-light))',
         'zad-gold': 'hsl(var(--zad-gold))',
         'zad-lime': 'hsl(var(--zad-lime))',
-        'foreground-primary': 'hsla(var(--foreground),1)',
-        'foreground-secondary': 'hsla(var(--foreground),0.7)',
-        'foreground-tertiary': 'hsla(var(--foreground),0.5)',
-        'foreground-quaternary': 'hsla(var(--foreground),0.3)',
+        'foreground-primary': 'hsl(var(--foreground) / 1)',
+        'foreground-secondary': 'hsl(var(--foreground) / 0.7)',
+        'foreground-tertiary': 'hsl(var(--foreground) / 0.5)',
+        'foreground-quaternary': 'hsl(var(--foreground) / 0.3)',
         background: 'hsl(var(--background))',
         border: 'hsla(var(--border))',
         card: {
@@ -106,42 +110,51 @@ const config = {
         DEFAULT: {
           css: [
             {
-              '--tw-prose-body': 'var(--text)',
-              '--tw-prose-headings': 'var(--text)',
-              // h1: {
-              //   fontWeight: 'bold',
-              //   marginBottom: '0.25em',
-              // },
-            },
-          ],
-        },
-        base: {
-          css: [
-            {
               h1: {
                 fontSize: 'var(--text-h1)',
                 fontWeight: 'bold',
+                marginBottom: '0.25em',
+                lineHeight: '1.4',
               },
               h2: {
                 fontSize: 'var(--text-h2)',
                 fontWeight: 'bold',
+                marginBottom: '0.25em',
+                lineHeight: '1.4',
               },
               h3: {
                 fontSize: 'var(--text-h3)',
                 fontWeight: 'bold',
+                marginBottom: '0.25em',
+                lineHeight: '1.3',
               },
               h4: {
                 fontSize: 'var(--text-h4)',
                 fontWeight: 'bold',
+                marginBottom: '0.25em',
+                lineHeight: '1.3',
               },
               h5: {
                 fontSize: 'var(--text-h5)',
                 fontWeight: 'bold',
+                marginBottom: '0.25em',
+                lineHeight: '1.2',
               },
               h6: {
                 fontSize: 'var(--text-h6)',
                 fontWeight: 'bold',
+                marginBottom: '0.25em',
+                lineHeight: '1.2',
               },
+            },
+          ],
+        },
+        base: {},
+        gray: {
+          css: [
+            {
+              '--tw-prose-body': 'hsl(var(--foreground) / 0.7)',
+              '--tw-prose-headings': 'hsl(var(--foreground) / 1)',
             },
           ],
         },

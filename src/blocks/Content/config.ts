@@ -25,8 +25,8 @@ const listItems: Field[] = [
         type: 'select',
         defaultValue: 'oneThird',
         admin: {
-          condition: (_data, siblingData) => {
-            return Boolean(siblingData?.variant === '1')
+          condition: (data, siblingData, { blockData }) => {
+            return Boolean(blockData?.variant === '1')
           },
         },
         options: [
@@ -55,8 +55,20 @@ const listItems: Field[] = [
         admin: {
           description:
             'Select an icon from the Remix icon set. You can preview all available icons at https://remixicon.com/',
+          condition: (data, siblingData, { blockData }) => {
+            return Boolean(['2', '3'].includes(blockData?.variant))
+          },
         },
       }),
+      {
+        name: 'tag',
+        type: 'text',
+        admin: {
+          condition: (data, siblingData, { blockData }) => {
+            return Boolean(['4'].includes(blockData.variant))
+          },
+        },
+      },
       {
         name: 'heading',
         type: 'text',
@@ -83,20 +95,16 @@ const listItems: Field[] = [
         type: 'upload',
         relationTo: 'media',
         admin: {
-          condition: (_data, siblingData) => {
-            return Boolean(siblingData?.variant === '2')
+          condition: (_data, siblingData, { blockData }) => {
+            return Boolean(['2', '4'].includes(blockData?.variant))
           },
         },
-      },
-      {
-        name: 'enableLink',
-        type: 'checkbox',
       },
       link({
         overrides: {
           admin: {
-            condition: (_data, siblingData) => {
-              return Boolean(siblingData?.enableLink)
+            condition: (data, siblingData, { blockData }) => {
+              return Boolean(blockData?.variant === '1')
             },
           },
         },
@@ -113,7 +121,7 @@ export const Content: Block = {
       name: 'variant',
       type: 'select',
       label: 'Variant',
-      options: ['1', '2', '3'],
+      options: ['1', '2', '3', '4'],
       defaultValue: '1',
       required: true,
     },
