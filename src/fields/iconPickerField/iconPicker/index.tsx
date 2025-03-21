@@ -36,7 +36,7 @@ const IconPickerField: IconPickerFieldClientComponent = (props) => {
   } = useConfig()
 
   const memoizedValidate = useCallback(
-    (value, options) => {
+    (value: string, options: any) => {
       if (typeof validate === 'function') {
         return validate(value, { ...options, maxLength, minLength, required }) || true
       }

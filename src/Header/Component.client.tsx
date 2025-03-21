@@ -53,7 +53,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
       className="sticky top-0 z-20 w-full bg-zad-green"
       {...(theme ? { 'data-theme': theme } : {})}
     >
-      <div className="section flex justify-between py-4">
+      <div className="section flex items-center justify-between py-4">
         <Link href="/">
           <Logo loading="eager" priority="high" className="" />
         </Link>
