@@ -22,7 +22,7 @@ export const Content01: React.FC<ContentBlock> = (props) => {
         {list &&
           list.length > 0 &&
           list.map((col, index) => {
-            const { enableLink, link, heading, content, size } = col
+            const { link, heading, content, size } = col
 
             return (
               <div
@@ -32,10 +32,10 @@ export const Content01: React.FC<ContentBlock> = (props) => {
                 key={index}
               >
                 {heading && (
-                  <h3 className="text-foreground-primary text-body-l font-bold">{heading}</h3>
+                  <h3 className="text-body-l font-bold text-foreground-primary">{heading}</h3>
                 )}
                 {content && <RichText data={content} enableGutter={false} />}
-                {enableLink && <CMSLink {...link} />}
+                {link && <CMSLink {...link} />}
               </div>
             )
           })}
