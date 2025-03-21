@@ -12,21 +12,15 @@ export const FormBlock: Block = {
   interfaceName: 'FormBlock',
   fields: [
     {
-      name: 'form',
-      type: 'relationship',
-      relationTo: 'forms',
-      required: true,
-    },
-    {
-      name: 'enableIntro',
+      name: 'enableHeading',
       type: 'checkbox',
-      label: 'Enable Intro Content',
+      label: 'Enable Heading',
     },
     {
-      name: 'introContent',
+      name: 'richText',
       type: 'richText',
       admin: {
-        condition: (_, { enableIntro }) => Boolean(enableIntro),
+        condition: (_, { enableHeading }) => Boolean(enableHeading),
       },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
@@ -38,7 +32,13 @@ export const FormBlock: Block = {
           ]
         },
       }),
-      label: 'Intro Content',
+      label: false,
+    },
+    {
+      name: 'form',
+      type: 'relationship',
+      relationTo: 'forms',
+      required: true,
     },
   ],
   graphQL: {

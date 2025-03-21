@@ -28,6 +28,9 @@ export const LogoBlock: Block = {
     {
       name: 'list',
       type: 'array',
+      admin: {
+        description: 'Leave empty to display all logos',
+      },
       fields: [
         {
           name: 'media',

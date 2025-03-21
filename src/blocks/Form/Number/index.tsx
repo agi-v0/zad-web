@@ -15,7 +15,7 @@ export const Number: React.FC<
 > = ({ name, defaultValue, errors, label, register, required, width }) => {
   return (
     <Width width={width}>
-      <Label htmlFor={name}>
+      <Label htmlFor={name} className="text-white/70">
         {label}
 
         {required && (
@@ -24,6 +24,7 @@ export const Number: React.FC<
           </span>
         )}
       </Label>
+
       <Input
         defaultValue={defaultValue}
         id={name}

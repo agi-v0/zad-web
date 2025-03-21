@@ -32,17 +32,10 @@ export const StatsBlock: Block = {
         {
           name: 'number',
           type: 'text',
-          required: true,
-        },
-        {
-          name: 'unit',
-          type: 'text',
-          required: false,
         },
         {
           name: 'description',
           type: 'text',
-          required: true,
         },
       ],
     },

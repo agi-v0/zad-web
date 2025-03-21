@@ -15,11 +15,11 @@ const buttonVariants = cva(
         clear: '',
         default: 'h-10 px-4 py-2',
         icon: 'h-10 w-10',
-        lg: 'h-11 text-body-large px-8',
+        lg: 'h-12 text-body-large px-6',
         sm: 'h-9 text-sm px-3',
       },
       variant: {
-        default: 'bg-zad-lime text-primary-foreground hover:bg-primary/90',
+        default: 'bg-zad-lime text-foreground-primary hover:bg-zad-lime/90',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         ghost: 'hover:bg-card hover:text-accent-foreground',
         link: 'text-primary items-start justify-start underline-offset-4 hover:underline',

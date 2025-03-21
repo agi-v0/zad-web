@@ -1,14 +1,12 @@
+import type { Block } from 'payload'
+
 import {
-  BoldFeature,
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
-  ItalicFeature,
   lexicalEditor,
-  LinkFeature,
-  ParagraphFeature,
 } from '@payloadcms/richtext-lexical'
-import { Block } from 'payload'
+import { linkGroup } from '@/fields/linkGroup'
 
 export const FaqBlock: Block = {
   slug: 'faqBlock',
@@ -17,7 +15,6 @@ export const FaqBlock: Block = {
     {
       name: 'richText',
       type: 'richText',
-      label: false,
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [
@@ -28,36 +25,26 @@ export const FaqBlock: Block = {
           ]
         },
       }),
+      label: false,
     },
+    linkGroup({
+      overrides: {
+        maxRows: 2,
+      },
+    }),
     {
-      name: 'list',
-      type: 'array',
-      label: 'List',
-      fields: [
-        {
-          name: 'question',
-          type: 'text',
-          label: 'Question',
-        },
-        {
-          name: 'answer',
-          type: 'richText',
-          label: 'Answer',
-          editor: lexicalEditor({
-            features: ({ rootFeatures }) => {
-              return [
-                ...rootFeatures,
-                LinkFeature(),
-                BoldFeature(),
-                ItalicFeature(),
-                ParagraphFeature(),
-                FixedToolbarFeature(),
-                InlineToolbarFeature(),
-              ]
-            },
-          }),
-        },
-      ],
+      name: 'faqs',
+      type: 'relationship',
+      relationTo: 'faq',
+      hasMany: true,
+      required: true,
     },
   ],
+  graphQL: {
+    singularName: 'FaqBlock',
+  },
+  labels: {
+    plural: 'Faq Blocks',
+    singular: 'Faq Block',
+  },
 }

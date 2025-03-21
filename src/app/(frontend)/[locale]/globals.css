@@ -47,7 +47,7 @@
 
     --border: 240 6% 80%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 169.69 33% 38%;
 
     --radius: 0.2rem;
 
@@ -95,8 +95,21 @@
   * {
     @apply border-border;
   }
+  html {
+    scroll-padding-top: clamp(
+      4rem /* 64px */,
+      1.86rem /* 29.76px */ + 5.36vw,
+      7rem /* 112px */
+    );
+    overscroll-behavior: none;
+    scroll-behavior: smooth;
+  }
+  ::selection {
+    background: hsl(var(--zad-green-light) / 0.2);
+    color: hsl(var(--zad-green-light) / 1);
+  }
   body {
-    @apply flex min-h-[100vh] flex-col bg-background text-foreground;
+    @apply flex min-h-[100vh] flex-col bg-background text-foreground-primary;
   }
   iconify-icon {
     display: inline-block;
@@ -146,10 +159,6 @@
   .text-body-small {
     font-size: var(--text-body-small);
   }
-}
-
-html {
-  opacity: 0;
 }
 
 html[data-theme='dark'],

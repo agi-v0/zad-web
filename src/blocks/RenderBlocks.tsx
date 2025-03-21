@@ -5,18 +5,22 @@ import type { Page } from '@/payload-types'
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { RenderContent } from '@/blocks/Content/RenderContent'
+import { FaqBlock } from '@/blocks/FaqBlock/Component'
 import { FormBlock } from '@/blocks/Form/Component'
-import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { LogoBlock } from '@/blocks/LogoBlock/Component'
-import { StatsBlock } from './StatsBlock/Component'
+import { MediaBlock } from '@/blocks/MediaBlock/Component'
+import { PricingBlock } from '@/blocks/PricingBlock/Component'
+import { StatsBlock } from '@/blocks/StatsBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
   content: RenderContent,
   cta: CallToActionBlock,
   formBlock: FormBlock,
-  mediaBlock: MediaBlock,
+  faqBlock: FaqBlock,
   logoBlock: LogoBlock,
+  mediaBlock: MediaBlock,
+  pricingBlock: PricingBlock,
   statsBlock: StatsBlock,
 }
 

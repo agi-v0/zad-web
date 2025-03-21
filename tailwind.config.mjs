@@ -30,10 +30,10 @@ const config = {
     container: {
       center: true,
     },
-    maxWidth: {
-      '8xl': '90rem',
-    },
     extend: {
+      maxWidth: {
+        '8xl': '90rem',
+      },
       spacing: {
         site: 'var(--site--margin)',
         sm: 'var(--spacing-sm)',

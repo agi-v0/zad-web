@@ -1,6 +1,7 @@
 'use client'
 import { cn } from '@/utilities/ui'
 import React, { useState } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
 import RichText from '@/components/RichText'
 
 import type { ContentBlock } from '@/payload-types'
@@ -15,42 +16,49 @@ export const Content02: React.FC<ContentBlock> = (props) => {
   )
 
   return (
-    <div className="bg-zad-beige-light w-full">
+    <div className="w-full bg-zad-beige-light">
       <div className="flex flex-col">
         {richText && (
-          <div className="section pt-site w-full">
+          <div className="section w-full pt-site">
             <RichText className="m-0" data={richText} enableGutter={false} />
           </div>
         )}
         {list && (
-          <div className="section py-site gap-site flex w-full flex-row">
-            <div className="flex w-full flex-col space-y-2">
+          <div className="section flex w-full flex-row gap-site py-site">
+            <div className="flex w-full flex-col">
               {list.map((item) => (
                 <button
                   type="button"
                   key={item.id}
                   className={cn(
-                    'flex w-full flex-col gap-2 rounded-lg p-3',
-                    activeAccordionId === item.id && 'bg-zinc-100 dark:bg-zinc-800',
+                    'flex w-full flex-col items-start gap-2 rounded-3xl p-6 text-start',
+                    activeAccordionId === item.id && 'bg-zad-beige dark:bg-zad-green',
                   )}
                   onClick={() => setActiveAccordionId(String(item.id))}
                 >
-                  <h3 className="text-foreground-primary text-body-l text-start font-bold">
-                    {item.heading}
-                  </h3>
+                  <h3 className="text-h6 font-bold text-foreground-primary">{item.heading}</h3>
                   {item.content && (
                     <RichText className="m-0" data={item.content} enableGutter={false} />
                   )}
                 </button>
               ))}
             </div>
-            <div className="relative h-auto w-full">
-              <Media
+            <AnimatePresence mode="wait">
+              <motion.div
                 key={list.find((item) => item.id === activeAccordionId)?.id}
-                imgClassName="w-full h-auto rounded-3xl"
-                resource={list.find((item) => item.id === activeAccordionId)?.media}
-              />
-            </div>
+                className="relative h-auto w-full"
+                initial={{ y: -100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 100, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Media
+                  key={list.find((item) => item.id === activeAccordionId)?.id}
+                  imgClassName="w-full h-auto rounded-3xl"
+                  resource={list.find((item) => item.id === activeAccordionId)?.media}
+                />
+              </motion.div>
+            </AnimatePresence>
           </div>
         )}
       </div>

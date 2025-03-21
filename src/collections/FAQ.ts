@@ -1,40 +1,19 @@
-import {
-  BoldFeature,
-  FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
-  ItalicFeature,
-  lexicalEditor,
-  LinkFeature,
-  ParagraphFeature,
-} from '@payloadcms/richtext-lexical'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { InlineToolbarFeature } from 'node_modules/@payloadcms/richtext-lexical/dist/features/toolbars/inline/server'
+import { FixedToolbarFeature } from 'node_modules/@payloadcms/richtext-lexical/dist/features/toolbars/fixed/server'
 import { CollectionConfig } from 'payload'
 
 export const FAQ: CollectionConfig = {
   slug: 'faq',
   fields: [
-    {
-      name: 'question',
-      type: 'text',
-      label: 'Question',
-      localized: true,
-    },
+    { name: 'question', type: 'text', localized: true },
     {
       name: 'answer',
       type: 'richText',
-      label: 'Answer',
       localized: true,
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
-          return [
-            ...rootFeatures,
-            LinkFeature(),
-            BoldFeature(),
-            ItalicFeature(),
-            ParagraphFeature(),
-            FixedToolbarFeature(),
-            InlineToolbarFeature(),
-          ]
+          return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
         },
       }),
     },

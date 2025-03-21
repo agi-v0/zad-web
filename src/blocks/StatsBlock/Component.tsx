@@ -19,12 +19,22 @@ export const StatsBlock: React.FC<StatsBlockProps> = (props) => {
           </div>
         )}
         {list && (
-          <div className="section grid w-full grid-cols-1 gap-sm py-site md:grid-cols-2 lg:grid-cols-4">
+          <div
+            className={cn(
+              'section grid w-full grid-cols-1 gap-sm py-site md:grid-cols-2',
+              list.length >= 4 ? 'lg:grid-cols-4' : '',
+              list.length === 3 ? 'lg:grid-cols-3' : '',
+            )}
+          >
             {list.map((item) => (
-              <div key={item.id} className="flex flex-col items-start gap-4">
-                <h3 className="text-h4 whitespace-pre text-start font-bold text-foreground-primary">
+              <div key={item.id} className="flex flex-col items-start">
+                <h3
+                  className={cn(
+                    'text-start font-bold text-foreground-primary',
+                    list.length >= 4 ? 'text-h4' : 'text-h3',
+                  )}
+                >
                   {item.number}
-                  {item.unit && ' ' + item.unit}
                 </h3>
                 {item.description && (
                   <p className="text-body-l text-start text-foreground-tertiary">

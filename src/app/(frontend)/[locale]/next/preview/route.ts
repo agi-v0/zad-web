@@ -24,8 +24,6 @@ export async function GET(
   const slug = searchParams.get('slug')
   const previewSecret = searchParams.get('previewSecret')
   const locale = searchParams.get('locale')
-  console.log('previewSecret: ', previewSecret)
-  console.log('process.env.PREVIEW_SECRET: ', process.env.PREVIEW_SECRET)
 
   if (previewSecret !== process.env.PREVIEW_SECRET) {
     return new Response('You are not allowed to preview this page', { status: 403 })

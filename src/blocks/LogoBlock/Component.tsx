@@ -7,6 +7,7 @@ import RichText from '@/components/RichText'
 import type { LogoBlock as LogoBlockProps } from '@/payload-types'
 
 import { Media } from '../../components/Media'
+import { AnimatedGroup } from '@/components/motion/animated-group'
 
 type ExtendedLogoBlockProps = LogoBlockProps & {
   className?: string
@@ -30,23 +31,26 @@ export const LogoBlock: React.FC<ExtendedLogoBlockProps> = (props) => {
   } = props
 
   return (
-    <div className="bg-zad-green w-full">
+    <div className="w-full bg-zad-green" data-theme="dark">
       <div className={cn('flex flex-col', className)}>
         {caption && !disableCaption && (
           <div
             className={cn(
-              'section pt-site w-full',
+              'section w-full pt-site',
               {
                 container: !disableInnerContainer,
               },
               captionClassName,
             )}
           >
-            <RichText className="m-0 text-white" data={caption} enableGutter={false} />
+            <RichText className="m-0" data={caption} enableGutter={false} />
           </div>
         )}
         {list && (
-          <div className="section py-site flex w-full flex-row gap-10">
+          <AnimatedGroup
+            className="section flex w-full flex-row justify-between gap-10 py-site"
+            preset="slide"
+          >
             {list.map((item) => (
               <Media
                 key={item.id}
@@ -54,7 +58,7 @@ export const LogoBlock: React.FC<ExtendedLogoBlockProps> = (props) => {
                 resource={item.media}
               />
             ))}
-          </div>
+          </AnimatedGroup>
         )}
       </div>
     </div>

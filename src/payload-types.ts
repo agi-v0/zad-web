@@ -192,7 +192,17 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | LogoBlock | StatsBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (
+    | ArchiveBlock
+    | CallToActionBlock
+    | ContentBlock
+    | FaqBlock
+    | FormBlock
+    | LogoBlock
+    | PricingBlock
+    | MediaBlock
+    | StatsBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -388,6 +398,40 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArchiveBlock".
+ */
+export interface ArchiveBlock {
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  populateBy?: ('collection' | 'selection') | null;
+  relationTo?: 'posts' | null;
+  categories?: (number | Category)[] | null;
+  limit?: number | null;
+  selectedDocs?:
+    | {
+        relationTo: 'posts';
+        value: number | Post;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'archive';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CallToActionBlock".
  */
 export interface CallToActionBlock {
@@ -508,10 +552,10 @@ export interface ContentBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LogoBlock".
+ * via the `definition` "FaqBlock".
  */
-export interface LogoBlock {
-  caption?: {
+export interface FaqBlock {
+  richText?: {
     root: {
       type: string;
       children: {
@@ -526,22 +570,43 @@ export interface LogoBlock {
     };
     [k: string]: unknown;
   } | null;
-  list?:
+  links?:
     | {
-        media: number | Media;
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
         id?: string | null;
       }[]
     | null;
+  faqs: (number | Faq)[];
   id?: string | null;
   blockName?: string | null;
-  blockType: 'logoBlock';
+  blockType: 'faqBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "StatsBlock".
+ * via the `definition` "faq".
  */
-export interface StatsBlock {
-  caption?: {
+export interface Faq {
+  id: number;
+  question?: string | null;
+  answer?: {
     root: {
       type: string;
       children: {
@@ -556,70 +621,16 @@ export interface StatsBlock {
     };
     [k: string]: unknown;
   } | null;
-  list?:
-    | {
-        number: string;
-        unit?: string | null;
-        description: string;
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'statsBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MediaBlock".
- */
-export interface MediaBlock {
-  media: number | Media;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'mediaBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ArchiveBlock".
- */
-export interface ArchiveBlock {
-  introContent?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  populateBy?: ('collection' | 'selection') | null;
-  relationTo?: 'posts' | null;
-  categories?: (number | Category)[] | null;
-  limit?: number | null;
-  selectedDocs?:
-    | {
-        relationTo: 'posts';
-        value: number | Post;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'archive';
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "FormBlock".
  */
 export interface FormBlock {
-  form: number | Form;
-  enableIntro?: boolean | null;
-  introContent?: {
+  enableHeading?: boolean | null;
+  richText?: {
     root: {
       type: string;
       children: {
@@ -634,6 +645,7 @@ export interface FormBlock {
     };
     [k: string]: unknown;
   } | null;
+  form: number | Form;
   id?: string | null;
   blockName?: string | null;
   blockType: 'formBlock';
@@ -813,12 +825,10 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faq".
+ * via the `definition` "LogoBlock".
  */
-export interface Faq {
-  id: number;
-  question?: string | null;
-  answer?: {
+export interface LogoBlock {
+  caption?: {
     root: {
       type: string;
       children: {
@@ -833,8 +843,138 @@ export interface Faq {
     };
     [k: string]: unknown;
   } | null;
-  updatedAt: string;
-  createdAt: string;
+  /**
+   * Leave empty to display all logos
+   */
+  list?:
+    | {
+        media: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'logoBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PricingBlock".
+ */
+export interface PricingBlock {
+  tag?: string | null;
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  baseFeatures?: {
+    tag?: string | null;
+    heading?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    features?:
+      | {
+          icon?: string | null;
+          feature?: string | null;
+          description?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  additionalFeatures?: {
+    tag?: string | null;
+    heading?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    features?:
+      | {
+          icon?: string | null;
+          feature?: string | null;
+          description?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'pricingBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlock".
+ */
+export interface MediaBlock {
+  media: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock".
+ */
+export interface StatsBlock {
+  caption?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  list?:
+    | {
+        number?: string | null;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'statsBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1125,13 +1265,15 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
+        archive?: T | ArchiveBlockSelect<T>;
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
-        logoBlock?: T | LogoBlockSelect<T>;
-        statsBlock?: T | StatsBlockSelect<T>;
-        mediaBlock?: T | MediaBlockSelect<T>;
-        archive?: T | ArchiveBlockSelect<T>;
+        faqBlock?: T | FaqBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        logoBlock?: T | LogoBlockSelect<T>;
+        pricingBlock?: T | PricingBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        statsBlock?: T | StatsBlockSelect<T>;
       };
   meta?:
     | T
@@ -1146,6 +1288,20 @@ export interface PagesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArchiveBlock_select".
+ */
+export interface ArchiveBlockSelect<T extends boolean = true> {
+  introContent?: T;
+  populateBy?: T;
+  relationTo?: T;
+  categories?: T;
+  limit?: T;
+  selectedDocs?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1204,6 +1360,42 @@ export interface ContentBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FaqBlock_select".
+ */
+export interface FaqBlockSelect<T extends boolean = true> {
+  richText?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  faqs?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FormBlock_select".
+ */
+export interface FormBlockSelect<T extends boolean = true> {
+  enableHeading?: T;
+  richText?: T;
+  form?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "LogoBlock_select".
  */
 export interface LogoBlockSelect<T extends boolean = true> {
@@ -1219,17 +1411,40 @@ export interface LogoBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "StatsBlock_select".
+ * via the `definition` "PricingBlock_select".
  */
-export interface StatsBlockSelect<T extends boolean = true> {
-  caption?: T;
-  list?:
+export interface PricingBlockSelect<T extends boolean = true> {
+  tag?: T;
+  richText?: T;
+  baseFeatures?:
     | T
     | {
-        number?: T;
-        unit?: T;
-        description?: T;
-        id?: T;
+        tag?: T;
+        heading?: T;
+        content?: T;
+        features?:
+          | T
+          | {
+              icon?: T;
+              feature?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  additionalFeatures?:
+    | T
+    | {
+        tag?: T;
+        heading?: T;
+        content?: T;
+        features?:
+          | T
+          | {
+              icon?: T;
+              feature?: T;
+              description?: T;
+              id?: T;
+            };
       };
   id?: T;
   blockName?: T;
@@ -1245,26 +1460,17 @@ export interface MediaBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ArchiveBlock_select".
+ * via the `definition` "StatsBlock_select".
  */
-export interface ArchiveBlockSelect<T extends boolean = true> {
-  introContent?: T;
-  populateBy?: T;
-  relationTo?: T;
-  categories?: T;
-  limit?: T;
-  selectedDocs?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FormBlock_select".
- */
-export interface FormBlockSelect<T extends boolean = true> {
-  form?: T;
-  enableIntro?: T;
-  introContent?: T;
+export interface StatsBlockSelect<T extends boolean = true> {
+  caption?: T;
+  list?:
+    | T
+    | {
+        number?: T;
+        description?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
