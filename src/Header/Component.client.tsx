@@ -50,7 +50,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   return (
     <header
       ref={ref}
-      className="fixed top-0 z-20 w-full bg-zad-green"
+      className="sticky top-0 z-20 w-full bg-zad-green"
       {...(theme ? { 'data-theme': theme } : {})}
     >
       <div className="section flex justify-between py-4">

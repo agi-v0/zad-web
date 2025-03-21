@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 
 import { Rubik } from 'next/font/google'
 import localFont from 'next/font/local'
@@ -19,12 +19,6 @@ import { notFound } from 'next/navigation'
 
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
-
-const rubik = Rubik({
-  weight: ['400', '500', '600'],
-  subsets: ['latin', 'arabic'],
-  variable: '--font-rubik',
-})
 
 const graphik = localFont({
   src: [
@@ -90,10 +84,12 @@ export default async function RootLayout({
 
 export const metadata: Metadata = {
   metadataBase: new URL(getServerSideURL()),
-  themeColor: '#27574F',
   openGraph: mergeOpenGraph(),
   twitter: {
     card: 'summary_large_image',
     creator: '@zidappcom',
   },
+}
+export const viewport: Viewport = {
+  themeColor: '#27574F',
 }
