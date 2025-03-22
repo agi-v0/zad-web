@@ -33,10 +33,24 @@ export const FaqBlock: React.FC<FaqBlockProps> = async (props) => {
 
   return (
     <div className="w-full bg-zad-beige-light">
-      <div className="section space-y-site">
-        {richText && (
-          <RichText className="mx-auto text-center" data={richText} enableGutter={false} />
-        )}
+      <div className="section space-y-site py-site">
+        <div className="flex w-full flex-col items-center gap-md text-center">
+          {richText && (
+            <RichText className="prose-p:text-body-large" data={richText} enableGutter={false} />
+          )}
+          {Array.isArray(links) && links.length > 0 && (
+            <ul className="flex gap-4 md:justify-center">
+              {links.map(({ link }, i) => {
+                return (
+                  <li key={i}>
+                    <CMSLink {...link} />
+                  </li>
+                )
+              })}
+            </ul>
+          )}
+        </div>
+
         {faqDocs && (
           <div className="mx-auto grid w-full max-w-3xl grid-cols-1">
             <Accordion type="single" collapsible>

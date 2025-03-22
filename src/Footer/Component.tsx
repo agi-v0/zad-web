@@ -14,14 +14,14 @@ export async function Footer() {
   const navItems = footerData?.navItems || []
 
   return (
-    <footer className="mt-auto border-t border-border bg-black text-white dark:bg-card">
-      <div className="container flex flex-col gap-8 py-8 md:flex-row md:justify-between">
+    <footer className="bg-zad-green text-white">
+      <div className="section flex flex-col gap-8 py-8 md:flex-row md:justify-center">
         <Link className="flex items-center" href="/">
           <Logo />
         </Link>
 
         <div className="flex flex-col-reverse items-start gap-4 md:flex-row md:items-center">
-          <ThemeSelector />
+          {/* <ThemeSelector /> */}
           <nav className="flex flex-col gap-4 md:flex-row">
             {navItems.map(({ link }, i) => {
               return <CMSLink className="text-white" key={i} {...link} />

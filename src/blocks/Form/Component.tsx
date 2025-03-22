@@ -118,7 +118,7 @@ export const FormBlock: React.FC<
       <div className="section py-site">
         {enableHeading && richText && !hasSubmitted && (
           <RichText
-            className="prose-invert mx-auto mb-lg text-center"
+            className="prose-p:text-body-large prose-invert mx-auto mb-lg text-center"
             data={richText}
             enableGutter={false}
           />
