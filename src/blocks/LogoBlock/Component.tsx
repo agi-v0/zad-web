@@ -21,7 +21,7 @@ type ExtendedLogoBlockProps = LogoBlockProps & {
 export const LogoBlock: React.FC<ExtendedLogoBlockProps> = (props) => {
   const {
     caption,
-    list,
+    logos,
     className,
     disableInnerContainer,
     captionClassName,
@@ -46,17 +46,13 @@ export const LogoBlock: React.FC<ExtendedLogoBlockProps> = (props) => {
             <RichText className="m-0" data={caption} enableGutter={false} />
           </div>
         )}
-        {list && (
+        {logos && (
           <AnimatedGroup
             className="section flex w-full flex-row justify-between gap-10 py-site"
             preset="slide"
           >
-            {list.map((item) => (
-              <Media
-                key={item.id}
-                imgClassName={cn('h-10 w-auto', imgClassName)}
-                resource={item.media}
-              />
+            {logos.map((item, index) => (
+              <Media key={index} imgClassName={cn('h-10 w-auto', imgClassName)} resource={item} />
             ))}
           </AnimatedGroup>
         )}

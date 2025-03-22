@@ -843,15 +843,7 @@ export interface LogoBlock {
     };
     [k: string]: unknown;
   } | null;
-  /**
-   * Leave empty to display all logos
-   */
-  list?:
-    | {
-        media: number | Media;
-        id?: string | null;
-      }[]
-    | null;
+  logos: (number | Media)[];
   id?: string | null;
   blockName?: string | null;
   blockType: 'logoBlock';
@@ -1400,12 +1392,7 @@ export interface FormBlockSelect<T extends boolean = true> {
  */
 export interface LogoBlockSelect<T extends boolean = true> {
   caption?: T;
-  list?:
-    | T
-    | {
-        media?: T;
-        id?: T;
-      };
+  logos?: T;
   id?: T;
   blockName?: T;
 }
