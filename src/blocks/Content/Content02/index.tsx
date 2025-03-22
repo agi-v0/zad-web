@@ -24,7 +24,7 @@ export const Content02: React.FC<ContentBlock> = (props) => {
           </div>
         )}
         {list && (
-          <div className="section flex w-full flex-row gap-site py-site">
+          <div className="section flex w-full flex-col gap-site py-site lg:flex-row">
             <div className="flex w-full flex-col">
               {list.map((item) => (
                 <button

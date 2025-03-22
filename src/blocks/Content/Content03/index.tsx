@@ -1,13 +1,11 @@
 'use client'
-import { cn } from '@/utilities/ui'
 import React, { useState } from 'react'
+import { cn } from '@/utilities/ui'
 import RichText from '@/components/RichText'
-
-import type { ContentBlock } from '@/payload-types'
-
+import { Icon } from '@iconify-icon/react'
 import { CMSLink } from '../../../components/Link'
 import { Media } from '@/components/Media'
-import { Icon } from '@iconify-icon/react'
+import type { ContentBlock } from '@/payload-types'
 export const Content03: React.FC<ContentBlock> = (props) => {
   const { richText, list } = props
 
