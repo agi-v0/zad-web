@@ -50,7 +50,6 @@ export const FaqBlock: React.FC<FaqBlockProps> = async (props) => {
             </ul>
           )}
         </div>
-
         {faqDocs && (
           <div className="mx-auto grid w-full max-w-3xl grid-cols-1">
             <Accordion type="single" collapsible>
