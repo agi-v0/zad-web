@@ -25,6 +25,7 @@
     "@iconify/utils": "^2.3.0",
     "@payloadcms/db-mongodb": "^3.28.1",
     "@payloadcms/db-postgres": "latest",
+    "@payloadcms/email-resend": "^3.29.0",
     "@payloadcms/live-preview-react": "latest",
     "@payloadcms/next": "latest",
     "@payloadcms/payload-cloud": "latest",
