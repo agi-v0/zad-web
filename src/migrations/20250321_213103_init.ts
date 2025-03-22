@@ -2,46 +2,285 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
-   CREATE TYPE IF NOT EXISTS "public"."_locales" AS ENUM('en', 'ar');
-  CREATE TYPE IF NOT EXISTS "public"."enum_pages_hero_links_link_type" AS ENUM('reference', 'custom');
-  CREATE TYPE IF NOT EXISTS "public"."enum_pages_hero_links_link_appearance" AS ENUM('default', 'outline');
-  CREATE TYPE IF NOT EXISTS "public"."enum_pages_blocks_archive_populate_by" AS ENUM('collection', 'selection');
-  CREATE TYPE IF NOT EXISTS "public"."enum_pages_blocks_archive_relation_to" AS ENUM('posts');
-  CREATE TYPE IF NOT EXISTS "public"."enum_pages_blocks_cta_links_link_type" AS ENUM('reference', 'custom');
-  CREATE TYPE IF NOT EXISTS "public"."enum_pages_blocks_cta_links_link_appearance" AS ENUM('default', 'outline');
-  CREATE TYPE IF NOT EXISTS "public"."enum_pages_blocks_content_list_size" AS ENUM('oneThird', 'half', 'twoThirds', 'full');
-  CREATE TYPE IF NOT EXISTS "public"."enum_pages_blocks_content_list_link_type" AS ENUM('reference', 'custom');
-  CREATE TYPE IF NOT EXISTS "public"."enum_pages_blocks_content_list_link_appearance" AS ENUM('default', 'outline');
-  CREATE TYPE IF NOT EXISTS "public"."enum_pages_blocks_content_variant" AS ENUM('1', '2', '3', '4');
-  CREATE TYPE IF NOT EXISTS "public"."enum_pages_blocks_faq_block_links_link_type" AS ENUM('reference', 'custom');
-  CREATE TYPE IF NOT EXISTS "public"."enum_pages_blocks_faq_block_links_link_appearance" AS ENUM('default', 'outline');
-  CREATE TYPE IF NOT EXISTS "public"."enum_pages_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact');
-  CREATE TYPE IF NOT EXISTS "public"."enum_pages_status" AS ENUM('draft', 'published');
-  CREATE TYPE IF NOT EXISTS "public"."enum__pages_v_version_hero_links_link_type" AS ENUM('reference', 'custom');
-  CREATE TYPE IF NOT EXISTS "public"."enum__pages_v_version_hero_links_link_appearance" AS ENUM('default', 'outline');
-  CREATE TYPE IF NOT EXISTS "public"."enum__pages_v_blocks_archive_populate_by" AS ENUM('collection', 'selection');
-  CREATE TYPE IF NOT EXISTS "public"."enum__pages_v_blocks_archive_relation_to" AS ENUM('posts');
-  CREATE TYPE IF NOT EXISTS "public"."enum__pages_v_blocks_cta_links_link_type" AS ENUM('reference', 'custom');
-  CREATE TYPE IF NOT EXISTS "public"."enum__pages_v_blocks_cta_links_link_appearance" AS ENUM('default', 'outline');
-  CREATE TYPE IF NOT EXISTS "public"."enum__pages_v_blocks_content_list_size" AS ENUM('oneThird', 'half', 'twoThirds', 'full');
-  CREATE TYPE IF NOT EXISTS "public"."enum__pages_v_blocks_content_list_link_type" AS ENUM('reference', 'custom');
-  CREATE TYPE IF NOT EXISTS "public"."enum__pages_v_blocks_content_list_link_appearance" AS ENUM('default', 'outline');
-  CREATE TYPE IF NOT EXISTS "public"."enum__pages_v_blocks_content_variant" AS ENUM('1', '2', '3', '4');
-  CREATE TYPE IF NOT EXISTS "public"."enum__pages_v_blocks_faq_block_links_link_type" AS ENUM('reference', 'custom');
-  CREATE TYPE IF NOT EXISTS "public"."enum__pages_v_blocks_faq_block_links_link_appearance" AS ENUM('default', 'outline');
-  CREATE TYPE IF NOT EXISTS "public"."enum__pages_v_version_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact');
-  CREATE TYPE IF NOT EXISTS "public"."enum__pages_v_version_status" AS ENUM('draft', 'published');
-  CREATE TYPE IF NOT EXISTS "public"."enum__pages_v_published_locale" AS ENUM('en', 'ar');
-  CREATE TYPE IF NOT EXISTS "public"."enum_posts_status" AS ENUM('draft', 'published');
-  CREATE TYPE IF NOT EXISTS "public"."enum__posts_v_version_status" AS ENUM('draft', 'published');
-  CREATE TYPE IF NOT EXISTS "public"."enum__posts_v_published_locale" AS ENUM('en', 'ar');
-  CREATE TYPE IF NOT EXISTS "public"."enum_redirects_to_type" AS ENUM('reference', 'custom');
-  CREATE TYPE IF NOT EXISTS "public"."enum_forms_confirmation_type" AS ENUM('message', 'redirect');
-  CREATE TYPE IF NOT EXISTS "public"."enum_payload_jobs_log_task_slug" AS ENUM('inline', 'schedulePublish');
-  CREATE TYPE IF NOT EXISTS "public"."enum_payload_jobs_log_state" AS ENUM('failed', 'succeeded');
-  CREATE TYPE IF NOT EXISTS "public"."enum_payload_jobs_task_slug" AS ENUM('inline', 'schedulePublish');
-  CREATE TYPE IF NOT EXISTS "public"."enum_header_nav_items_link_type" AS ENUM('reference', 'custom');
-  CREATE TYPE IF NOT EXISTS "public"."enum_footer_nav_items_link_type" AS ENUM('reference', 'custom');
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = '_locales') THEN
+        CREATE TYPE "public"."_locales" AS ENUM('en', 'ar');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_pages_hero_links_link_type') THEN
+        CREATE TYPE "public"."enum_pages_hero_links_link_type" AS ENUM('reference', 'custom');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_pages_hero_links_link_appearance') THEN
+        CREATE TYPE "public"."enum_pages_hero_links_link_appearance" AS ENUM('default', 'outline');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_pages_blocks_archive_populate_by') THEN
+        CREATE TYPE "public"."enum_pages_blocks_archive_populate_by" AS ENUM('collection', 'selection');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_pages_blocks_archive_relation_to') THEN
+        CREATE TYPE "public"."enum_pages_blocks_archive_relation_to" AS ENUM('posts');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_pages_blocks_cta_links_link_type') THEN
+        CREATE TYPE "public"."enum_pages_blocks_cta_links_link_type" AS ENUM('reference', 'custom');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_pages_blocks_cta_links_link_appearance') THEN
+        CREATE TYPE "public"."enum_pages_blocks_cta_links_link_appearance" AS ENUM('default', 'outline');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_pages_blocks_content_list_size') THEN
+        CREATE TYPE "public"."enum_pages_blocks_content_list_size" AS ENUM('oneThird', 'half', 'twoThirds', 'full');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_pages_blocks_content_list_link_type') THEN
+        CREATE TYPE "public"."enum_pages_blocks_content_list_link_type" AS ENUM('reference', 'custom');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_pages_blocks_content_list_link_appearance') THEN
+        CREATE TYPE "public"."enum_pages_blocks_content_list_link_appearance" AS ENUM('default', 'outline');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_pages_blocks_content_variant') THEN
+        CREATE TYPE "public"."enum_pages_blocks_content_variant" AS ENUM('1', '2', '3', '4');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_pages_blocks_faq_block_links_link_type') THEN
+        CREATE TYPE "public"."enum_pages_blocks_faq_block_links_link_type" AS ENUM('reference', 'custom');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_pages_blocks_faq_block_links_link_appearance') THEN
+        CREATE TYPE "public"."enum_pages_blocks_faq_block_links_link_appearance" AS ENUM('default', 'outline');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_pages_hero_type') THEN
+        CREATE TYPE "public"."enum_pages_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_pages_status') THEN
+        CREATE TYPE "public"."enum_pages_status" AS ENUM('draft', 'published');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum__pages_v_version_hero_links_link_type') THEN
+        CREATE TYPE "public"."enum__pages_v_version_hero_links_link_type" AS ENUM('reference', 'custom');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum__pages_v_version_hero_links_link_appearance') THEN
+        CREATE TYPE "public"."enum__pages_v_version_hero_links_link_appearance" AS ENUM('default', 'outline');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum__pages_v_blocks_archive_populate_by') THEN
+        CREATE TYPE "public"."enum__pages_v_blocks_archive_populate_by" AS ENUM('collection', 'selection');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum__pages_v_blocks_archive_relation_to') THEN
+        CREATE TYPE "public"."enum__pages_v_blocks_archive_relation_to" AS ENUM('posts');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum__pages_v_blocks_cta_links_link_type') THEN
+        CREATE TYPE "public"."enum__pages_v_blocks_cta_links_link_type" AS ENUM('reference', 'custom');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum__pages_v_blocks_cta_links_link_appearance') THEN
+        CREATE TYPE "public"."enum__pages_v_blocks_cta_links_link_appearance" AS ENUM('default', 'outline');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum__pages_v_blocks_content_list_size') THEN
+        CREATE TYPE "public"."enum__pages_v_blocks_content_list_size" AS ENUM('oneThird', 'half', 'twoThirds', 'full');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum__pages_v_blocks_content_list_link_type') THEN
+        CREATE TYPE "public"."enum__pages_v_blocks_content_list_link_type" AS ENUM('reference', 'custom');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum__pages_v_blocks_content_list_link_appearance') THEN
+        CREATE TYPE "public"."enum__pages_v_blocks_content_list_link_appearance" AS ENUM('default', 'outline');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum__pages_v_blocks_content_variant') THEN
+        CREATE TYPE "public"."enum__pages_v_blocks_content_variant" AS ENUM('1', '2', '3', '4');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum__pages_v_blocks_faq_block_links_link_type') THEN
+        CREATE TYPE "public"."enum__pages_v_blocks_faq_block_links_link_type" AS ENUM('reference', 'custom');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum__pages_v_blocks_faq_block_links_link_appearance') THEN
+        CREATE TYPE "public"."enum__pages_v_blocks_faq_block_links_link_appearance" AS ENUM('default', 'outline');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum__pages_v_version_hero_type') THEN
+        CREATE TYPE "public"."enum__pages_v_version_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum__pages_v_version_status') THEN
+        CREATE TYPE "public"."enum__pages_v_version_status" AS ENUM('draft', 'published');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum__pages_v_published_locale') THEN
+        CREATE TYPE "public"."enum__pages_v_published_locale" AS ENUM('en', 'ar');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_posts_status') THEN
+        CREATE TYPE "public"."enum_posts_status" AS ENUM('draft', 'published');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum__posts_v_version_status') THEN
+        CREATE TYPE "public"."enum__posts_v_version_status" AS ENUM('draft', 'published');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum__posts_v_published_locale') THEN
+        CREATE TYPE "public"."enum__posts_v_published_locale" AS ENUM('en', 'ar');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_redirects_to_type') THEN
+        CREATE TYPE "public"."enum_redirects_to_type" AS ENUM('reference', 'custom');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_forms_confirmation_type') THEN
+        CREATE TYPE "public"."enum_forms_confirmation_type" AS ENUM('message', 'redirect');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_payload_jobs_log_task_slug') THEN
+        CREATE TYPE "public"."enum_payload_jobs_log_task_slug" AS ENUM('inline', 'schedulePublish');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_payload_jobs_log_state') THEN
+        CREATE TYPE "public"."enum_payload_jobs_log_state" AS ENUM('failed', 'succeeded');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_payload_jobs_task_slug') THEN
+        CREATE TYPE "public"."enum_payload_jobs_task_slug" AS ENUM('inline', 'schedulePublish');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_header_nav_items_link_type') THEN
+        CREATE TYPE "public"."enum_header_nav_items_link_type" AS ENUM('reference', 'custom');
+      END IF;
+    END $$;
+
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_footer_nav_items_link_type') THEN
+        CREATE TYPE "public"."enum_footer_nav_items_link_type" AS ENUM('reference', 'custom');
+      END IF;
+    END $$;
   CREATE TABLE IF NOT EXISTS "pages_hero_links" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,

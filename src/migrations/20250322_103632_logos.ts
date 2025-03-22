@@ -2,13 +2,17 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
-   ALTER TABLE "pages_blocks_logo_block_list" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "_pages_v_blocks_logo_block_list" DISABLE ROW LEVEL SECURITY;
-  DROP TABLE "pages_blocks_logo_block_list" CASCADE;
-  DROP TABLE "_pages_v_blocks_logo_block_list" CASCADE;
-  ALTER TABLE "pages_rels" ADD COLUMN "media_id" integer;
-  ALTER TABLE "_pages_v_rels" ADD COLUMN "media_id" integer;
-  ALTER TABLE "forms_blocks_select" ADD COLUMN "placeholder" varchar;
+  DO $$ BEGIN
+    DROP TABLE IF EXISTS "pages_blocks_logo_block_list" CASCADE;
+    DROP TABLE IF EXISTS "_pages_v_blocks_logo_block_list" CASCADE;
+  EXCEPTION
+    WHEN undefined_table THEN null;
+  END $$;
+
+  ALTER TABLE "pages_rels" ADD COLUMN IF NOT EXISTS "media_id" integer;
+  ALTER TABLE "_pages_v_rels" ADD COLUMN IF NOT EXISTS "media_id" integer;
+  ALTER TABLE "forms_blocks_select" ADD COLUMN IF NOT EXISTS "placeholder" varchar;
+
   DO $$ BEGIN
    ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
