@@ -4,12 +4,13 @@ import { cn } from '@/utilities/ui'
 import React from 'react'
 import RichText from '@/components/RichText'
 
-import type { LogoBlock as LogoBlockProps } from '@/payload-types'
+import type { LogoBlock as LogoBlockProps, Media as MediaType } from '@/payload-types'
 
 import { Media } from '../../components/Media'
 import { AnimatedGroup } from '@/components/motion/animated-group'
 
 type ExtendedLogoBlockProps = LogoBlockProps & {
+  logos?: MediaType[]
   className?: string
   disableInnerContainer?: boolean
   captionClassName?: string

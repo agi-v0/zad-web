@@ -192,6 +192,7 @@ export interface Page {
         }[]
       | null;
     media?: (number | null) | Media;
+    logos: (number | Media)[];
   };
   layout: (
     | ArchiveBlock
@@ -1255,6 +1256,7 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        logos?: T;
       };
   layout?:
     | T

@@ -69,6 +69,13 @@ export const hero: Field = {
       required: true,
       localized: true,
     },
+    {
+      name: 'logos',
+      type: 'relationship',
+      relationTo: 'media',
+      hasMany: true,
+      required: true,
+    },
   ],
   label: false,
 }
