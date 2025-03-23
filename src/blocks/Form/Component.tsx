@@ -118,7 +118,7 @@ export const FormBlock: React.FC<
       <div className="section py-site">
         {enableHeading && richText && !hasSubmitted && (
           <RichText
-            className="prose-p:text-body-large prose-invert mx-auto mb-lg text-center"
+            className="prose-p:text-body-large prose-invert mb-lg mx-auto text-center"
             data={richText}
             enableGutter={false}
           />
@@ -140,7 +140,7 @@ export const FormBlock: React.FC<
                       const Field: React.FC<any> = fields?.[field.blockType as keyof typeof fields]
                       if (Field) {
                         return (
-                          <div className="mx-auto mb-sm w-full max-w-3xl last:mb-0" key={index}>
+                          <div className="mb-sm mx-auto w-full max-w-3xl last:mb-0" key={index}>
                             <Field
                               form={formFromProps}
                               {...field}
@@ -160,7 +160,7 @@ export const FormBlock: React.FC<
                   type="submit"
                   variant="default"
                   size="lg"
-                  className="mx-auto mt-lg text-center"
+                  className="mt-lg mx-auto text-center"
                 >
                   {submitButtonLabel}
                 </Button>

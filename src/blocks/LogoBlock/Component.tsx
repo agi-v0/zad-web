@@ -31,24 +31,28 @@ export const LogoBlock: React.FC<ExtendedLogoBlockProps> = (props) => {
   } = props
 
   return (
-    <div className="w-full bg-zad-green" data-theme="dark">
+    <div className="bg-zad-green w-full" data-theme="dark">
       <div className={cn('flex flex-col', className)}>
         {caption && !disableCaption && (
           <div
             className={cn(
-              'section w-full pt-site',
+              'section pt-site w-full',
               {
                 container: !disableInnerContainer,
               },
               captionClassName,
             )}
           >
-            <RichText className="m-0" data={caption} enableGutter={false} />
+            <RichText
+              className="prose-headings:text-white prose-p:text-white/50 m-0"
+              data={caption}
+              enableGutter={false}
+            />
           </div>
         )}
         {logos && (
           <AnimatedGroup
-            className="section flex w-full flex-row justify-between gap-10 py-site"
+            className="section py-site flex w-full flex-row justify-between gap-10"
             preset="slide"
           >
             {logos.map((item, index) => (

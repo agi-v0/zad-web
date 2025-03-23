@@ -32,9 +32,9 @@ export const FaqBlock: React.FC<FaqBlockProps> = async (props) => {
   })
 
   return (
-    <div className="w-full bg-zad-beige-light">
+    <div className="bg-zad-beige-light w-full">
       <div className="section space-y-site py-site">
-        <div className="flex w-full flex-col items-center gap-md text-center">
+        <div className="gap-md flex w-full flex-col items-center text-center">
           {richText && (
             <RichText className="prose-p:text-body-large" data={richText} enableGutter={false} />
           )}
@@ -59,7 +59,7 @@ export const FaqBlock: React.FC<FaqBlockProps> = async (props) => {
                   <AccordionContent>
                     {faq.answer ? (
                       <RichText
-                        className="prose-p:text-body-l m-0 text-start"
+                        className="prose-p:text-body-large m-0 text-start"
                         data={faq.answer}
                         enableGutter={false}
                       />

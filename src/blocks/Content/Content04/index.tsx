@@ -11,28 +11,30 @@ export const Content04: React.FC<ContentBlock> = (props) => {
   const { richText, list } = props
 
   return (
-    <div className="w-full bg-background">
-      <div className="flex flex-col">
+    <div className="bg-background w-full">
+      <div className="section gap-md py-site flex flex-col">
         {richText && (
-          <div className="section w-full pt-site">
+          <div className="pt-site w-full">
             <RichText
-              className="prose-p:text-body-large -mx-auto max-w-8xl text-center prose-headings:text-zad-green"
+              className="prose-p:text-body-large -mx-auto max-w-8xl text-center"
               data={richText}
               enableGutter={false}
             />
           </div>
         )}
         {list && (
-          <div className="section flex w-full flex-col gap-site py-site">
+          <div className="gap-lg py-site flex w-full flex-col">
             {list.map((item) => (
-              <div key={item.id} className="grid grid-cols-1 gap-xl lg:grid-cols-2">
-                <div className="flex flex-col items-start justify-center gap-4">
+              <div key={item.id} className="gap-xl flex flex-col even:flex-row-reverse lg:flex-row">
+                <div className="flex w-full flex-col items-start justify-center gap-4">
                   {item.tag && (
-                    <span className="rounded-full bg-zad-lime px-3 py-1 text-sm font-bold">
+                    <span className="bg-zad-lime rounded-full px-3 py-1 text-sm font-bold">
                       {item.tag}
                     </span>
                   )}
-                  <h3 className="text-h3 text-start font-bold">{item.heading}</h3>
+                  <h3 className="text-start text-(length:--text-h3) font-bold text-(color:--color-zad-golden)">
+                    {item.heading}
+                  </h3>
                   {item.content && (
                     <RichText
                       className="prose-p:text-body-large m-0"

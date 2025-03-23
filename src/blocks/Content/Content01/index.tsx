@@ -32,7 +32,7 @@ export const Content01: React.FC<ContentBlock> = (props) => {
                 key={index}
               >
                 {heading && (
-                  <h3 className="text-body-l font-bold text-foreground-primary">{heading}</h3>
+                  <h3 className="text-body-large text-foreground-primary font-bold">{heading}</h3>
                 )}
                 {content && <RichText data={content} enableGutter={false} />}
                 {link && <CMSLink {...link} />}

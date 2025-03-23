@@ -16,15 +16,15 @@ export const Content02: React.FC<ContentBlock> = (props) => {
   )
 
   return (
-    <div className="w-full bg-zad-beige-light">
+    <div className="bg-zad-beige-light w-full">
       <div className="flex flex-col">
         {richText && (
-          <div className="section w-full pt-site">
+          <div className="section pt-site w-full">
             <RichText className="m-0" data={richText} enableGutter={false} />
           </div>
         )}
         {list && (
-          <div className="section flex w-full flex-col gap-site py-site lg:flex-row">
+          <div className="section gap-site py-site flex w-full flex-col lg:flex-row">
             <div className="flex w-full flex-col">
               {list.map((item) => (
                 <button
@@ -32,11 +32,11 @@ export const Content02: React.FC<ContentBlock> = (props) => {
                   key={item.id}
                   className={cn(
                     'flex w-full flex-col items-start gap-2 rounded-3xl p-6 text-start',
-                    activeAccordionId === item.id && 'bg-zad-beige dark:bg-zad-green',
+                    activeAccordionId === item.id && 'bg-zad-beige',
                   )}
                   onClick={() => setActiveAccordionId(String(item.id))}
                 >
-                  <h3 className="text-h6 font-bold text-foreground-primary">{item.heading}</h3>
+                  <h3 className="text-h6 text-foreground-primary font-bold">{item.heading}</h3>
                   {item.content && (
                     <RichText className="m-0" data={item.content} enableGutter={false} />
                   )}

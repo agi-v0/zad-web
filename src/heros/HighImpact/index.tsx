@@ -18,7 +18,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
   return (
     <div className="bg-zad-green text-white">
       <div className="section relative flex min-h-[calc(100vh-var(--header-height))] flex-col items-center justify-center lg:flex-row">
-        <div className="flex w-full flex-col items-start gap-md">
+        <div className="gap-md flex w-full flex-col items-start">
           {richText && (
             <RichText
               className="prose-p:text-body-large prose-invert"
@@ -31,7 +31,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
               {links.map(({ link }, i) => {
                 return (
                   <li key={i}>
-                    <CMSLink {...link} className="" />
+                    <CMSLink {...link} size="lg" />
                   </li>
                 )
               })}
