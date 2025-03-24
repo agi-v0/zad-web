@@ -37,9 +37,7 @@ export const StatsBlock: React.FC<StatsBlockProps> = (props) => {
                   {item.number}
                 </h3>
                 {item.description && (
-                  <p className="text-body-large text-foreground-tertiary text-start">
-                    {item.description}
-                  </p>
+                  <p className="text-body-large text-zad-gold text-start">{item.description}</p>
                 )}
               </div>
             ))}

@@ -20,7 +20,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, logos, ri
   return (
     <div className="bg-background-subtle text-foreground" data-theme="light">
       <div className="section relative flex min-h-[calc(100vh-var(--header-height))] flex-col items-center justify-center lg:flex-row">
-        <div className="gap-md flex w-full basis-1/2 flex-col items-start overflow-hidden">
+        <div className="gap-md mt-site flex w-full basis-1/2 flex-col items-start overflow-hidden">
           {richText && (
             <RichText className="prose-p:text-body-large" data={richText} enableGutter={false} />
           )}
@@ -29,7 +29,11 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, logos, ri
               {links.map(({ link }, i) => {
                 return (
                   <li key={i} className="w-full">
-                    <CMSLink {...link} size="lg" className="text-stone-950 max-md:w-full" />
+                    <CMSLink
+                      {...link}
+                      size="lg"
+                      className="not-dark:bg-zad-green not-dark:hover:bg-zad-green/90 not-dark:text-white max-md:w-full"
+                    />
                   </li>
                 )
               })}
@@ -40,7 +44,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, logos, ri
               {logos.map((item, index) => (
                 <Media
                   key={index}
-                  imgClassName={cn('h-10 w-auto opacity-40 invert')}
+                  imgClassName={cn('h-10 w-auto opacity-40 dark:invert')}
                   resource={item}
                 />
               ))}
