@@ -192,7 +192,7 @@ export interface Page {
         }[]
       | null;
     media?: (number | null) | Media;
-    logos: (number | Media)[];
+    logos?: (number | Media)[] | null;
   };
   layout: (
     | ArchiveBlock

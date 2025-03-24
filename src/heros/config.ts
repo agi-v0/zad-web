@@ -74,7 +74,6 @@ export const hero: Field = {
       type: 'relationship',
       relationTo: 'media',
       hasMany: true,
-      required: true,
     },
   ],
   label: false,

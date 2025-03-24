@@ -26,6 +26,7 @@
     "@iconify/utils": "^2.3.0",
     "@payloadcms/db-mongodb": "^3.28.1",
     "@payloadcms/db-postgres": "latest",
+    "@payloadcms/db-vercel-postgres": "^3.29.0",
     "@payloadcms/email-resend": "latest",
     "@payloadcms/live-preview-react": "latest",
     "@payloadcms/next": "latest",
