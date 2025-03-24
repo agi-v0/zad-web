@@ -66,7 +66,7 @@ export const PricingBlock: React.FC<PricingBlockProps> = (props) => {
                 {additionalFeatures?.features?.map((item) => (
                   <li key={item.id} className="flex flex-row items-center gap-4 rounded-lg">
                     {item.icon && (
-                      <div className="bg-zad-gold inline-flex w-fit rounded-full p-3">
+                      <div className="bg-zad-beige inline-flex w-fit rounded-full p-3">
                         <Icon
                           icon={`ri:${item.icon}`}
                           className="text-zad-green text-2xl leading-none"

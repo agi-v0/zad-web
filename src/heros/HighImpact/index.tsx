@@ -20,7 +20,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, logos, ri
   return (
     <div className="bg-zad-green text-white">
       <div className="section relative flex min-h-[calc(100vh-var(--header-height))] flex-col items-center justify-center lg:flex-row">
-        <div className="gap-md flex basis-1/2 flex-col items-start overflow-hidden">
+        <div className="gap-md flex w-full basis-1/2 flex-col items-start overflow-hidden">
           {richText && (
             <RichText
               className="prose-p:text-body-large prose-invert"
@@ -29,18 +29,18 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, logos, ri
             />
           )}
           {Array.isArray(links) && links.length > 0 && (
-            <ul className="flex gap-4 md:justify-center">
+            <ul className="flex gap-4 max-md:w-full md:justify-center">
               {links.map(({ link }, i) => {
                 return (
-                  <li key={i}>
-                    <CMSLink {...link} size="lg" />
+                  <li key={i} className="w-full">
+                    <CMSLink {...link} size="lg" className="max-md:w-full" />
                   </li>
                 )
               })}
             </ul>
           )}
           {logos && (
-            <InfiniteSlider gap={24} speed={56} reverse>
+            <InfiniteSlider gap={48} speed={56}>
               {logos.map((item, index) => (
                 <Media key={index} imgClassName={cn('h-10 w-auto')} resource={item} />
               ))}

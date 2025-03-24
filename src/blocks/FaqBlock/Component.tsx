@@ -43,7 +43,11 @@ export const FaqBlock: React.FC<FaqBlockProps> = async (props) => {
               {links.map(({ link }, i) => {
                 return (
                   <li key={i}>
-                    <CMSLink {...link} />
+                    <CMSLink
+                      {...link}
+                      size={'lg'}
+                      className="bg-zad-green hover:bg-zad-green/90 text-white"
+                    />
                   </li>
                 )
               })}

@@ -25,24 +25,6 @@ export const Content02: React.FC<ContentBlock> = (props) => {
         )}
         {list && (
           <div className="section gap-site py-site flex w-full flex-col lg:flex-row">
-            <div className="flex w-full flex-col">
-              {list.map((item) => (
-                <button
-                  type="button"
-                  key={item.id}
-                  className={cn(
-                    'flex w-full flex-col items-start gap-2 rounded-3xl p-6 text-start',
-                    activeAccordionId === item.id && 'bg-zad-beige',
-                  )}
-                  onClick={() => setActiveAccordionId(String(item.id))}
-                >
-                  <h3 className="text-h6 text-foreground-primary font-bold">{item.heading}</h3>
-                  {item.content && (
-                    <RichText className="m-0" data={item.content} enableGutter={false} />
-                  )}
-                </button>
-              ))}
-            </div>
             <AnimatePresence mode="wait">
               <motion.div
                 key={list.find((item) => item.id === activeAccordionId)?.id}
@@ -59,6 +41,26 @@ export const Content02: React.FC<ContentBlock> = (props) => {
                 />
               </motion.div>
             </AnimatePresence>
+            <div className="flex w-full flex-col">
+              {list.map((item) => (
+                <button
+                  type="button"
+                  key={item.id}
+                  className={cn(
+                    'flex w-full flex-col items-start gap-2 rounded-3xl p-6 text-start',
+                    activeAccordionId === item.id && 'bg-zad-beige',
+                  )}
+                  onClick={() => setActiveAccordionId(String(item.id))}
+                >
+                  <h3 className="text-foreground-primary text-(length:--text-body-large) font-bold">
+                    {item.heading}
+                  </h3>
+                  {item.content && (
+                    <RichText className="m-0" data={item.content} enableGutter={false} />
+                  )}
+                </button>
+              ))}
+            </div>
           </div>
         )}
       </div>

@@ -1,8 +1,7 @@
 @import 'tailwindcss';
+@import 'tw-animate-css';
 
 @config '../../../../tailwind.config.js';
-
-@plugin 'tailwindcss-animate';
 
 /* @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *)); */
 
@@ -25,7 +24,7 @@
 }
 
 @utility section {
-  @apply max-w-8xl mx-auto w-full;
+  @apply max-w-8xl mx-auto w-full overflow-x-hidden;
   padding-inline: var(--spacing-site);
 }
 
@@ -223,23 +222,23 @@ html[data-theme='light'] {
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --animation-accordion-down: 'accordion-down 0.2s ease-out';
-  --animation-accordion-up: 'accordion-up 0.2s ease-out';
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
 
   @keyframes accordion-down {
-    from: {
-      height: '0';
+    from {
+      height: 0;
     }
-    to: {
-      height: 'var(--radix-accordion-content-height)';
+    to {
+      height: var(--radix-accordion-content-height);
     }
   }
   @keyframes accordion-up {
-    from: {
-      height: 'var(--radix-accordion-content-height)';
+    from {
+      height: var(--radix-accordion-content-height);
     }
-    to: {
-      height: '0';
+    to {
+      height: 0;
     }
   }
 }

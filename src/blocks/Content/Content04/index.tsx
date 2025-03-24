@@ -25,7 +25,10 @@ export const Content04: React.FC<ContentBlock> = (props) => {
         {list && (
           <div className="gap-lg py-site flex w-full flex-col">
             {list.map((item) => (
-              <div key={item.id} className="gap-xl flex flex-col even:flex-row-reverse lg:flex-row">
+              <div
+                key={item.id}
+                className="gap-xl flex flex-col lg:flex-row even:lg:flex-row-reverse"
+              >
                 <div className="flex w-full flex-col items-start justify-center gap-4">
                   {item.tag && (
                     <span className="bg-zad-lime rounded-full px-3 py-1 text-sm font-bold">
