@@ -32,7 +32,7 @@ const AccordionTrigger = React.forwardRef<
       {children}
       <Icon
         icon="ri:arrow-down-s-line"
-        className="text-muted-foreground text-body-large shrink-0 transition-transform duration-200"
+        className="text-foreground/70 text-body-large shrink-0 transition-transform duration-200"
       />
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>

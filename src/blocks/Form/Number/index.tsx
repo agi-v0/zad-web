@@ -15,7 +15,7 @@ export const Number: React.FC<
 > = ({ name, defaultValue, errors, label, register, required, width }) => {
   return (
     <Width width={width}>
-      <Label htmlFor={name} className="text-white/70">
+      {/* <Label htmlFor={name} className="text-foreground-secondary">
         {label}
 
         {required && (
@@ -23,9 +23,10 @@ export const Number: React.FC<
             * <span className="sr-only">(required)</span>
           </span>
         )}
-      </Label>
+      </Label> */}
 
       <Input
+        placeholder={label + (required ? ' *' : '')}
         defaultValue={defaultValue}
         id={name}
         type="number"

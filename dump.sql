@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 17.4 (Debian 17.4-1.pgdg120+2)
+-- Dumped from database version 17.4
 -- Dumped by pg_dump version 17.4 (Debian 17.4-1.pgdg120+2)
 
 SET statement_timeout = 0;
@@ -51,6 +51,7 @@ ALTER TABLE IF EXISTS ONLY "public"."payload_jobs_log" DROP CONSTRAINT IF EXISTS
 ALTER TABLE IF EXISTS ONLY "public"."pages_rels" DROP CONSTRAINT IF EXISTS "pages_rels_posts_fk";
 ALTER TABLE IF EXISTS ONLY "public"."pages_rels" DROP CONSTRAINT IF EXISTS "pages_rels_parent_fk";
 ALTER TABLE IF EXISTS ONLY "public"."pages_rels" DROP CONSTRAINT IF EXISTS "pages_rels_pages_fk";
+ALTER TABLE IF EXISTS ONLY "public"."pages_rels" DROP CONSTRAINT IF EXISTS "pages_rels_media_fk";
 ALTER TABLE IF EXISTS ONLY "public"."pages_rels" DROP CONSTRAINT IF EXISTS "pages_rels_faq_fk";
 ALTER TABLE IF EXISTS ONLY "public"."pages_rels" DROP CONSTRAINT IF EXISTS "pages_rels_categories_fk";
 ALTER TABLE IF EXISTS ONLY "public"."pages_locales" DROP CONSTRAINT IF EXISTS "pages_locales_parent_id_fk";
@@ -66,8 +67,6 @@ ALTER TABLE IF EXISTS ONLY "public"."pages_blocks_pricing_block_additional_featu
 ALTER TABLE IF EXISTS ONLY "public"."pages_blocks_media_block" DROP CONSTRAINT IF EXISTS "pages_blocks_media_block_parent_id_fk";
 ALTER TABLE IF EXISTS ONLY "public"."pages_blocks_media_block" DROP CONSTRAINT IF EXISTS "pages_blocks_media_block_media_id_media_id_fk";
 ALTER TABLE IF EXISTS ONLY "public"."pages_blocks_logo_block" DROP CONSTRAINT IF EXISTS "pages_blocks_logo_block_parent_id_fk";
-ALTER TABLE IF EXISTS ONLY "public"."pages_blocks_logo_block_list" DROP CONSTRAINT IF EXISTS "pages_blocks_logo_block_list_parent_id_fk";
-ALTER TABLE IF EXISTS ONLY "public"."pages_blocks_logo_block_list" DROP CONSTRAINT IF EXISTS "pages_blocks_logo_block_list_media_id_media_id_fk";
 ALTER TABLE IF EXISTS ONLY "public"."pages_blocks_form_block" DROP CONSTRAINT IF EXISTS "pages_blocks_form_block_parent_id_fk";
 ALTER TABLE IF EXISTS ONLY "public"."pages_blocks_form_block" DROP CONSTRAINT IF EXISTS "pages_blocks_form_block_form_id_forms_id_fk";
 ALTER TABLE IF EXISTS ONLY "public"."pages_blocks_faq_block" DROP CONSTRAINT IF EXISTS "pages_blocks_faq_block_parent_id_fk";
@@ -134,6 +133,7 @@ ALTER TABLE IF EXISTS ONLY "public"."_pages_v_version_hero_links_locales" DROP C
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v_rels" DROP CONSTRAINT IF EXISTS "_pages_v_rels_posts_fk";
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v_rels" DROP CONSTRAINT IF EXISTS "_pages_v_rels_parent_fk";
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v_rels" DROP CONSTRAINT IF EXISTS "_pages_v_rels_pages_fk";
+ALTER TABLE IF EXISTS ONLY "public"."_pages_v_rels" DROP CONSTRAINT IF EXISTS "_pages_v_rels_media_fk";
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v_rels" DROP CONSTRAINT IF EXISTS "_pages_v_rels_faq_fk";
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v_rels" DROP CONSTRAINT IF EXISTS "_pages_v_rels_categories_fk";
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v" DROP CONSTRAINT IF EXISTS "_pages_v_parent_id_pages_id_fk";
@@ -148,8 +148,6 @@ ALTER TABLE IF EXISTS ONLY "public"."_pages_v_blocks_pricing_block_additional_fe
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v_blocks_media_block" DROP CONSTRAINT IF EXISTS "_pages_v_blocks_media_block_parent_id_fk";
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v_blocks_media_block" DROP CONSTRAINT IF EXISTS "_pages_v_blocks_media_block_media_id_media_id_fk";
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v_blocks_logo_block" DROP CONSTRAINT IF EXISTS "_pages_v_blocks_logo_block_parent_id_fk";
-ALTER TABLE IF EXISTS ONLY "public"."_pages_v_blocks_logo_block_list" DROP CONSTRAINT IF EXISTS "_pages_v_blocks_logo_block_list_parent_id_fk";
-ALTER TABLE IF EXISTS ONLY "public"."_pages_v_blocks_logo_block_list" DROP CONSTRAINT IF EXISTS "_pages_v_blocks_logo_block_list_media_id_media_id_fk";
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v_blocks_form_block" DROP CONSTRAINT IF EXISTS "_pages_v_blocks_form_block_parent_id_fk";
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v_blocks_form_block" DROP CONSTRAINT IF EXISTS "_pages_v_blocks_form_block_form_id_forms_id_fk";
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v_blocks_faq_block" DROP CONSTRAINT IF EXISTS "_pages_v_blocks_faq_block_parent_id_fk";
@@ -244,6 +242,7 @@ DROP INDEX IF EXISTS "public"."pages_rels_path_idx";
 DROP INDEX IF EXISTS "public"."pages_rels_parent_idx";
 DROP INDEX IF EXISTS "public"."pages_rels_pages_id_idx";
 DROP INDEX IF EXISTS "public"."pages_rels_order_idx";
+DROP INDEX IF EXISTS "public"."pages_rels_media_id_idx";
 DROP INDEX IF EXISTS "public"."pages_rels_faq_id_idx";
 DROP INDEX IF EXISTS "public"."pages_rels_categories_id_idx";
 DROP INDEX IF EXISTS "public"."pages_meta_meta_image_idx";
@@ -272,9 +271,6 @@ DROP INDEX IF EXISTS "public"."pages_blocks_media_block_media_idx";
 DROP INDEX IF EXISTS "public"."pages_blocks_logo_block_path_idx";
 DROP INDEX IF EXISTS "public"."pages_blocks_logo_block_parent_id_idx";
 DROP INDEX IF EXISTS "public"."pages_blocks_logo_block_order_idx";
-DROP INDEX IF EXISTS "public"."pages_blocks_logo_block_list_parent_id_idx";
-DROP INDEX IF EXISTS "public"."pages_blocks_logo_block_list_order_idx";
-DROP INDEX IF EXISTS "public"."pages_blocks_logo_block_list_media_idx";
 DROP INDEX IF EXISTS "public"."pages_blocks_form_block_path_idx";
 DROP INDEX IF EXISTS "public"."pages_blocks_form_block_parent_id_idx";
 DROP INDEX IF EXISTS "public"."pages_blocks_form_block_order_idx";
@@ -427,6 +423,7 @@ DROP INDEX IF EXISTS "public"."_pages_v_rels_path_idx";
 DROP INDEX IF EXISTS "public"."_pages_v_rels_parent_idx";
 DROP INDEX IF EXISTS "public"."_pages_v_rels_pages_id_idx";
 DROP INDEX IF EXISTS "public"."_pages_v_rels_order_idx";
+DROP INDEX IF EXISTS "public"."_pages_v_rels_media_id_idx";
 DROP INDEX IF EXISTS "public"."_pages_v_rels_faq_id_idx";
 DROP INDEX IF EXISTS "public"."_pages_v_rels_categories_id_idx";
 DROP INDEX IF EXISTS "public"."_pages_v_published_locale_idx";
@@ -453,9 +450,6 @@ DROP INDEX IF EXISTS "public"."_pages_v_blocks_media_block_media_idx";
 DROP INDEX IF EXISTS "public"."_pages_v_blocks_logo_block_path_idx";
 DROP INDEX IF EXISTS "public"."_pages_v_blocks_logo_block_parent_id_idx";
 DROP INDEX IF EXISTS "public"."_pages_v_blocks_logo_block_order_idx";
-DROP INDEX IF EXISTS "public"."_pages_v_blocks_logo_block_list_parent_id_idx";
-DROP INDEX IF EXISTS "public"."_pages_v_blocks_logo_block_list_order_idx";
-DROP INDEX IF EXISTS "public"."_pages_v_blocks_logo_block_list_media_idx";
 DROP INDEX IF EXISTS "public"."_pages_v_blocks_form_block_path_idx";
 DROP INDEX IF EXISTS "public"."_pages_v_blocks_form_block_parent_id_idx";
 DROP INDEX IF EXISTS "public"."_pages_v_blocks_form_block_order_idx";
@@ -513,7 +507,6 @@ ALTER TABLE IF EXISTS ONLY "public"."pages_blocks_pricing_block" DROP CONSTRAINT
 ALTER TABLE IF EXISTS ONLY "public"."pages_blocks_pricing_block_additional_features_features" DROP CONSTRAINT IF EXISTS "pages_blocks_pricing_block_additional_features_features_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."pages_blocks_media_block" DROP CONSTRAINT IF EXISTS "pages_blocks_media_block_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."pages_blocks_logo_block" DROP CONSTRAINT IF EXISTS "pages_blocks_logo_block_pkey";
-ALTER TABLE IF EXISTS ONLY "public"."pages_blocks_logo_block_list" DROP CONSTRAINT IF EXISTS "pages_blocks_logo_block_list_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."pages_blocks_form_block" DROP CONSTRAINT IF EXISTS "pages_blocks_form_block_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."pages_blocks_faq_block" DROP CONSTRAINT IF EXISTS "pages_blocks_faq_block_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."pages_blocks_faq_block_links" DROP CONSTRAINT IF EXISTS "pages_blocks_faq_block_links_pkey";
@@ -580,7 +573,6 @@ ALTER TABLE IF EXISTS ONLY "public"."_pages_v_blocks_pricing_block" DROP CONSTRA
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v_blocks_pricing_block_additional_features_features" DROP CONSTRAINT IF EXISTS "_pages_v_blocks_pricing_block_additional_features_features_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v_blocks_media_block" DROP CONSTRAINT IF EXISTS "_pages_v_blocks_media_block_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v_blocks_logo_block" DROP CONSTRAINT IF EXISTS "_pages_v_blocks_logo_block_pkey";
-ALTER TABLE IF EXISTS ONLY "public"."_pages_v_blocks_logo_block_list" DROP CONSTRAINT IF EXISTS "_pages_v_blocks_logo_block_list_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v_blocks_form_block" DROP CONSTRAINT IF EXISTS "_pages_v_blocks_form_block_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v_blocks_faq_block" DROP CONSTRAINT IF EXISTS "_pages_v_blocks_faq_block_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."_pages_v_blocks_faq_block_links" DROP CONSTRAINT IF EXISTS "_pages_v_blocks_faq_block_links_pkey";
@@ -652,7 +644,6 @@ ALTER TABLE IF EXISTS "public"."_pages_v_blocks_pricing_block_base_features_feat
 ALTER TABLE IF EXISTS "public"."_pages_v_blocks_pricing_block_additional_features_features" ALTER COLUMN "id" DROP DEFAULT;
 ALTER TABLE IF EXISTS "public"."_pages_v_blocks_pricing_block" ALTER COLUMN "id" DROP DEFAULT;
 ALTER TABLE IF EXISTS "public"."_pages_v_blocks_media_block" ALTER COLUMN "id" DROP DEFAULT;
-ALTER TABLE IF EXISTS "public"."_pages_v_blocks_logo_block_list" ALTER COLUMN "id" DROP DEFAULT;
 ALTER TABLE IF EXISTS "public"."_pages_v_blocks_logo_block" ALTER COLUMN "id" DROP DEFAULT;
 ALTER TABLE IF EXISTS "public"."_pages_v_blocks_form_block" ALTER COLUMN "id" DROP DEFAULT;
 ALTER TABLE IF EXISTS "public"."_pages_v_blocks_faq_block_links_locales" ALTER COLUMN "id" DROP DEFAULT;
@@ -713,7 +704,6 @@ DROP TABLE IF EXISTS "public"."pages_blocks_pricing_block_base_features_features
 DROP TABLE IF EXISTS "public"."pages_blocks_pricing_block_additional_features_features";
 DROP TABLE IF EXISTS "public"."pages_blocks_pricing_block";
 DROP TABLE IF EXISTS "public"."pages_blocks_media_block";
-DROP TABLE IF EXISTS "public"."pages_blocks_logo_block_list";
 DROP TABLE IF EXISTS "public"."pages_blocks_logo_block";
 DROP TABLE IF EXISTS "public"."pages_blocks_form_block";
 DROP SEQUENCE IF EXISTS "public"."pages_blocks_faq_block_links_locales_id_seq";
@@ -822,8 +812,6 @@ DROP TABLE IF EXISTS "public"."_pages_v_blocks_pricing_block_additional_features
 DROP TABLE IF EXISTS "public"."_pages_v_blocks_pricing_block";
 DROP SEQUENCE IF EXISTS "public"."_pages_v_blocks_media_block_id_seq";
 DROP TABLE IF EXISTS "public"."_pages_v_blocks_media_block";
-DROP SEQUENCE IF EXISTS "public"."_pages_v_blocks_logo_block_list_id_seq";
-DROP TABLE IF EXISTS "public"."_pages_v_blocks_logo_block_list";
 DROP SEQUENCE IF EXISTS "public"."_pages_v_blocks_logo_block_id_seq";
 DROP TABLE IF EXISTS "public"."_pages_v_blocks_logo_block";
 DROP SEQUENCE IF EXISTS "public"."_pages_v_blocks_form_block_id_seq";
@@ -1761,39 +1749,6 @@ ALTER SEQUENCE "public"."_pages_v_blocks_logo_block_id_seq" OWNED BY "public"."_
 
 
 --
--- Name: _pages_v_blocks_logo_block_list; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE "public"."_pages_v_blocks_logo_block_list" (
-    "_order" integer NOT NULL,
-    "_parent_id" integer NOT NULL,
-    "id" integer NOT NULL,
-    "media_id" integer,
-    "_uuid" character varying
-);
-
-
---
--- Name: _pages_v_blocks_logo_block_list_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE "public"."_pages_v_blocks_logo_block_list_id_seq"
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: _pages_v_blocks_logo_block_list_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE "public"."_pages_v_blocks_logo_block_list_id_seq" OWNED BY "public"."_pages_v_blocks_logo_block_list"."id";
-
-
---
 -- Name: _pages_v_blocks_media_block; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2077,7 +2032,8 @@ CREATE TABLE "public"."_pages_v_rels" (
     "pages_id" integer,
     "posts_id" integer,
     "categories_id" integer,
-    "faq_id" integer
+    "faq_id" integer,
+    "media_id" integer
 );
 
 
@@ -2851,7 +2807,8 @@ CREATE TABLE "public"."forms_blocks_select" (
     "name" character varying NOT NULL,
     "width" numeric,
     "required" boolean,
-    "block_name" character varying
+    "block_name" character varying,
+    "placeholder" character varying
 );
 
 
@@ -3351,7 +3308,8 @@ CREATE TABLE "public"."media" (
     "sizes_og_height" numeric,
     "sizes_og_mime_type" character varying,
     "sizes_og_filesize" numeric,
-    "sizes_og_filename" character varying
+    "sizes_og_filename" character varying,
+    "prefix" character varying
 );
 
 
@@ -3630,18 +3588,6 @@ CREATE TABLE "public"."pages_blocks_logo_block" (
 
 
 --
--- Name: pages_blocks_logo_block_list; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE "public"."pages_blocks_logo_block_list" (
-    "_order" integer NOT NULL,
-    "_parent_id" character varying NOT NULL,
-    "id" character varying NOT NULL,
-    "media_id" integer
-);
-
-
---
 -- Name: pages_blocks_media_block; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3846,7 +3792,8 @@ CREATE TABLE "public"."pages_rels" (
     "pages_id" integer,
     "posts_id" integer,
     "categories_id" integer,
-    "faq_id" integer
+    "faq_id" integer,
+    "media_id" integer
 );
 
 
@@ -4535,13 +4482,6 @@ ALTER TABLE ONLY "public"."_pages_v_blocks_logo_block" ALTER COLUMN "id" SET DEF
 
 
 --
--- Name: _pages_v_blocks_logo_block_list id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY "public"."_pages_v_blocks_logo_block_list" ALTER COLUMN "id" SET DEFAULT "nextval"('"public"."_pages_v_blocks_logo_block_list_id_seq"'::"regclass");
-
-
---
 -- Name: _pages_v_blocks_media_block id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4966,11 +4906,17 @@ ALTER TABLE ONLY "public"."users" ALTER COLUMN "id" SET DEFAULT "nextval"('"publ
 --
 
 COPY "public"."_pages_v" ("id", "parent_id", "version_title", "version_hero_type", "version_published_at", "version_slug", "version_slug_lock", "version_updated_at", "version_created_at", "version__status", "created_at", "updated_at", "snapshot", "published_locale", "latest", "autosave") FROM stdin;
-5	1	Home	highImpact	2025-03-21 08:46:14.743+00	home	t	2025-03-21 14:52:44.629+00	2025-03-21 08:44:07.555+00	published	2025-03-21 14:52:44.654+00	2025-03-21 14:52:44.654+00	\N	\N	t	f
+11	1	Home	highImpact	2025-03-21 08:46:14.743+00	home	t	2025-03-24 11:00:39.808+00	2025-03-21 08:44:07.555+00	published	2025-03-24 11:00:40.394+00	2025-03-24 11:00:40.396+00	\N	\N	t	f
+9	1	Home	highImpact	2025-03-21 08:46:14.743+00	home	t	2025-03-22 14:31:47.383+00	2025-03-21 08:44:07.555+00	published	2025-03-22 14:31:47.812+00	2025-03-22 14:31:47.813+00	\N	\N	f	f
+8	1	Home	highImpact	2025-03-21 08:46:14.743+00	home	t	2025-03-22 14:31:43.749+00	2025-03-21 08:44:07.555+00	draft	2025-03-22 14:31:43.749+00	2025-03-22 14:31:43.803+00	\N	\N	f	t
+7	1	Home	highImpact	2025-03-21 08:46:14.743+00	home	t	2025-03-22 14:30:41.305+00	2025-03-21 08:44:07.555+00	published	2025-03-22 14:30:41.787+00	2025-03-22 14:30:41.788+00	\N	\N	f	f
+5	1	Home	highImpact	2025-03-21 08:46:14.743+00	home	t	2025-03-21 14:52:44.629+00	2025-03-21 08:44:07.555+00	published	2025-03-21 14:52:44.654+00	2025-03-21 14:52:44.654+00	\N	\N	f	f
 3	1	Home	highImpact	2025-03-21 08:46:14.743+00	home	t	2025-03-21 09:15:52.599+00	2025-03-21 08:44:07.555+00	published	2025-03-21 09:15:52.622+00	2025-03-21 09:15:52.622+00	\N	\N	f	f
 1	1	\N	lowImpact	\N	\N	t	2025-03-21 08:44:07.556+00	2025-03-21 08:44:07.555+00	draft	2025-03-21 08:44:07.568+00	2025-03-21 08:44:07.568+00	\N	\N	f	f
 2	1	Home	highImpact	2025-03-21 08:46:14.743+00	home	t	2025-03-21 09:14:10.039+00	2025-03-21 08:44:07.555+00	draft	2025-03-21 08:44:07.866+00	2025-03-21 09:14:10.043+00	\N	\N	f	t
 4	1	Home	highImpact	2025-03-21 08:46:14.743+00	home	t	2025-03-21 14:52:41.399+00	2025-03-21 08:44:07.555+00	draft	2025-03-21 09:17:44.67+00	2025-03-21 14:52:41.405+00	\N	\N	f	t
+6	1	Home	highImpact	2025-03-21 08:46:14.743+00	home	t	2025-03-22 14:30:38.718+00	2025-03-21 08:44:07.555+00	draft	2025-03-22 08:15:31.296+00	2025-03-22 14:30:38.764+00	\N	\N	f	t
+10	1	Home	highImpact	2025-03-21 08:46:14.743+00	home	t	2025-03-24 11:00:16.19+00	2025-03-21 08:44:07.555+00	draft	2025-03-24 10:49:54.313+00	2025-03-24 11:00:16.216+00	\N	\N	f	t
 \.
 
 
@@ -4995,6 +4941,24 @@ COPY "public"."_pages_v_blocks_content" ("_order", "_parent_id", "_path", "id", 
 1	5	version.layout	2398	2	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لماذا تختار الجمعيات زاد ؟", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd2a7dee9c04239ea1fea1	WHY ZAD
 2	5	version.layout	2399	3	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كيف تعمل زاد؟", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd2eb8a896e469ebeae65b	HOW TO
 5	5	version.layout	2400	4	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كل ما تحتاجه لتشغيل متجرك الخيري", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "خصائص تمكن الجمعيات الخيرية من تشغيل متاجر خيرية، تسويقها ومراقبة أداءها، وجمع التبرعات بسهولة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd41cca896e469ebeae665	FEATURES
+1	6	version.layout	2584	2	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لماذا تختار الجمعيات زاد ؟", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd2a7dee9c04239ea1fea1	WHY ZAD
+2	6	version.layout	2585	3	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كيف تعمل زاد؟", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd2eb8a896e469ebeae65b	HOW TO
+5	6	version.layout	2586	4	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كل ما تحتاجه لتشغيل متجرك الخيري", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "خصائص تمكن الجمعيات الخيرية من تشغيل متاجر خيرية، تسويقها ومراقبة أداءها، وجمع التبرعات بسهولة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd41cca896e469ebeae665	FEATURES
+1	7	version.layout	2587	2	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لماذا تختار الجمعيات زاد ؟", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd2a7dee9c04239ea1fea1	WHY ZAD
+1	8	version.layout	2590	2	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لماذا تختار الجمعيات زاد ؟", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd2a7dee9c04239ea1fea1	WHY ZAD
+2	8	version.layout	2591	3	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كيف تعمل زاد؟", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd2eb8a896e469ebeae65b	HOW TO
+5	8	version.layout	2592	4	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كل ما تحتاجه لتشغيل متجرك الخيري", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "خصائص تمكن الجمعيات الخيرية من تشغيل متاجر خيرية، تسويقها ومراقبة أداءها، وجمع التبرعات بسهولة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd41cca896e469ebeae665	FEATURES
+1	9	version.layout	2593	2	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لماذا تختار الجمعيات زاد ؟", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd2a7dee9c04239ea1fea1	WHY ZAD
+2	9	version.layout	2594	3	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كيف تعمل زاد؟", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd2eb8a896e469ebeae65b	HOW TO
+1	10	version.layout	2680	2	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لماذا تختار الجمعيات زاد ؟", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd2a7dee9c04239ea1fea1	WHY ZAD
+2	10	version.layout	2681	3	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كيف تعمل زاد؟", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd2eb8a896e469ebeae65b	HOW TO
+5	10	version.layout	2682	4	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كل ما تحتاجه لتشغيل متجرك الخيري", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "خصائص تمكن الجمعيات الخيرية من تشغيل متاجر خيرية، تسويقها ومراقبة أداءها، وجمع التبرعات بسهولة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd41cca896e469ebeae665	FEATURES
+2	7	version.layout	2588	3	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كيف تعمل زاد؟", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd2eb8a896e469ebeae65b	HOW TO
+5	7	version.layout	2589	4	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كل ما تحتاجه لتشغيل متجرك الخيري", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "خصائص تمكن الجمعيات الخيرية من تشغيل متاجر خيرية، تسويقها ومراقبة أداءها، وجمع التبرعات بسهولة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd41cca896e469ebeae665	FEATURES
+5	9	version.layout	2595	4	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كل ما تحتاجه لتشغيل متجرك الخيري", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "خصائص تمكن الجمعيات الخيرية من تشغيل متاجر خيرية، تسويقها ومراقبة أداءها، وجمع التبرعات بسهولة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd41cca896e469ebeae665	FEATURES
+1	11	version.layout	2683	2	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لماذا تختار الجمعيات زاد ؟", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd2a7dee9c04239ea1fea1	WHY ZAD
+2	11	version.layout	2684	3	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كيف تعمل زاد؟", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd2eb8a896e469ebeae65b	HOW TO
+5	11	version.layout	2685	4	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كل ما تحتاجه لتشغيل متجرك الخيري", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "خصائص تمكن الجمعيات الخيرية من تشغيل متاجر خيرية، تسويقها ومراقبة أداءها، وجمع التبرعات بسهولة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd41cca896e469ebeae665	FEATURES
 \.
 
 
@@ -5003,34 +4967,94 @@ COPY "public"."_pages_v_blocks_content" ("_order", "_parent_id", "_path", "id", 
 --
 
 COPY "public"."_pages_v_blocks_content_list" ("_order", "_parent_id", "id", "size", "icon", "tag", "heading", "content", "media_id", "link_type", "link_new_tab", "link_url", "link_appearance", "_uuid") FROM stdin;
-1	59	109	oneThird	\N	\N	حلول رقمية متكاملة	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لإنشاء وإدارة منصة التبرع الخاصة بالجمعية بسهولة وبشكل آني", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	4	reference	\N	\N	default	67dd2aa8ee9c04239ea1fea3
-2	59	110	oneThird	\N	\N	تحقيق الاستدامة المالية للجمعية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تنويع مصادر الدخل ، وخدمات زاد ليست حصرا على منصة التبرعات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	2	reference	\N	\N	default	67dd2c29ee9c04239ea1fea5
-3	59	111	oneThird	\N	\N	مساندة الجمعية في إدارة العلاقة مع المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "مساندة الجمعية في إدارة العلاقة مع المتبرعين", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	6	reference	\N	\N	default	67dd2c5eee9c04239ea1fea7
-4	59	112	oneThird	\N	\N	دعم فني وتسويقي مستمر	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "للمساهمة في رفع إيرادات الجمعية من جميع أنشطتها الترويجية والتسويقية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	5	reference	\N	\N	default	67dd2c7eee9c04239ea1fea9
-1	60	113	oneThird	\N	\N	حلول رقمية متكاملة	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لإنشاء وإدارة منصة التبرع الخاصة بالجمعية بسهولة وبشكل آني", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	4	reference	\N	\N	default	67dd2aa8ee9c04239ea1fea3
-2	60	114	oneThird	\N	\N	تحقيق الاستدامة المالية للجمعية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تنويع مصادر الدخل ، وخدمات زاد ليست حصرا على منصة التبرعات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	2	reference	\N	\N	default	67dd2c29ee9c04239ea1fea5
-3	60	115	oneThird	\N	\N	مساندة الجمعية في إدارة العلاقة مع المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "مساندة الجمعية في إدارة العلاقة مع المتبرعين", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	6	reference	\N	\N	default	67dd2c5eee9c04239ea1fea7
-4	60	116	oneThird	\N	\N	دعم فني وتسويقي مستمر	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "للمساهمة في رفع إيرادات الجمعية من جميع أنشطتها الترويجية والتسويقية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	5	reference	\N	\N	default	67dd2c7eee9c04239ea1fea9
-1	2395	7871	oneThird	\N	\N	حلول رقمية متكاملة	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لإنشاء وإدارة منصة التبرع الخاصة بالجمعية بسهولة وبشكل آني", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	4	reference	\N	\N	default	67dd2aa8ee9c04239ea1fea3
-2	2395	7872	oneThird	\N	\N	تحقيق الاستدامة المالية للجمعية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تنويع مصادر الدخل ، وخدمات زاد ليست حصرا على منصة التبرعات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	2	reference	\N	\N	default	67dd2c29ee9c04239ea1fea5
-3	2395	7873	oneThird	\N	\N	مساندة الجمعية في إدارة العلاقة مع المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "مساندة الجمعية في إدارة العلاقة مع المتبرعين", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	6	reference	\N	\N	default	67dd2c5eee9c04239ea1fea7
-4	2395	7874	oneThird	\N	\N	دعم فني وتسويقي مستمر	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "للمساهمة في رفع إيرادات الجمعية من جميع أنشطتها الترويجية والتسويقية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	5	reference	\N	\N	default	67dd2c7eee9c04239ea1fea9
+1	2584	8501	oneThird	\N	\N	حلول رقمية متكاملة	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لإنشاء وإدارة منصة التبرع الخاصة بالجمعية بسهولة وبشكل آني", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	24	reference	\N	\N	default	67dd2aa8ee9c04239ea1fea3
 1	2396	7875	oneThird	user-add-line	\N	أنشئ حسابك في دقائق	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تسجيل الدخول برقم الترخيص الصادر من مركز تنمية القطاع غير الربحي", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2ef2a896e469ebeae65d
 2	2396	7876	oneThird	store-2-line	\N	إعداد متجرك	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "أضف فرص التبرع بسهولة وعدل منصة الجمعية بأفضل ما يمكن", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f24a896e469ebeae65f
 3	2396	7877	oneThird	broadcast-line	\N	جذب المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "استخدم أوبتمايز بلس لإدارة الحملات الترويجية في جميع منصات التواصل بسهولة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f3da896e469ebeae661
 4	2396	7878	oneThird	line-chart-line	\N	استدامة الجمعية المالية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تتبع التبرعات وتحليل الأداء من خلال أدوات منصة زاد", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f5ba896e469ebeae663
-1	2397	7879	oneThird	\N	منصة متكاملة تقنيا	لوحة تحكم سهلة الإستخدام	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لوحة تحكم خاصة للجمعيات حيث يمكن للجمعية الاستفادة من لوحة تحكم باللغة العربية وقابلة للاستخدام دون الحاجة لخبرة برمجية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	14	reference	\N	\N	default	67dd42c2a14b92b128ef217a
-2	2397	7880	oneThird	\N	إدارة ذكية لأعمالك	تقارير تفصيلية عن أداء المشروع	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "متابعة أداء المتجر بشكل عام، والحصول على تحليلات دقيقة بشكل واضح ومعرفة كافة التبرعات ومصادرها سواء لفرص أو منتجات التبرع ويمكن تصديرها بشكل مفصل.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	13	reference	\N	\N	default	67dd42f7a14b92b128ef217c
-1	2398	7881	oneThird	\N	\N	حلول رقمية متكاملة	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لإنشاء وإدارة منصة التبرع الخاصة بالجمعية بسهولة وبشكل آني", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	4	reference	\N	\N	default	67dd2aa8ee9c04239ea1fea3
-2	2398	7882	oneThird	\N	\N	تحقيق الاستدامة المالية للجمعية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تنويع مصادر الدخل ، وخدمات زاد ليست حصرا على منصة التبرعات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	2	reference	\N	\N	default	67dd2c29ee9c04239ea1fea5
-3	2398	7883	oneThird	\N	\N	مساندة الجمعية في إدارة العلاقة مع المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "مساندة الجمعية في إدارة العلاقة مع المتبرعين", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	6	reference	\N	\N	default	67dd2c5eee9c04239ea1fea7
-4	2398	7884	oneThird	\N	\N	دعم فني وتسويقي مستمر	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "للمساهمة في رفع إيرادات الجمعية من جميع أنشطتها الترويجية والتسويقية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	5	reference	\N	\N	default	67dd2c7eee9c04239ea1fea9
 1	2399	7885	oneThird	user-add-line	\N	أنشئ حسابك في دقائق	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تسجيل الدخول برقم الترخيص الصادر من مركز تنمية القطاع غير الربحي", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2ef2a896e469ebeae65d
 2	2399	7886	oneThird	store-2-line	\N	إعداد متجرك	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "أضف فرص التبرع بسهولة وعدل منصة الجمعية بأفضل ما يمكن", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f24a896e469ebeae65f
 3	2399	7887	oneThird	broadcast-line	\N	جذب المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "استخدم أوبتمايز بلس لإدارة الحملات الترويجية في جميع منصات التواصل بسهولة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f3da896e469ebeae661
 4	2399	7888	oneThird	line-chart-line	\N	استدامة الجمعية المالية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تتبع التبرعات وتحليل الأداء من خلال أدوات منصة زاد", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f5ba896e469ebeae663
-1	2400	7889	oneThird	\N	منصة متكاملة تقنيا	لوحة تحكم سهلة الإستخدام	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لوحة تحكم خاصة للجمعيات حيث يمكن للجمعية الاستفادة من لوحة تحكم باللغة العربية وقابلة للاستخدام دون الحاجة لخبرة برمجية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	14	reference	\N	\N	default	67dd42c2a14b92b128ef217a
-2	2400	7890	oneThird	\N	إدارة ذكية لأعمالك	تقارير تفصيلية عن أداء المشروع	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "متابعة أداء المتجر بشكل عام، والحصول على تحليلات دقيقة بشكل واضح ومعرفة كافة التبرعات ومصادرها سواء لفرص أو منتجات التبرع ويمكن تصديرها بشكل مفصل.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	13	reference	\N	\N	default	67dd42f7a14b92b128ef217c
+2	2397	7880	oneThird	\N	إدارة ذكية لأعمالك	تقارير تفصيلية عن أداء المشروع	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "متابعة أداء المتجر بشكل عام، والحصول على تحليلات دقيقة بشكل واضح ومعرفة كافة التبرعات ومصادرها سواء لفرص أو منتجات التبرع ويمكن تصديرها بشكل مفصل.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd42f7a14b92b128ef217c
+2	2400	7890	oneThird	\N	إدارة ذكية لأعمالك	تقارير تفصيلية عن أداء المشروع	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "متابعة أداء المتجر بشكل عام، والحصول على تحليلات دقيقة بشكل واضح ومعرفة كافة التبرعات ومصادرها سواء لفرص أو منتجات التبرع ويمكن تصديرها بشكل مفصل.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd42f7a14b92b128ef217c
+4	59	112	oneThird	\N	\N	دعم فني وتسويقي مستمر	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "للمساهمة في رفع إيرادات الجمعية من جميع أنشطتها الترويجية والتسويقية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2c7eee9c04239ea1fea9
+4	60	116	oneThird	\N	\N	دعم فني وتسويقي مستمر	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "للمساهمة في رفع إيرادات الجمعية من جميع أنشطتها الترويجية والتسويقية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2c7eee9c04239ea1fea9
+4	2395	7874	oneThird	\N	\N	دعم فني وتسويقي مستمر	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "للمساهمة في رفع إيرادات الجمعية من جميع أنشطتها الترويجية والتسويقية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2c7eee9c04239ea1fea9
+4	2398	7884	oneThird	\N	\N	دعم فني وتسويقي مستمر	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "للمساهمة في رفع إيرادات الجمعية من جميع أنشطتها الترويجية والتسويقية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2c7eee9c04239ea1fea9
+1	59	109	oneThird	\N	\N	حلول رقمية متكاملة	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لإنشاء وإدارة منصة التبرع الخاصة بالجمعية بسهولة وبشكل آني", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2aa8ee9c04239ea1fea3
+1	60	113	oneThird	\N	\N	حلول رقمية متكاملة	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لإنشاء وإدارة منصة التبرع الخاصة بالجمعية بسهولة وبشكل آني", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2aa8ee9c04239ea1fea3
+1	2395	7871	oneThird	\N	\N	حلول رقمية متكاملة	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لإنشاء وإدارة منصة التبرع الخاصة بالجمعية بسهولة وبشكل آني", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2aa8ee9c04239ea1fea3
+1	2398	7881	oneThird	\N	\N	حلول رقمية متكاملة	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لإنشاء وإدارة منصة التبرع الخاصة بالجمعية بسهولة وبشكل آني", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2aa8ee9c04239ea1fea3
+3	59	111	oneThird	\N	\N	مساندة الجمعية في إدارة العلاقة مع المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "مساندة الجمعية في إدارة العلاقة مع المتبرعين", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2c5eee9c04239ea1fea7
+3	60	115	oneThird	\N	\N	مساندة الجمعية في إدارة العلاقة مع المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "مساندة الجمعية في إدارة العلاقة مع المتبرعين", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2c5eee9c04239ea1fea7
+3	2395	7873	oneThird	\N	\N	مساندة الجمعية في إدارة العلاقة مع المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "مساندة الجمعية في إدارة العلاقة مع المتبرعين", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2c5eee9c04239ea1fea7
+3	2398	7883	oneThird	\N	\N	مساندة الجمعية في إدارة العلاقة مع المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "مساندة الجمعية في إدارة العلاقة مع المتبرعين", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2c5eee9c04239ea1fea7
+2	59	110	oneThird	\N	\N	تحقيق الاستدامة المالية للجمعية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تنويع مصادر الدخل ، وخدمات زاد ليست حصرا على منصة التبرعات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2c29ee9c04239ea1fea5
+2	60	114	oneThird	\N	\N	تحقيق الاستدامة المالية للجمعية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تنويع مصادر الدخل ، وخدمات زاد ليست حصرا على منصة التبرعات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2c29ee9c04239ea1fea5
+2	2395	7872	oneThird	\N	\N	تحقيق الاستدامة المالية للجمعية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تنويع مصادر الدخل ، وخدمات زاد ليست حصرا على منصة التبرعات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2c29ee9c04239ea1fea5
+2	2398	7882	oneThird	\N	\N	تحقيق الاستدامة المالية للجمعية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تنويع مصادر الدخل ، وخدمات زاد ليست حصرا على منصة التبرعات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2c29ee9c04239ea1fea5
+1	2397	7879	oneThird	\N	منصة متكاملة تقنيا	لوحة تحكم سهلة الإستخدام	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لوحة تحكم خاصة للجمعيات حيث يمكن للجمعية الاستفادة من لوحة تحكم باللغة العربية وقابلة للاستخدام دون الحاجة لخبرة برمجية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd42c2a14b92b128ef217a
+1	2400	7889	oneThird	\N	منصة متكاملة تقنيا	لوحة تحكم سهلة الإستخدام	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لوحة تحكم خاصة للجمعيات حيث يمكن للجمعية الاستفادة من لوحة تحكم باللغة العربية وقابلة للاستخدام دون الحاجة لخبرة برمجية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd42c2a14b92b128ef217a
+1	2680	8821	oneThird	\N	\N	حلول رقمية متكاملة	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لإنشاء وإدارة منصة التبرع الخاصة بالجمعية بسهولة وبشكل آني", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	24	reference	\N	\N	default	67dd2aa8ee9c04239ea1fea3
+2	2680	8822	oneThird	\N	\N	تحقيق الاستدامة المالية للجمعية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تنويع مصادر الدخل ، وخدمات زاد ليست حصرا على منصة التبرعات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	25	reference	\N	\N	default	67dd2c29ee9c04239ea1fea5
+3	2680	8823	oneThird	\N	\N	مساندة الجمعية في إدارة العلاقة مع المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "مساندة الجمعية في إدارة العلاقة مع المتبرعين", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	26	reference	\N	\N	default	67dd2c5eee9c04239ea1fea7
+4	2680	8824	oneThird	\N	\N	دعم فني وتسويقي مستمر	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "للمساهمة في رفع إيرادات الجمعية من جميع أنشطتها الترويجية والتسويقية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	28	reference	\N	\N	default	67dd2c7eee9c04239ea1fea9
+1	2681	8825	oneThird	user-add-line	\N	أنشئ حسابك في دقائق	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تسجيل الدخول برقم الترخيص الصادر من مركز تنمية القطاع غير الربحي", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2ef2a896e469ebeae65d
+2	2681	8826	oneThird	store-2-line	\N	إعداد متجرك	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "أضف فرص التبرع بسهولة وعدل منصة الجمعية بأفضل ما يمكن", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f24a896e469ebeae65f
+3	2681	8827	oneThird	broadcast-line	\N	جذب المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "استخدم أوبتمايز بلس لإدارة الحملات الترويجية في جميع منصات التواصل بسهولة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f3da896e469ebeae661
+4	2681	8828	oneThird	line-chart-line	\N	استدامة الجمعية المالية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تتبع التبرعات وتحليل الأداء من خلال أدوات منصة زاد", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f5ba896e469ebeae663
+1	2682	8829	oneThird	\N	منصة متكاملة تقنيا	لوحة تحكم سهلة الإستخدام	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لوحة تحكم خاصة للجمعيات حيث يمكن للجمعية الاستفادة من لوحة تحكم باللغة العربية وقابلة للاستخدام دون الحاجة لخبرة برمجية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	22	reference	\N	\N	default	67dd42c2a14b92b128ef217a
+2	2682	8830	oneThird	\N	إدارة ذكية لأعمالك	تقارير تفصيلية عن أداء المشروع	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "متابعة أداء المتجر بشكل عام، والحصول على تحليلات دقيقة بشكل واضح ومعرفة كافة التبرعات ومصادرها سواء لفرص أو منتجات التبرع ويمكن تصديرها بشكل مفصل.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	21	reference	\N	\N	default	67dd42f7a14b92b128ef217c
+2	2584	8502	oneThird	\N	\N	تحقيق الاستدامة المالية للجمعية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تنويع مصادر الدخل ، وخدمات زاد ليست حصرا على منصة التبرعات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	25	reference	\N	\N	default	67dd2c29ee9c04239ea1fea5
+3	2584	8503	oneThird	\N	\N	مساندة الجمعية في إدارة العلاقة مع المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "مساندة الجمعية في إدارة العلاقة مع المتبرعين", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	26	reference	\N	\N	default	67dd2c5eee9c04239ea1fea7
+4	2584	8504	oneThird	\N	\N	دعم فني وتسويقي مستمر	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "للمساهمة في رفع إيرادات الجمعية من جميع أنشطتها الترويجية والتسويقية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	28	reference	\N	\N	default	67dd2c7eee9c04239ea1fea9
+1	2585	8505	oneThird	user-add-line	\N	أنشئ حسابك في دقائق	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تسجيل الدخول برقم الترخيص الصادر من مركز تنمية القطاع غير الربحي", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2ef2a896e469ebeae65d
+2	2585	8506	oneThird	store-2-line	\N	إعداد متجرك	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "أضف فرص التبرع بسهولة وعدل منصة الجمعية بأفضل ما يمكن", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f24a896e469ebeae65f
+3	2585	8507	oneThird	broadcast-line	\N	جذب المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "استخدم أوبتمايز بلس لإدارة الحملات الترويجية في جميع منصات التواصل بسهولة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f3da896e469ebeae661
+4	2585	8508	oneThird	line-chart-line	\N	استدامة الجمعية المالية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تتبع التبرعات وتحليل الأداء من خلال أدوات منصة زاد", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f5ba896e469ebeae663
+1	2586	8509	oneThird	\N	منصة متكاملة تقنيا	لوحة تحكم سهلة الإستخدام	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لوحة تحكم خاصة للجمعيات حيث يمكن للجمعية الاستفادة من لوحة تحكم باللغة العربية وقابلة للاستخدام دون الحاجة لخبرة برمجية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	22	reference	\N	\N	default	67dd42c2a14b92b128ef217a
+2	2586	8510	oneThird	\N	إدارة ذكية لأعمالك	تقارير تفصيلية عن أداء المشروع	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "متابعة أداء المتجر بشكل عام، والحصول على تحليلات دقيقة بشكل واضح ومعرفة كافة التبرعات ومصادرها سواء لفرص أو منتجات التبرع ويمكن تصديرها بشكل مفصل.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	21	reference	\N	\N	default	67dd42f7a14b92b128ef217c
+1	2587	8511	oneThird	\N	\N	حلول رقمية متكاملة	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لإنشاء وإدارة منصة التبرع الخاصة بالجمعية بسهولة وبشكل آني", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	24	reference	\N	\N	default	67dd2aa8ee9c04239ea1fea3
+2	2587	8512	oneThird	\N	\N	تحقيق الاستدامة المالية للجمعية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تنويع مصادر الدخل ، وخدمات زاد ليست حصرا على منصة التبرعات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	25	reference	\N	\N	default	67dd2c29ee9c04239ea1fea5
+3	2587	8513	oneThird	\N	\N	مساندة الجمعية في إدارة العلاقة مع المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "مساندة الجمعية في إدارة العلاقة مع المتبرعين", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	26	reference	\N	\N	default	67dd2c5eee9c04239ea1fea7
+4	2587	8514	oneThird	\N	\N	دعم فني وتسويقي مستمر	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "للمساهمة في رفع إيرادات الجمعية من جميع أنشطتها الترويجية والتسويقية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	28	reference	\N	\N	default	67dd2c7eee9c04239ea1fea9
+1	2588	8515	oneThird	user-add-line	\N	أنشئ حسابك في دقائق	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تسجيل الدخول برقم الترخيص الصادر من مركز تنمية القطاع غير الربحي", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2ef2a896e469ebeae65d
+2	2588	8516	oneThird	store-2-line	\N	إعداد متجرك	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "أضف فرص التبرع بسهولة وعدل منصة الجمعية بأفضل ما يمكن", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f24a896e469ebeae65f
+3	2588	8517	oneThird	broadcast-line	\N	جذب المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "استخدم أوبتمايز بلس لإدارة الحملات الترويجية في جميع منصات التواصل بسهولة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f3da896e469ebeae661
+4	2588	8518	oneThird	line-chart-line	\N	استدامة الجمعية المالية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تتبع التبرعات وتحليل الأداء من خلال أدوات منصة زاد", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f5ba896e469ebeae663
+1	2589	8519	oneThird	\N	منصة متكاملة تقنيا	لوحة تحكم سهلة الإستخدام	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لوحة تحكم خاصة للجمعيات حيث يمكن للجمعية الاستفادة من لوحة تحكم باللغة العربية وقابلة للاستخدام دون الحاجة لخبرة برمجية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	22	reference	\N	\N	default	67dd42c2a14b92b128ef217a
+2	2589	8520	oneThird	\N	إدارة ذكية لأعمالك	تقارير تفصيلية عن أداء المشروع	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "متابعة أداء المتجر بشكل عام، والحصول على تحليلات دقيقة بشكل واضح ومعرفة كافة التبرعات ومصادرها سواء لفرص أو منتجات التبرع ويمكن تصديرها بشكل مفصل.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	21	reference	\N	\N	default	67dd42f7a14b92b128ef217c
+1	2683	8831	oneThird	\N	\N	حلول رقمية متكاملة	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لإنشاء وإدارة منصة التبرع الخاصة بالجمعية بسهولة وبشكل آني", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	24	reference	\N	\N	default	67dd2aa8ee9c04239ea1fea3
+2	2683	8832	oneThird	\N	\N	تحقيق الاستدامة المالية للجمعية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تنويع مصادر الدخل ، وخدمات زاد ليست حصرا على منصة التبرعات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	25	reference	\N	\N	default	67dd2c29ee9c04239ea1fea5
+3	2683	8833	oneThird	\N	\N	مساندة الجمعية في إدارة العلاقة مع المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "مساندة الجمعية في إدارة العلاقة مع المتبرعين", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	26	reference	\N	\N	default	67dd2c5eee9c04239ea1fea7
+1	2590	8521	oneThird	\N	\N	حلول رقمية متكاملة	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لإنشاء وإدارة منصة التبرع الخاصة بالجمعية بسهولة وبشكل آني", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	24	reference	\N	\N	default	67dd2aa8ee9c04239ea1fea3
+2	2590	8522	oneThird	\N	\N	تحقيق الاستدامة المالية للجمعية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تنويع مصادر الدخل ، وخدمات زاد ليست حصرا على منصة التبرعات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	25	reference	\N	\N	default	67dd2c29ee9c04239ea1fea5
+3	2590	8523	oneThird	\N	\N	مساندة الجمعية في إدارة العلاقة مع المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "مساندة الجمعية في إدارة العلاقة مع المتبرعين", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	26	reference	\N	\N	default	67dd2c5eee9c04239ea1fea7
+4	2590	8524	oneThird	\N	\N	دعم فني وتسويقي مستمر	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "للمساهمة في رفع إيرادات الجمعية من جميع أنشطتها الترويجية والتسويقية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	28	reference	\N	\N	default	67dd2c7eee9c04239ea1fea9
+1	2591	8525	oneThird	user-add-line	\N	أنشئ حسابك في دقائق	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تسجيل الدخول برقم الترخيص الصادر من مركز تنمية القطاع غير الربحي", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2ef2a896e469ebeae65d
+2	2591	8526	oneThird	store-2-line	\N	إعداد متجرك	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "أضف فرص التبرع بسهولة وعدل منصة الجمعية بأفضل ما يمكن", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f24a896e469ebeae65f
+3	2591	8527	oneThird	broadcast-line	\N	جذب المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "استخدم أوبتمايز بلس لإدارة الحملات الترويجية في جميع منصات التواصل بسهولة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f3da896e469ebeae661
+4	2591	8528	oneThird	line-chart-line	\N	استدامة الجمعية المالية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تتبع التبرعات وتحليل الأداء من خلال أدوات منصة زاد", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f5ba896e469ebeae663
+1	2592	8529	oneThird	\N	منصة متكاملة تقنيا	لوحة تحكم سهلة الإستخدام	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لوحة تحكم خاصة للجمعيات حيث يمكن للجمعية الاستفادة من لوحة تحكم باللغة العربية وقابلة للاستخدام دون الحاجة لخبرة برمجية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	22	reference	\N	\N	default	67dd42c2a14b92b128ef217a
+2	2592	8530	oneThird	\N	إدارة ذكية لأعمالك	تقارير تفصيلية عن أداء المشروع	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "متابعة أداء المتجر بشكل عام، والحصول على تحليلات دقيقة بشكل واضح ومعرفة كافة التبرعات ومصادرها سواء لفرص أو منتجات التبرع ويمكن تصديرها بشكل مفصل.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	21	reference	\N	\N	default	67dd42f7a14b92b128ef217c
+4	2683	8834	oneThird	\N	\N	دعم فني وتسويقي مستمر	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "للمساهمة في رفع إيرادات الجمعية من جميع أنشطتها الترويجية والتسويقية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	28	reference	\N	\N	default	67dd2c7eee9c04239ea1fea9
+1	2593	8531	oneThird	\N	\N	حلول رقمية متكاملة	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لإنشاء وإدارة منصة التبرع الخاصة بالجمعية بسهولة وبشكل آني", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	24	reference	\N	\N	default	67dd2aa8ee9c04239ea1fea3
+2	2593	8532	oneThird	\N	\N	تحقيق الاستدامة المالية للجمعية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تنويع مصادر الدخل ، وخدمات زاد ليست حصرا على منصة التبرعات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	25	reference	\N	\N	default	67dd2c29ee9c04239ea1fea5
+3	2593	8533	oneThird	\N	\N	مساندة الجمعية في إدارة العلاقة مع المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "مساندة الجمعية في إدارة العلاقة مع المتبرعين", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	26	reference	\N	\N	default	67dd2c5eee9c04239ea1fea7
+4	2593	8534	oneThird	\N	\N	دعم فني وتسويقي مستمر	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "للمساهمة في رفع إيرادات الجمعية من جميع أنشطتها الترويجية والتسويقية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	28	reference	\N	\N	default	67dd2c7eee9c04239ea1fea9
+1	2594	8535	oneThird	user-add-line	\N	أنشئ حسابك في دقائق	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تسجيل الدخول برقم الترخيص الصادر من مركز تنمية القطاع غير الربحي", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2ef2a896e469ebeae65d
+2	2594	8536	oneThird	store-2-line	\N	إعداد متجرك	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "أضف فرص التبرع بسهولة وعدل منصة الجمعية بأفضل ما يمكن", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f24a896e469ebeae65f
+3	2594	8537	oneThird	broadcast-line	\N	جذب المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "استخدم أوبتمايز بلس لإدارة الحملات الترويجية في جميع منصات التواصل بسهولة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f3da896e469ebeae661
+4	2594	8538	oneThird	line-chart-line	\N	استدامة الجمعية المالية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تتبع التبرعات وتحليل الأداء من خلال أدوات منصة زاد", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f5ba896e469ebeae663
+1	2595	8539	oneThird	\N	منصة متكاملة تقنيا	لوحة تحكم سهلة الإستخدام	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لوحة تحكم خاصة للجمعيات حيث يمكن للجمعية الاستفادة من لوحة تحكم باللغة العربية وقابلة للاستخدام دون الحاجة لخبرة برمجية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	22	reference	\N	\N	default	67dd42c2a14b92b128ef217a
+2	2595	8540	oneThird	\N	إدارة ذكية لأعمالك	تقارير تفصيلية عن أداء المشروع	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "متابعة أداء المتجر بشكل عام، والحصول على تحليلات دقيقة بشكل واضح ومعرفة كافة التبرعات ومصادرها سواء لفرص أو منتجات التبرع ويمكن تصديرها بشكل مفصل.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	21	reference	\N	\N	default	67dd42f7a14b92b128ef217c
+1	2684	8835	oneThird	user-add-line	\N	أنشئ حسابك في دقائق	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تسجيل الدخول برقم الترخيص الصادر من مركز تنمية القطاع غير الربحي", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2ef2a896e469ebeae65d
+2	2684	8836	oneThird	store-2-line	\N	إعداد متجرك	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "أضف فرص التبرع بسهولة وعدل منصة الجمعية بأفضل ما يمكن", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f24a896e469ebeae65f
+3	2684	8837	oneThird	broadcast-line	\N	جذب المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "استخدم أوبتمايز بلس لإدارة الحملات الترويجية في جميع منصات التواصل بسهولة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f3da896e469ebeae661
+4	2684	8838	oneThird	line-chart-line	\N	استدامة الجمعية المالية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تتبع التبرعات وتحليل الأداء من خلال أدوات منصة زاد", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default	67dd2f5ba896e469ebeae663
+1	2685	8839	oneThird	\N	منصة متكاملة تقنيا	لوحة تحكم سهلة الإستخدام	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لوحة تحكم خاصة للجمعيات حيث يمكن للجمعية الاستفادة من لوحة تحكم باللغة العربية وقابلة للاستخدام دون الحاجة لخبرة برمجية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	22	reference	\N	\N	default	67dd42c2a14b92b128ef217a
+2	2685	8840	oneThird	\N	إدارة ذكية لأعمالك	تقارير تفصيلية عن أداء المشروع	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "متابعة أداء المتجر بشكل عام، والحصول على تحليلات دقيقة بشكل واضح ومعرفة كافة التبرعات ومصادرها سواء لفرص أو منتجات التبرع ويمكن تصديرها بشكل مفصل.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	21	reference	\N	\N	default	67dd42f7a14b92b128ef217c
 \.
 
 
@@ -5075,6 +5099,126 @@ COPY "public"."_pages_v_blocks_content_list_locales" ("link_label", "id", "_loca
 \N	6490	ar	7889
 \N	6491	en	7890
 \N	6492	ar	7890
+\N	7753	en	8521
+\N	7754	ar	8521
+\N	7755	en	8522
+\N	7756	ar	8522
+\N	7757	en	8523
+\N	7758	ar	8523
+\N	7759	en	8524
+\N	7760	ar	8524
+\N	7761	en	8525
+\N	7762	ar	8525
+\N	7763	en	8526
+\N	7764	ar	8526
+\N	7765	en	8527
+\N	7766	ar	8527
+\N	7767	en	8528
+\N	7768	ar	8528
+\N	7769	en	8529
+\N	7770	ar	8529
+\N	7771	en	8530
+\N	7772	ar	8530
+\N	7773	en	8531
+\N	7774	ar	8531
+\N	7775	en	8532
+\N	7776	ar	8532
+\N	7777	en	8533
+\N	7778	ar	8533
+\N	7779	en	8534
+\N	7780	ar	8534
+\N	7781	en	8535
+\N	7782	ar	8535
+\N	7783	en	8536
+\N	7784	ar	8536
+\N	7785	en	8537
+\N	7786	ar	8537
+\N	7787	en	8538
+\N	7788	ar	8538
+\N	7789	en	8539
+\N	7790	ar	8539
+\N	7791	en	8540
+\N	7792	ar	8540
+\N	7713	en	8501
+\N	7714	ar	8501
+\N	7715	en	8502
+\N	7716	ar	8502
+\N	7717	en	8503
+\N	7718	ar	8503
+\N	7719	en	8504
+\N	7720	ar	8504
+\N	7721	en	8505
+\N	7722	ar	8505
+\N	7723	en	8506
+\N	7724	ar	8506
+\N	7725	en	8507
+\N	7726	ar	8507
+\N	7727	en	8508
+\N	7728	ar	8508
+\N	7729	en	8509
+\N	7730	ar	8509
+\N	7731	en	8510
+\N	7732	ar	8510
+\N	7733	en	8511
+\N	7734	ar	8511
+\N	7735	en	8512
+\N	7736	ar	8512
+\N	7737	en	8513
+\N	7738	ar	8513
+\N	7739	en	8514
+\N	7740	ar	8514
+\N	7741	en	8515
+\N	7742	ar	8515
+\N	7743	en	8516
+\N	7744	ar	8516
+\N	7745	en	8517
+\N	7746	ar	8517
+\N	7747	en	8518
+\N	7748	ar	8518
+\N	7749	en	8519
+\N	7750	ar	8519
+\N	7751	en	8520
+\N	7752	ar	8520
+\N	8353	en	8821
+\N	8354	ar	8821
+\N	8355	en	8822
+\N	8356	ar	8822
+\N	8357	en	8823
+\N	8358	ar	8823
+\N	8359	en	8824
+\N	8360	ar	8824
+\N	8361	en	8825
+\N	8362	ar	8825
+\N	8363	en	8826
+\N	8364	ar	8826
+\N	8365	en	8827
+\N	8366	ar	8827
+\N	8367	en	8828
+\N	8368	ar	8828
+\N	8369	en	8829
+\N	8370	ar	8829
+\N	8371	en	8830
+\N	8372	ar	8830
+\N	8373	en	8831
+\N	8374	ar	8831
+\N	8375	en	8832
+\N	8376	ar	8832
+\N	8377	en	8833
+\N	8378	ar	8833
+\N	8379	en	8834
+\N	8380	ar	8834
+\N	8381	en	8835
+\N	8382	ar	8835
+\N	8383	en	8836
+\N	8384	ar	8836
+\N	8385	en	8837
+\N	8386	ar	8837
+\N	8387	en	8838
+\N	8388	ar	8838
+\N	8389	en	8839
+\N	8390	ar	8839
+\N	8391	en	8840
+\N	8392	ar	8840
 \.
 
 
@@ -5109,6 +5253,14 @@ COPY "public"."_pages_v_blocks_cta_links_locales" ("link_label", "id", "_locale"
 COPY "public"."_pages_v_blocks_faq_block" ("_order", "_parent_id", "_path", "id", "rich_text", "_uuid", "block_name") FROM stdin;
 7	4	version.layout	52	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "الأسئلة الشائعة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "داعمينك لين توصل جمعيتك للاستدامة. عندك اسئلة؟ يمديك تتواصل معنا عبر الاستمارة، الواتس اب، او مجادثة مباشرة.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd7bd5fb92c1f4e493e1ac	FAQ
 7	5	version.layout	53	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "الأسئلة الشائعة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "داعمينك لين توصل جمعيتك للاستدامة. عندك اسئلة؟ يمديك تتواصل معنا عبر الاستمارة، الواتس اب، او مجادثة مباشرة.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd7bd5fb92c1f4e493e1ac	FAQ
+7	8	version.layout	162	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "الأسئلة الشائعة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "داعمينك لين توصل جمعيتك للاستدامة. عندك اسئلة؟ يمديك تتواصل معنا عبر الاستمارة، الواتس اب، او مجادثة مباشرة.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd7bd5fb92c1f4e493e1ac	FAQ
+7	6	version.layout	158	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "الأسئلة الشائعة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "داعمينك لين توصل جمعيتك للاستدامة. عندك اسئلة؟ يمديك تتواصل معنا عبر الاستمارة، الواتس اب، او مجادثة مباشرة.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd7bd5fb92c1f4e493e1ac	FAQ
+9	6	version.layout	159	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "الأسئلة الشائعة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "داعمينك لين توصل جمعيتك للاستدامة. عندك اسئلة؟ يمديك تتواصل معنا عبر الاستمارة، الواتس اب، او مجادثة مباشرة.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67de7376bf498fe301fc50a1	\N
+7	7	version.layout	160	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "الأسئلة الشائعة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "داعمينك لين توصل جمعيتك للاستدامة. عندك اسئلة؟ يمديك تتواصل معنا عبر الاستمارة، الواتس اب، او مجادثة مباشرة.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd7bd5fb92c1f4e493e1ac	FAQ
+9	7	version.layout	161	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "الأسئلة الشائعة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "داعمينك لين توصل جمعيتك للاستدامة. عندك اسئلة؟ يمديك تتواصل معنا عبر الاستمارة، الواتس اب، او مجادثة مباشرة.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67de7376bf498fe301fc50a1	\N
+7	9	version.layout	163	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "الأسئلة الشائعة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "داعمينك لين توصل جمعيتك للاستدامة. عندك اسئلة؟ يمديك تتواصل معنا عبر الاستمارة، الواتس اب، او مجادثة مباشرة.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd7bd5fb92c1f4e493e1ac	FAQ
+7	10	version.layout	192	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "الأسئلة الشائعة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "داعمينك لين توصل جمعيتك للاستدامة. عندك اسئلة؟ يمديك تتواصل معنا عبر الاستمارة، الواتس اب، او مجادثة مباشرة.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd7bd5fb92c1f4e493e1ac	FAQ
+7	11	version.layout	193	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "الأسئلة الشائعة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "داعمينك لين توصل جمعيتك للاستدامة. عندك اسئلة؟ يمديك تتواصل معنا عبر الاستمارة، الواتس اب، او مجادثة مباشرة.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd7bd5fb92c1f4e493e1ac	FAQ
 \.
 
 
@@ -5119,6 +5271,14 @@ COPY "public"."_pages_v_blocks_faq_block" ("_order", "_parent_id", "_path", "id"
 COPY "public"."_pages_v_blocks_faq_block_links" ("_order", "_parent_id", "id", "link_type", "link_new_tab", "link_url", "link_appearance", "_uuid") FROM stdin;
 1	52	19	reference	\N	\N	default	67dd7d2389b1617b0d62f87a
 1	53	20	reference	\N	\N	default	67dd7d2389b1617b0d62f87a
+1	162	100	reference	\N	\N	default	67dd7d2389b1617b0d62f87a
+1	163	101	reference	\N	\N	default	67dd7d2389b1617b0d62f87a
+1	192	130	reference	\N	\N	default	67dd7d2389b1617b0d62f87a
+1	193	131	reference	\N	\N	default	67dd7d2389b1617b0d62f87a
+1	158	96	reference	\N	\N	default	67dd7d2389b1617b0d62f87a
+1	159	97	reference	\N	\N	default	67dec97c6d639f80d109ef1e
+1	160	98	reference	\N	\N	default	67dd7d2389b1617b0d62f87a
+1	161	99	reference	\N	\N	default	67dec97c6d639f80d109ef1e
 \.
 
 
@@ -5129,6 +5289,14 @@ COPY "public"."_pages_v_blocks_faq_block_links" ("_order", "_parent_id", "id", "
 COPY "public"."_pages_v_blocks_faq_block_links_locales" ("link_label", "id", "_locale", "_parent_id") FROM stdin;
 تواصل معنا	17	ar	19
 تواصل معنا	18	ar	20
+تواصل معنا	92	ar	100
+تواصل معنا	93	ar	101
+تواصل معنا	122	ar	130
+تواصل معنا	123	ar	131
+تواصل معنا	88	ar	96
+تواصل معنا	89	ar	97
+تواصل معنا	90	ar	98
+تواصل معنا	91	ar	99
 \.
 
 
@@ -5139,6 +5307,12 @@ COPY "public"."_pages_v_blocks_faq_block_links_locales" ("link_label", "id", "_l
 COPY "public"."_pages_v_blocks_form_block" ("_order", "_parent_id", "_path", "id", "form_id", "enable_heading", "rich_text", "_uuid", "block_name") FROM stdin;
 8	4	version.layout	117	1	t	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "سجل اهتمامك الآن!", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "احصل على دليل التسويق للجمعيات مجانا", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd6dcfc06fe6cfef50c242	Form
 8	5	version.layout	118	1	t	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "سجل اهتمامك الآن!", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "احصل على دليل التسويق للجمعيات مجانا", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd6dcfc06fe6cfef50c242	Form
+8	10	version.layout	212	1	t	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "سجل اهتمامك الآن!", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "احصل على دليل التسويق للجمعيات مجانا", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd6dcfc06fe6cfef50c242	Form
+8	11	version.layout	213	1	t	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "سجل اهتمامك الآن!", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "احصل على دليل التسويق للجمعيات مجانا", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd6dcfc06fe6cfef50c242	Form
+8	6	version.layout	180	1	t	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "سجل اهتمامك الآن!", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "احصل على دليل التسويق للجمعيات مجانا", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd6dcfc06fe6cfef50c242	Form
+8	7	version.layout	181	1	t	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "سجل اهتمامك الآن!", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "احصل على دليل التسويق للجمعيات مجانا", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd6dcfc06fe6cfef50c242	Form
+8	8	version.layout	182	1	t	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "سجل اهتمامك الآن!", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "احصل على دليل التسويق للجمعيات مجانا", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd6dcfc06fe6cfef50c242	Form
+8	9	version.layout	183	1	t	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "سجل اهتمامك الآن!", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "احصل على دليل التسويق للجمعيات مجانا", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	67dd6dcfc06fe6cfef50c242	Form
 \.
 
 
@@ -5149,26 +5323,12 @@ COPY "public"."_pages_v_blocks_form_block" ("_order", "_parent_id", "_path", "id
 COPY "public"."_pages_v_blocks_logo_block" ("_order", "_parent_id", "_path", "id", "caption", "_uuid", "block_name") FROM stdin;
 3	4	version.layout	670	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h3", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "شركاؤنا في دعم وتمكين المنظمات غير الربحية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd440da14b92b128ef217e	PARTNERS
 3	5	version.layout	671	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h3", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "شركاؤنا في دعم وتمكين المنظمات غير الربحية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd440da14b92b128ef217e	PARTNERS
-\.
-
-
---
--- Data for Name: _pages_v_blocks_logo_block_list; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY "public"."_pages_v_blocks_logo_block_list" ("_order", "_parent_id", "id", "media_id", "_uuid") FROM stdin;
-1	670	3809	12	67dd45d1a14b92b128ef2182
-2	670	3810	11	67dd45d7a14b92b128ef2184
-3	670	3811	10	67dd45dca14b92b128ef2186
-4	670	3812	9	67dd45e1a14b92b128ef2188
-5	670	3813	8	67dd45e6a14b92b128ef218a
-6	670	3814	7	67dd45eca14b92b128ef218c
-1	671	3815	12	67dd45d1a14b92b128ef2182
-2	671	3816	11	67dd45d7a14b92b128ef2184
-3	671	3817	10	67dd45dca14b92b128ef2186
-4	671	3818	9	67dd45e1a14b92b128ef2188
-5	671	3819	8	67dd45e6a14b92b128ef218a
-6	671	3820	7	67dd45eca14b92b128ef218c
+3	10	version.layout	765	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h3", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "شركاؤنا في دعم وتمكين المنظمات غير الربحية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd440da14b92b128ef217e	PARTNERS
+3	11	version.layout	766	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h3", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "شركاؤنا في دعم وتمكين المنظمات غير الربحية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd440da14b92b128ef217e	PARTNERS
+3	6	version.layout	733	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h3", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "شركاؤنا في دعم وتمكين المنظمات غير الربحية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd440da14b92b128ef217e	PARTNERS
+3	7	version.layout	734	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h3", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "شركاؤنا في دعم وتمكين المنظمات غير الربحية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd440da14b92b128ef217e	PARTNERS
+3	8	version.layout	735	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h3", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "شركاؤنا في دعم وتمكين المنظمات غير الربحية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd440da14b92b128ef217e	PARTNERS
+3	9	version.layout	736	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h3", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "شركاؤنا في دعم وتمكين المنظمات غير الربحية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd440da14b92b128ef217e	PARTNERS
 \.
 
 
@@ -5187,6 +5347,12 @@ COPY "public"."_pages_v_blocks_media_block" ("_order", "_parent_id", "_path", "i
 COPY "public"."_pages_v_blocks_pricing_block" ("_order", "_parent_id", "_path", "id", "rich_text", "_uuid", "block_name", "base_features_tag", "base_features_heading", "base_features_content", "additional_features_tag", "additional_features_heading", "additional_features_content", "tag") FROM stdin;
 6	4	version.layout	526	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "باقة نمو زاد", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd52363656a85f842b4237	FEATURES #2	\N	المزايا الأساسية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كل ما تحتاجه لإطلاق متجرك الخيري", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	مزايا إضافية مخصصة للجمعيات	\N	الميزات
 6	5	version.layout	527	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "باقة نمو زاد", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd52363656a85f842b4237	FEATURES #2	\N	المزايا الأساسية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كل ما تحتاجه لإطلاق متجرك الخيري", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	مزايا إضافية مخصصة للجمعيات	\N	الميزات
+6	10	version.layout	621	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "باقة نمو زاد", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd52363656a85f842b4237	FEATURES #2	\N	المزايا الأساسية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كل ما تحتاجه لإطلاق متجرك الخيري", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	مزايا إضافية مخصصة للجمعيات	\N	الميزات
+6	11	version.layout	622	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "باقة نمو زاد", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd52363656a85f842b4237	FEATURES #2	\N	المزايا الأساسية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كل ما تحتاجه لإطلاق متجرك الخيري", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	مزايا إضافية مخصصة للجمعيات	\N	الميزات
+6	6	version.layout	589	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "باقة نمو زاد", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd52363656a85f842b4237	FEATURES #2	\N	المزايا الأساسية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كل ما تحتاجه لإطلاق متجرك الخيري", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	مزايا إضافية مخصصة للجمعيات	\N	الميزات
+6	7	version.layout	590	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "باقة نمو زاد", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd52363656a85f842b4237	FEATURES #2	\N	المزايا الأساسية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كل ما تحتاجه لإطلاق متجرك الخيري", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	مزايا إضافية مخصصة للجمعيات	\N	الميزات
+6	8	version.layout	591	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "باقة نمو زاد", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd52363656a85f842b4237	FEATURES #2	\N	المزايا الأساسية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كل ما تحتاجه لإطلاق متجرك الخيري", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	مزايا إضافية مخصصة للجمعيات	\N	الميزات
+6	9	version.layout	592	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h2", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "باقة نمو زاد", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	67dd52363656a85f842b4237	FEATURES #2	\N	المزايا الأساسية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "كل ما تحتاجه لإطلاق متجرك الخيري", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	مزايا إضافية مخصصة للجمعيات	\N	الميزات
 \.
 
 
@@ -5207,6 +5373,42 @@ COPY "public"."_pages_v_blocks_pricing_block_additional_features_features" ("_or
 4	527	1849	megaphone-line	قنوات ترويج إضافية	67dd585e1a2c7d6139c33751	قيمة ترويج إضافية بالشراكة مع المنصات
 5	527	1850	customer-service-line	استشارات مع خبراء	67dd58831a2c7d6139c33753	لتطوير عرض الفرص والمنصة
 6	527	1851	calendar-todo-line	الاستقطاع الشهري	67dd59211a2c7d6139c33755	متجرك شغال بدون اشتراك
+1	621	2410	add-circle-line	اوبتمايز بلس	67dd542b26f6d0eda1519c82	لإدارة الحملات الإعلانية
+2	621	2411	brush-ai-line	ثيم إيثار الفخم	67dd56dd1a2c7d6139c3374b	تفعيل مجاني لثيم إيثار المطور
+3	621	2412	shake-hands-line	مساندة المتاجر التجارية لفرص التبرع	67dd573f1a2c7d6139c3374f	\N
+4	621	2413	megaphone-line	قنوات ترويج إضافية	67dd585e1a2c7d6139c33751	قيمة ترويج إضافية بالشراكة مع المنصات
+5	621	2414	customer-service-line	استشارات مع خبراء	67dd58831a2c7d6139c33753	لتطوير عرض الفرص والمنصة
+6	621	2415	calendar-todo-line	الاستقطاع الشهري	67dd59211a2c7d6139c33755	متجرك شغال بدون اشتراك
+1	589	2218	add-circle-line	اوبتمايز بلس	67dd542b26f6d0eda1519c82	لإدارة الحملات الإعلانية
+2	589	2219	brush-ai-line	ثيم إيثار الفخم	67dd56dd1a2c7d6139c3374b	تفعيل مجاني لثيم إيثار المطور
+3	589	2220	shake-hands-line	مساندة المتاجر التجارية لفرص التبرع	67dd573f1a2c7d6139c3374f	\N
+4	589	2221	megaphone-line	قنوات ترويج إضافية	67dd585e1a2c7d6139c33751	قيمة ترويج إضافية بالشراكة مع المنصات
+5	589	2222	customer-service-line	استشارات مع خبراء	67dd58831a2c7d6139c33753	لتطوير عرض الفرص والمنصة
+6	589	2223	calendar-todo-line	الاستقطاع الشهري	67dd59211a2c7d6139c33755	متجرك شغال بدون اشتراك
+1	590	2224	add-circle-line	اوبتمايز بلس	67dd542b26f6d0eda1519c82	لإدارة الحملات الإعلانية
+2	590	2225	brush-ai-line	ثيم إيثار الفخم	67dd56dd1a2c7d6139c3374b	تفعيل مجاني لثيم إيثار المطور
+3	590	2226	shake-hands-line	مساندة المتاجر التجارية لفرص التبرع	67dd573f1a2c7d6139c3374f	\N
+4	590	2227	megaphone-line	قنوات ترويج إضافية	67dd585e1a2c7d6139c33751	قيمة ترويج إضافية بالشراكة مع المنصات
+5	590	2228	customer-service-line	استشارات مع خبراء	67dd58831a2c7d6139c33753	لتطوير عرض الفرص والمنصة
+6	590	2229	calendar-todo-line	الاستقطاع الشهري	67dd59211a2c7d6139c33755	متجرك شغال بدون اشتراك
+1	591	2230	add-circle-line	اوبتمايز بلس	67dd542b26f6d0eda1519c82	لإدارة الحملات الإعلانية
+2	591	2231	brush-ai-line	ثيم إيثار الفخم	67dd56dd1a2c7d6139c3374b	تفعيل مجاني لثيم إيثار المطور
+3	591	2232	shake-hands-line	مساندة المتاجر التجارية لفرص التبرع	67dd573f1a2c7d6139c3374f	\N
+4	591	2233	megaphone-line	قنوات ترويج إضافية	67dd585e1a2c7d6139c33751	قيمة ترويج إضافية بالشراكة مع المنصات
+5	591	2234	customer-service-line	استشارات مع خبراء	67dd58831a2c7d6139c33753	لتطوير عرض الفرص والمنصة
+6	591	2235	calendar-todo-line	الاستقطاع الشهري	67dd59211a2c7d6139c33755	متجرك شغال بدون اشتراك
+1	592	2236	add-circle-line	اوبتمايز بلس	67dd542b26f6d0eda1519c82	لإدارة الحملات الإعلانية
+2	592	2237	brush-ai-line	ثيم إيثار الفخم	67dd56dd1a2c7d6139c3374b	تفعيل مجاني لثيم إيثار المطور
+3	592	2238	shake-hands-line	مساندة المتاجر التجارية لفرص التبرع	67dd573f1a2c7d6139c3374f	\N
+4	592	2239	megaphone-line	قنوات ترويج إضافية	67dd585e1a2c7d6139c33751	قيمة ترويج إضافية بالشراكة مع المنصات
+5	592	2240	customer-service-line	استشارات مع خبراء	67dd58831a2c7d6139c33753	لتطوير عرض الفرص والمنصة
+6	592	2241	calendar-todo-line	الاستقطاع الشهري	67dd59211a2c7d6139c33755	متجرك شغال بدون اشتراك
+1	622	2416	add-circle-line	اوبتمايز بلس	67dd542b26f6d0eda1519c82	لإدارة الحملات الإعلانية
+2	622	2417	brush-ai-line	ثيم إيثار الفخم	67dd56dd1a2c7d6139c3374b	تفعيل مجاني لثيم إيثار المطور
+3	622	2418	shake-hands-line	مساندة المتاجر التجارية لفرص التبرع	67dd573f1a2c7d6139c3374f	\N
+4	622	2419	megaphone-line	قنوات ترويج إضافية	67dd585e1a2c7d6139c33751	قيمة ترويج إضافية بالشراكة مع المنصات
+5	622	2420	customer-service-line	استشارات مع خبراء	67dd58831a2c7d6139c33753	لتطوير عرض الفرص والمنصة
+6	622	2421	calendar-todo-line	الاستقطاع الشهري	67dd59211a2c7d6139c33755	متجرك شغال بدون اشتراك
 \.
 
 
@@ -5223,6 +5425,30 @@ COPY "public"."_pages_v_blocks_pricing_block_base_features_features" ("_order", 
 2	527	1869	67dd55181a2c7d6139c33742	group-line	إدارة المنصة لـ5 أشخاص	\N
 3	527	1870	67dd55881a2c7d6139c33745	pie-chart-line	تحليلات متقدمة للمنصة	\N
 4	527	1871	67dd55b91a2c7d6139c33747	bank-card-2-line	ربط مع بوابة الدفع الإلكتروني وApple Pay	\N
+1	591	2124	67dd52393656a85f842b4239	hand-coin-line	فرص تبرع غير محدودة	\N
+2	591	2125	67dd55181a2c7d6139c33742	group-line	إدارة المنصة لـ5 أشخاص	\N
+3	591	2126	67dd55881a2c7d6139c33745	pie-chart-line	تحليلات متقدمة للمنصة	\N
+4	591	2127	67dd55b91a2c7d6139c33747	bank-card-2-line	ربط مع بوابة الدفع الإلكتروني وApple Pay	\N
+1	592	2128	67dd52393656a85f842b4239	hand-coin-line	فرص تبرع غير محدودة	\N
+2	592	2129	67dd55181a2c7d6139c33742	group-line	إدارة المنصة لـ5 أشخاص	\N
+3	592	2130	67dd55881a2c7d6139c33745	pie-chart-line	تحليلات متقدمة للمنصة	\N
+4	592	2131	67dd55b91a2c7d6139c33747	bank-card-2-line	ربط مع بوابة الدفع الإلكتروني وApple Pay	\N
+1	589	2116	67dd52393656a85f842b4239	hand-coin-line	فرص تبرع غير محدودة	\N
+2	589	2117	67dd55181a2c7d6139c33742	group-line	إدارة المنصة لـ5 أشخاص	\N
+3	589	2118	67dd55881a2c7d6139c33745	pie-chart-line	تحليلات متقدمة للمنصة	\N
+4	589	2119	67dd55b91a2c7d6139c33747	bank-card-2-line	ربط مع بوابة الدفع الإلكتروني وApple Pay	\N
+1	590	2120	67dd52393656a85f842b4239	hand-coin-line	فرص تبرع غير محدودة	\N
+2	590	2121	67dd55181a2c7d6139c33742	group-line	إدارة المنصة لـ5 أشخاص	\N
+3	590	2122	67dd55881a2c7d6139c33745	pie-chart-line	تحليلات متقدمة للمنصة	\N
+4	590	2123	67dd55b91a2c7d6139c33747	bank-card-2-line	ربط مع بوابة الدفع الإلكتروني وApple Pay	\N
+1	621	2244	67dd52393656a85f842b4239	hand-coin-line	فرص تبرع غير محدودة	\N
+2	621	2245	67dd55181a2c7d6139c33742	group-line	إدارة المنصة لـ5 أشخاص	\N
+3	621	2246	67dd55881a2c7d6139c33745	pie-chart-line	تحليلات متقدمة للمنصة	\N
+4	621	2247	67dd55b91a2c7d6139c33747	bank-card-2-line	ربط مع بوابة الدفع الإلكتروني وApple Pay	\N
+1	622	2248	67dd52393656a85f842b4239	hand-coin-line	فرص تبرع غير محدودة	\N
+2	622	2249	67dd55181a2c7d6139c33742	group-line	إدارة المنصة لـ5 أشخاص	\N
+3	622	2250	67dd55881a2c7d6139c33745	pie-chart-line	تحليلات متقدمة للمنصة	\N
+4	622	2251	67dd55b91a2c7d6139c33747	bank-card-2-line	ربط مع بوابة الدفع الإلكتروني وApple Pay	\N
 \.
 
 
@@ -5233,6 +5459,12 @@ COPY "public"."_pages_v_blocks_pricing_block_base_features_features" ("_order", 
 COPY "public"."_pages_v_blocks_stats_block" ("_order", "_parent_id", "_path", "id", "caption", "_uuid", "block_name") FROM stdin;
 4	4	version.layout	599	\N	67dd462aa14b92b128ef218e	STATS
 4	5	version.layout	600	\N	67dd462aa14b92b128ef218e	STATS
+4	10	version.layout	694	\N	67dd462aa14b92b128ef218e	STATS
+4	11	version.layout	695	\N	67dd462aa14b92b128ef218e	STATS
+4	6	version.layout	662	\N	67dd462aa14b92b128ef218e	STATS
+4	7	version.layout	663	\N	67dd462aa14b92b128ef218e	STATS
+4	8	version.layout	664	\N	67dd462aa14b92b128ef218e	STATS
+4	9	version.layout	665	\N	67dd462aa14b92b128ef218e	STATS
 \.
 
 
@@ -5247,6 +5479,24 @@ COPY "public"."_pages_v_blocks_stats_block_list" ("_order", "_parent_id", "id", 
 1	600	1748	+1200	جمعية استفادت من زاد منذ 2022	67dd4630a14b92b128ef2190
 2	600	1749	+650 مليون ريال	حققت الجمعيات التي تستخدم زاد عبر منصاتها	67dd4641a14b92b128ef2192
 3	600	1750	+6 مليون محسن	تبرع عن طريق منصات زاد	67dd467fa14b92b128ef2194
+1	662	1934	+1200	جمعية استفادت من زاد منذ 2022	67dd4630a14b92b128ef2190
+2	662	1935	+650 مليون ريال	حققت الجمعيات التي تستخدم زاد عبر منصاتها	67dd4641a14b92b128ef2192
+3	662	1936	+6 مليون محسن	تبرع عن طريق منصات زاد	67dd467fa14b92b128ef2194
+1	663	1937	+1200	جمعية استفادت من زاد منذ 2022	67dd4630a14b92b128ef2190
+2	663	1938	+650 مليون ريال	حققت الجمعيات التي تستخدم زاد عبر منصاتها	67dd4641a14b92b128ef2192
+3	663	1939	+6 مليون محسن	تبرع عن طريق منصات زاد	67dd467fa14b92b128ef2194
+1	664	1940	+1200	جمعية استفادت من زاد منذ 2022	67dd4630a14b92b128ef2190
+2	664	1941	+650 مليون ريال	حققت الجمعيات التي تستخدم زاد عبر منصاتها	67dd4641a14b92b128ef2192
+3	664	1942	+6 مليون محسن	تبرع عن طريق منصات زاد	67dd467fa14b92b128ef2194
+1	665	1943	+1200	جمعية استفادت من زاد منذ 2022	67dd4630a14b92b128ef2190
+2	665	1944	+650 مليون ريال	حققت الجمعيات التي تستخدم زاد عبر منصاتها	67dd4641a14b92b128ef2192
+3	665	1945	+6 مليون محسن	تبرع عن طريق منصات زاد	67dd467fa14b92b128ef2194
+1	694	2030	+1200	جمعية استفادت من زاد منذ 2022	67dd4630a14b92b128ef2190
+2	694	2031	+650 مليون ريال	حققت الجمعيات التي تستخدم زاد عبر منصاتها	67dd4641a14b92b128ef2192
+3	694	2032	+6 مليون محسن	تبرع عن طريق منصات زاد	67dd467fa14b92b128ef2194
+1	695	2033	+1200	جمعية استفادت من زاد منذ 2022	67dd4630a14b92b128ef2190
+2	695	2034	+650 مليون ريال	حققت الجمعيات التي تستخدم زاد عبر منصاتها	67dd4641a14b92b128ef2192
+3	695	2035	+6 مليون محسن	تبرع عن طريق منصات زاد	67dd467fa14b92b128ef2194
 \.
 
 
@@ -5258,13 +5508,25 @@ COPY "public"."_pages_v_locales" ("version_hero_rich_text", "version_hero_media_
 \N	\N	\N	\N	\N	1	en	1
 \N	\N	\N	\N	\N	2	ar	1
 \N	\N	\N	\N	\N	171	en	3
-{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h1", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تعزيز العطاء الرقمي ونمو الجمعيات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "زاد منظومة خدمات متكاملة تمكن جمعيتك من تحقيق دخل متنوع ومستدام.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	1	\N	\N	\N	172	ar	3
+\N	\N	\N	\N	\N	1917	en	8
 \N	\N	\N	\N	\N	169	en	2
-{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h1", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تعزيز العطاء الرقمي ونمو الجمعيات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "زاد منظومة خدمات متكاملة تمكن جمعيتك من تحقيق دخل متنوع ومستدام.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	1	\N	\N	\N	170	ar	2
+{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h1", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تعزيز العطاء الرقمي ونمو الجمعيات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "زاد منظومة خدمات متكاملة تمكن جمعيتك من تحقيق دخل متنوع ومستدام.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	23	\N	\N	\N	1918	ar	8
 \N	\N	\N	\N	\N	1787	en	4
-{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h1", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تعزيز العطاء الرقمي ونمو الجمعيات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "زاد منظومة خدمات متكاملة تمكن جمعيتك من تحقيق دخل متنوع ومستدام.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	1	\N	\N	\N	1788	ar	4
+\N	\N	\N	\N	\N	1919	en	9
 \N	\N	\N	\N	\N	1789	en	5
-{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h1", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تعزيز العطاء الرقمي ونمو الجمعيات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "زاد منظومة خدمات متكاملة تمكن جمعيتك من تحقيق دخل متنوع ومستدام.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	1	\N	\N	\N	1790	ar	5
+{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h1", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تعزيز العطاء الرقمي ونمو الجمعيات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "زاد منظومة خدمات متكاملة تمكن جمعيتك من تحقيق دخل متنوع ومستدام.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	23	\N	\N	\N	1920	ar	9
+{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h1", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تعزيز العطاء الرقمي ونمو الجمعيات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "زاد منظومة خدمات متكاملة تمكن جمعيتك من تحقيق دخل متنوع ومستدام.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	\N	\N	\N	172	ar	3
+{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h1", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تعزيز العطاء الرقمي ونمو الجمعيات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "زاد منظومة خدمات متكاملة تمكن جمعيتك من تحقيق دخل متنوع ومستدام.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	\N	\N	\N	170	ar	2
+{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h1", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تعزيز العطاء الرقمي ونمو الجمعيات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "زاد منظومة خدمات متكاملة تمكن جمعيتك من تحقيق دخل متنوع ومستدام.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	\N	\N	\N	1788	ar	4
+{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h1", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تعزيز العطاء الرقمي ونمو الجمعيات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "زاد منظومة خدمات متكاملة تمكن جمعيتك من تحقيق دخل متنوع ومستدام.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	\N	\N	\N	1790	ar	5
+\N	\N	\N	\N	\N	1913	en	6
+{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h1", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تعزيز العطاء الرقمي ونمو الجمعيات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "زاد منظومة خدمات متكاملة تمكن جمعيتك من تحقيق دخل متنوع ومستدام.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	23	\N	\N	\N	1914	ar	6
+\N	\N	\N	\N	\N	1915	en	7
+{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h1", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تعزيز العطاء الرقمي ونمو الجمعيات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "زاد منظومة خدمات متكاملة تمكن جمعيتك من تحقيق دخل متنوع ومستدام.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	23	\N	\N	\N	1916	ar	7
+\N	\N	\N	\N	\N	1977	en	10
+{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h1", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تعزيز العطاء الرقمي ونمو الجمعيات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "زاد منظومة خدمات متكاملة تمكن جمعيتك من تحقيق دخل متنوع ومستدام.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	23	\N	\N	\N	1978	ar	10
+\N	\N	\N	\N	\N	1979	en	11
+{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h1", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تعزيز العطاء الرقمي ونمو الجمعيات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "زاد منظومة خدمات متكاملة تمكن جمعيتك من تحقيق دخل متنوع ومستدام.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	23	\N	\N	\N	1980	ar	11
 \.
 
 
@@ -5272,34 +5534,152 @@ COPY "public"."_pages_v_locales" ("version_hero_rich_text", "version_hero_media_
 -- Data for Name: _pages_v_rels; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public"."_pages_v_rels" ("id", "order", "parent_id", "path", "pages_id", "posts_id", "categories_id", "faq_id") FROM stdin;
-65	\N	2	version.hero.links.0.link.reference	1	\N	\N	\N
-66	\N	3	version.hero.links.0.link.reference	1	\N	\N	\N
-994	1	4	version.layout.7.faqs	\N	\N	\N	1
-995	2	4	version.layout.7.faqs	\N	\N	\N	2
-996	3	4	version.layout.7.faqs	\N	\N	\N	3
-997	4	4	version.layout.7.faqs	\N	\N	\N	4
-998	5	4	version.layout.7.faqs	\N	\N	\N	5
-999	6	4	version.layout.7.faqs	\N	\N	\N	6
-1000	7	4	version.layout.7.faqs	\N	\N	\N	7
-1163	\N	4	version.hero.links.0.link.reference	1	\N	\N	\N
-1164	\N	4	version.layout.6.links.0.link.reference	1	\N	\N	\N
-1165	1	4	version.layout.6.faqs	\N	\N	\N	1
-1166	2	4	version.layout.6.faqs	\N	\N	\N	2
-1167	3	4	version.layout.6.faqs	\N	\N	\N	3
-1168	4	4	version.layout.6.faqs	\N	\N	\N	4
-1169	5	4	version.layout.6.faqs	\N	\N	\N	5
-1170	6	4	version.layout.6.faqs	\N	\N	\N	6
-1171	7	4	version.layout.6.faqs	\N	\N	\N	7
-1172	\N	5	version.hero.links.0.link.reference	1	\N	\N	\N
-1173	\N	5	version.layout.6.links.0.link.reference	1	\N	\N	\N
-1174	1	5	version.layout.6.faqs	\N	\N	\N	1
-1175	2	5	version.layout.6.faqs	\N	\N	\N	2
-1176	3	5	version.layout.6.faqs	\N	\N	\N	3
-1177	4	5	version.layout.6.faqs	\N	\N	\N	4
-1178	5	5	version.layout.6.faqs	\N	\N	\N	5
-1179	6	5	version.layout.6.faqs	\N	\N	\N	6
-1180	7	5	version.layout.6.faqs	\N	\N	\N	7
+COPY "public"."_pages_v_rels" ("id", "order", "parent_id", "path", "pages_id", "posts_id", "categories_id", "faq_id", "media_id") FROM stdin;
+65	\N	2	version.hero.links.0.link.reference	1	\N	\N	\N	\N
+66	\N	3	version.hero.links.0.link.reference	1	\N	\N	\N	\N
+994	1	4	version.layout.7.faqs	\N	\N	\N	1	\N
+995	2	4	version.layout.7.faqs	\N	\N	\N	2	\N
+996	3	4	version.layout.7.faqs	\N	\N	\N	3	\N
+997	4	4	version.layout.7.faqs	\N	\N	\N	4	\N
+998	5	4	version.layout.7.faqs	\N	\N	\N	5	\N
+999	6	4	version.layout.7.faqs	\N	\N	\N	6	\N
+1000	7	4	version.layout.7.faqs	\N	\N	\N	7	\N
+1163	\N	4	version.hero.links.0.link.reference	1	\N	\N	\N	\N
+1164	\N	4	version.layout.6.links.0.link.reference	1	\N	\N	\N	\N
+1165	1	4	version.layout.6.faqs	\N	\N	\N	1	\N
+1166	2	4	version.layout.6.faqs	\N	\N	\N	2	\N
+1167	3	4	version.layout.6.faqs	\N	\N	\N	3	\N
+1168	4	4	version.layout.6.faqs	\N	\N	\N	4	\N
+1169	5	4	version.layout.6.faqs	\N	\N	\N	5	\N
+1170	6	4	version.layout.6.faqs	\N	\N	\N	6	\N
+1171	7	4	version.layout.6.faqs	\N	\N	\N	7	\N
+1172	\N	5	version.hero.links.0.link.reference	1	\N	\N	\N	\N
+1173	\N	5	version.layout.6.links.0.link.reference	1	\N	\N	\N	\N
+1174	1	5	version.layout.6.faqs	\N	\N	\N	1	\N
+1175	2	5	version.layout.6.faqs	\N	\N	\N	2	\N
+1176	3	5	version.layout.6.faqs	\N	\N	\N	3	\N
+1177	4	5	version.layout.6.faqs	\N	\N	\N	4	\N
+1178	5	5	version.layout.6.faqs	\N	\N	\N	5	\N
+1179	6	5	version.layout.6.faqs	\N	\N	\N	6	\N
+1180	7	5	version.layout.6.faqs	\N	\N	\N	7	\N
+2094	\N	8	version.hero.links.0.link.reference	1	\N	\N	\N	\N
+2095	1	8	version.layout.2.logos	\N	\N	\N	\N	15
+2096	2	8	version.layout.2.logos	\N	\N	\N	\N	16
+2097	3	8	version.layout.2.logos	\N	\N	\N	\N	17
+2098	4	8	version.layout.2.logos	\N	\N	\N	\N	18
+2099	5	8	version.layout.2.logos	\N	\N	\N	\N	19
+2100	6	8	version.layout.2.logos	\N	\N	\N	\N	20
+2101	\N	8	version.layout.6.links.0.link.reference	1	\N	\N	\N	\N
+2102	1	8	version.layout.6.faqs	\N	\N	\N	1	\N
+2103	2	8	version.layout.6.faqs	\N	\N	\N	2	\N
+2104	3	8	version.layout.6.faqs	\N	\N	\N	3	\N
+2105	4	8	version.layout.6.faqs	\N	\N	\N	4	\N
+2106	5	8	version.layout.6.faqs	\N	\N	\N	5	\N
+2107	6	8	version.layout.6.faqs	\N	\N	\N	6	\N
+2108	7	8	version.layout.6.faqs	\N	\N	\N	7	\N
+2109	\N	9	version.hero.links.0.link.reference	1	\N	\N	\N	\N
+2110	1	9	version.layout.2.logos	\N	\N	\N	\N	15
+2111	2	9	version.layout.2.logos	\N	\N	\N	\N	16
+2112	3	9	version.layout.2.logos	\N	\N	\N	\N	17
+2113	4	9	version.layout.2.logos	\N	\N	\N	\N	18
+2114	5	9	version.layout.2.logos	\N	\N	\N	\N	19
+2115	6	9	version.layout.2.logos	\N	\N	\N	\N	20
+2116	\N	9	version.layout.6.links.0.link.reference	1	\N	\N	\N	\N
+2048	\N	6	version.hero.links.0.link.reference	1	\N	\N	\N	\N
+2049	1	6	version.layout.2.logos	\N	\N	\N	\N	15
+2050	2	6	version.layout.2.logos	\N	\N	\N	\N	16
+2051	3	6	version.layout.2.logos	\N	\N	\N	\N	17
+2052	4	6	version.layout.2.logos	\N	\N	\N	\N	18
+2053	5	6	version.layout.2.logos	\N	\N	\N	\N	19
+2054	6	6	version.layout.2.logos	\N	\N	\N	\N	20
+2055	\N	6	version.layout.6.links.0.link.reference	1	\N	\N	\N	\N
+2056	1	6	version.layout.6.faqs	\N	\N	\N	1	\N
+2057	2	6	version.layout.6.faqs	\N	\N	\N	2	\N
+2058	3	6	version.layout.6.faqs	\N	\N	\N	3	\N
+2059	4	6	version.layout.6.faqs	\N	\N	\N	4	\N
+2060	5	6	version.layout.6.faqs	\N	\N	\N	5	\N
+2061	6	6	version.layout.6.faqs	\N	\N	\N	6	\N
+2062	7	6	version.layout.6.faqs	\N	\N	\N	7	\N
+2063	\N	6	version.layout.8.links.0.link.reference	1	\N	\N	\N	\N
+2064	1	6	version.layout.8.faqs	\N	\N	\N	1	\N
+2065	2	6	version.layout.8.faqs	\N	\N	\N	2	\N
+2066	3	6	version.layout.8.faqs	\N	\N	\N	3	\N
+2067	4	6	version.layout.8.faqs	\N	\N	\N	4	\N
+2068	5	6	version.layout.8.faqs	\N	\N	\N	5	\N
+2069	6	6	version.layout.8.faqs	\N	\N	\N	6	\N
+2070	7	6	version.layout.8.faqs	\N	\N	\N	7	\N
+2071	\N	7	version.hero.links.0.link.reference	1	\N	\N	\N	\N
+2072	1	7	version.layout.2.logos	\N	\N	\N	\N	15
+2073	2	7	version.layout.2.logos	\N	\N	\N	\N	16
+2074	3	7	version.layout.2.logos	\N	\N	\N	\N	17
+2075	4	7	version.layout.2.logos	\N	\N	\N	\N	18
+2076	5	7	version.layout.2.logos	\N	\N	\N	\N	19
+2077	6	7	version.layout.2.logos	\N	\N	\N	\N	20
+2078	\N	7	version.layout.6.links.0.link.reference	1	\N	\N	\N	\N
+2079	1	7	version.layout.6.faqs	\N	\N	\N	1	\N
+2080	2	7	version.layout.6.faqs	\N	\N	\N	2	\N
+2081	3	7	version.layout.6.faqs	\N	\N	\N	3	\N
+2082	4	7	version.layout.6.faqs	\N	\N	\N	4	\N
+2083	5	7	version.layout.6.faqs	\N	\N	\N	5	\N
+2084	6	7	version.layout.6.faqs	\N	\N	\N	6	\N
+2085	7	7	version.layout.6.faqs	\N	\N	\N	7	\N
+2086	\N	7	version.layout.8.links.0.link.reference	1	\N	\N	\N	\N
+2087	1	7	version.layout.8.faqs	\N	\N	\N	1	\N
+2088	2	7	version.layout.8.faqs	\N	\N	\N	2	\N
+2089	3	7	version.layout.8.faqs	\N	\N	\N	3	\N
+2090	4	7	version.layout.8.faqs	\N	\N	\N	4	\N
+2091	5	7	version.layout.8.faqs	\N	\N	\N	5	\N
+2092	6	7	version.layout.8.faqs	\N	\N	\N	6	\N
+2093	7	7	version.layout.8.faqs	\N	\N	\N	7	\N
+2117	1	9	version.layout.6.faqs	\N	\N	\N	1	\N
+2118	2	9	version.layout.6.faqs	\N	\N	\N	2	\N
+2119	3	9	version.layout.6.faqs	\N	\N	\N	3	\N
+2120	4	9	version.layout.6.faqs	\N	\N	\N	4	\N
+2121	5	9	version.layout.6.faqs	\N	\N	\N	5	\N
+2122	6	9	version.layout.6.faqs	\N	\N	\N	6	\N
+2123	7	9	version.layout.6.faqs	\N	\N	\N	7	\N
+2626	\N	10	version.hero.links.0.link.reference	1	\N	\N	\N	\N
+2627	1	10	version.hero.logos	\N	\N	\N	\N	29
+2628	2	10	version.hero.logos	\N	\N	\N	\N	34
+2629	3	10	version.hero.logos	\N	\N	\N	\N	33
+2630	4	10	version.hero.logos	\N	\N	\N	\N	30
+2631	5	10	version.hero.logos	\N	\N	\N	\N	31
+2632	6	10	version.hero.logos	\N	\N	\N	\N	32
+2633	1	10	version.layout.2.logos	\N	\N	\N	\N	15
+2634	2	10	version.layout.2.logos	\N	\N	\N	\N	16
+2635	3	10	version.layout.2.logos	\N	\N	\N	\N	17
+2636	4	10	version.layout.2.logos	\N	\N	\N	\N	18
+2637	5	10	version.layout.2.logos	\N	\N	\N	\N	19
+2638	6	10	version.layout.2.logos	\N	\N	\N	\N	20
+2639	\N	10	version.layout.6.links.0.link.reference	1	\N	\N	\N	\N
+2640	1	10	version.layout.6.faqs	\N	\N	\N	1	\N
+2641	2	10	version.layout.6.faqs	\N	\N	\N	2	\N
+2642	3	10	version.layout.6.faqs	\N	\N	\N	3	\N
+2643	4	10	version.layout.6.faqs	\N	\N	\N	4	\N
+2644	5	10	version.layout.6.faqs	\N	\N	\N	5	\N
+2645	6	10	version.layout.6.faqs	\N	\N	\N	6	\N
+2646	7	10	version.layout.6.faqs	\N	\N	\N	7	\N
+2647	\N	11	version.hero.links.0.link.reference	1	\N	\N	\N	\N
+2648	1	11	version.hero.logos	\N	\N	\N	\N	29
+2649	2	11	version.hero.logos	\N	\N	\N	\N	34
+2650	3	11	version.hero.logos	\N	\N	\N	\N	33
+2651	4	11	version.hero.logos	\N	\N	\N	\N	30
+2652	5	11	version.hero.logos	\N	\N	\N	\N	31
+2653	6	11	version.hero.logos	\N	\N	\N	\N	32
+2654	1	11	version.layout.2.logos	\N	\N	\N	\N	15
+2655	2	11	version.layout.2.logos	\N	\N	\N	\N	16
+2656	3	11	version.layout.2.logos	\N	\N	\N	\N	17
+2657	4	11	version.layout.2.logos	\N	\N	\N	\N	18
+2658	5	11	version.layout.2.logos	\N	\N	\N	\N	19
+2659	6	11	version.layout.2.logos	\N	\N	\N	\N	20
+2660	\N	11	version.layout.6.links.0.link.reference	1	\N	\N	\N	\N
+2661	1	11	version.layout.6.faqs	\N	\N	\N	1	\N
+2662	2	11	version.layout.6.faqs	\N	\N	\N	2	\N
+2663	3	11	version.layout.6.faqs	\N	\N	\N	3	\N
+2664	4	11	version.layout.6.faqs	\N	\N	\N	4	\N
+2665	5	11	version.layout.6.faqs	\N	\N	\N	5	\N
+2666	6	11	version.layout.6.faqs	\N	\N	\N	6	\N
+2667	7	11	version.layout.6.faqs	\N	\N	\N	7	\N
 \.
 
 
@@ -5312,6 +5692,12 @@ COPY "public"."_pages_v_version_hero_links" ("_order", "_parent_id", "id", "link
 1	3	70	reference	\N	\N	default	67dd2741ea208a05e1daa429
 1	4	878	reference	\N	\N	default	67dd2741ea208a05e1daa429
 1	5	879	reference	\N	\N	default	67dd2741ea208a05e1daa429
+1	10	973	reference	\N	\N	default	67dd2741ea208a05e1daa429
+1	11	974	reference	\N	\N	default	67dd2741ea208a05e1daa429
+1	6	941	reference	\N	\N	default	67dd2741ea208a05e1daa429
+1	7	942	reference	\N	\N	default	67dd2741ea208a05e1daa429
+1	8	943	reference	\N	\N	default	67dd2741ea208a05e1daa429
+1	9	944	reference	\N	\N	default	67dd2741ea208a05e1daa429
 \.
 
 
@@ -5324,6 +5710,12 @@ COPY "public"."_pages_v_version_hero_links_locales" ("link_label", "id", "_local
 إبدأ مع زاد الآن	68	ar	70
 إبدأ مع زاد الآن	876	ar	878
 إبدأ مع زاد الآن	877	ar	879
+إبدأ مع زاد الآن	971	ar	973
+إبدأ مع زاد الآن	972	ar	974
+إبدأ مع زاد الآن	939	ar	941
+إبدأ مع زاد الآن	940	ar	942
+إبدأ مع زاد الآن	941	ar	943
+إبدأ مع زاد الآن	942	ar	944
 \.
 
 
@@ -5548,7 +5940,7 @@ COPY "public"."forms_blocks_number_locales" ("label", "id", "_locale", "_parent_
 -- Data for Name: forms_blocks_select; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public"."forms_blocks_select" ("_order", "_parent_id", "_path", "id", "name", "width", "required", "block_name") FROM stdin;
+COPY "public"."forms_blocks_select" ("_order", "_parent_id", "_path", "id", "name", "width", "required", "block_name", "placeholder") FROM stdin;
 \.
 
 
@@ -5658,7 +6050,7 @@ COPY "public"."forms_locales" ("submit_button_label", "confirmation_message", "i
 --
 
 COPY "public"."header" ("id", "updated_at", "created_at") FROM stdin;
-1	2025-03-21 17:41:01.381+00	2025-03-21 17:40:42.426+00
+1	2025-03-22 08:22:22.21+00	2025-03-21 17:40:42.426+00
 \.
 
 
@@ -5668,7 +6060,6 @@ COPY "public"."header" ("id", "updated_at", "created_at") FROM stdin;
 
 COPY "public"."header_nav_items" ("_order", "_parent_id", "id", "link_type", "link_new_tab", "link_url") FROM stdin;
 1	1	67dda46689b1617b0d62f87c	reference	\N	\N
-2	1	67dda48489b1617b0d62f87e	reference	\N	\N
 \.
 
 
@@ -5677,8 +6068,7 @@ COPY "public"."header_nav_items" ("_order", "_parent_id", "id", "link_type", "li
 --
 
 COPY "public"."header_nav_items_locales" ("link_label", "id", "_locale", "_parent_id") FROM stdin;
-إبدأ مع زاد	3	ar	67dda46689b1617b0d62f87c
-تسجيل الدخول	4	ar	67dda48489b1617b0d62f87e
+إبدأ مع زاد	5	ar	67dda46689b1617b0d62f87c
 \.
 
 
@@ -5687,8 +6077,8 @@ COPY "public"."header_nav_items_locales" ("link_label", "id", "_locale", "_paren
 --
 
 COPY "public"."header_rels" ("id", "order", "parent_id", "path", "pages_id", "posts_id") FROM stdin;
-3	\N	1	navItems.0.link.reference	1	\N
 4	\N	1	navItems.1.link.reference	1	\N
+5	\N	1	navItems.0.link.reference	1	\N
 \.
 
 
@@ -5696,21 +6086,27 @@ COPY "public"."header_rels" ("id", "order", "parent_id", "path", "pages_id", "po
 -- Data for Name: media; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public"."media" ("id", "alt", "caption", "updated_at", "created_at", "url", "thumbnail_u_r_l", "filename", "mime_type", "filesize", "width", "height", "focal_x", "focal_y", "sizes_thumbnail_url", "sizes_thumbnail_width", "sizes_thumbnail_height", "sizes_thumbnail_mime_type", "sizes_thumbnail_filesize", "sizes_thumbnail_filename", "sizes_square_url", "sizes_square_width", "sizes_square_height", "sizes_square_mime_type", "sizes_square_filesize", "sizes_square_filename", "sizes_small_url", "sizes_small_width", "sizes_small_height", "sizes_small_mime_type", "sizes_small_filesize", "sizes_small_filename", "sizes_medium_url", "sizes_medium_width", "sizes_medium_height", "sizes_medium_mime_type", "sizes_medium_filesize", "sizes_medium_filename", "sizes_large_url", "sizes_large_width", "sizes_large_height", "sizes_large_mime_type", "sizes_large_filesize", "sizes_large_filename", "sizes_xlarge_url", "sizes_xlarge_width", "sizes_xlarge_height", "sizes_xlarge_mime_type", "sizes_xlarge_filesize", "sizes_xlarge_filename", "sizes_og_url", "sizes_og_width", "sizes_og_height", "sizes_og_mime_type", "sizes_og_filesize", "sizes_og_filename") FROM stdin;
-1	hero	\N	2025-03-16 19:03:09.873+00	2025-03-16 19:03:04.333+00	\N	\N	hero.png	image/png	67172	1176	1176	50	50	\N	300	300	image/png	14199	hero-300x300.png	\N	500	500	image/png	28446	hero-500x500.png	\N	600	600	image/png	36076	hero-600x600.png	\N	900	900	image/png	63144	hero-900x900.png	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	1200	630	image/png	71036	hero-1200x630.png
-2	تحقيق الاستدامة المالية للجمعية	\N	2025-03-21 09:06:23.968+00	2025-03-21 09:06:23.913+00	\N	\N	growth-1.png	image/png	37374	1000	1000	50	50	\N	300	300	image/png	22044	growth-1-300x300.png	\N	500	500	image/png	39757	growth-1-500x500.png	\N	600	600	image/png	52932	growth-1-600x600.png	\N	900	900	image/png	99605	growth-1-900x900.png	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	1200	630	image/png	93937	growth-1-1200x630.png
-3	يدينا في يديك	\N	2025-03-21 09:06:24.042+00	2025-03-21 09:06:23.985+00	\N	\N	handinhand-1.png	image/png	39502	1000	1000	50	50	\N	300	300	image/png	23058	handinhand-1-300x300.png	\N	500	500	image/png	43692	handinhand-1-500x500.png	\N	600	600	image/png	56368	handinhand-1-600x600.png	\N	900	900	image/png	102484	handinhand-1-900x900.png	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	1200	630	image/png	119065	handinhand-1-1200x630.png
-4	تحقيق الاستدامة المالية للجمعية	\N	2025-03-21 09:06:24.116+00	2025-03-21 09:06:24.059+00	\N	\N	solutions-1.png	image/png	31289	1000	1000	50	50	\N	300	300	image/png	16009	solutions-1-300x300.png	\N	500	500	image/png	30883	solutions-1-500x500.png	\N	600	600	image/png	40246	solutions-1-600x600.png	\N	900	900	image/png	71377	solutions-1-900x900.png	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	1200	630	image/png	83306	solutions-1-1200x630.png
-5	تحقيق الاستدامة المالية للجمعية	\N	2025-03-21 09:06:24.19+00	2025-03-21 09:06:24.132+00	\N	\N	support-1.png	image/png	40850	1000	1000	50	50	\N	300	300	image/png	21496	support-1-300x300.png	\N	500	500	image/png	40075	support-1-500x500.png	\N	600	600	image/png	51687	support-1-600x600.png	\N	900	900	image/png	94301	support-1-900x900.png	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	1200	630	image/png	110283	support-1-1200x630.png
-6	مساندة الجمعية في إدارة العلاقة مع المتبرعين	\N	2025-03-21 09:06:33.304+00	2025-03-21 09:06:33.243+00	\N	\N	crm-2.png	image/png	28762	1000	1000	50	50	\N	300	300	image/png	14503	crm-2-300x300.png	\N	500	500	image/png	26937	crm-2-500x500.png	\N	600	600	image/png	34865	crm-2-600x600.png	\N	900	900	image/png	64139	crm-2-900x900.png	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	1200	630	image/png	57979	crm-2-1200x630.png
-7	\N	\N	2025-03-21 10:45:46.675+00	2025-03-21 10:45:46.666+00	\N	\N	Eshtarek-1.svg	image/svg+xml	8724	125	40	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
-8	\N	\N	2025-03-21 10:45:46.694+00	2025-03-21 10:45:46.688+00	\N	\N	NCNS-1.svg	image/svg+xml	82367	93	40	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
-9	\N	\N	2025-03-21 10:45:46.711+00	2025-03-21 10:45:46.706+00	\N	\N	Optimize-1.svg	image/svg+xml	7828	155	40	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
-10	\N	\N	2025-03-21 10:45:46.728+00	2025-03-21 10:45:46.724+00	\N	\N	Snapchat-1.svg	image/svg+xml	11194	137	40	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
-11	\N	\N	2025-03-21 10:45:46.742+00	2025-03-21 10:45:46.738+00	\N	\N	Taqrer-1.svg	image/svg+xml	7316	117	40	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
-12	\N	\N	2025-03-21 10:45:46.756+00	2025-03-21 10:45:46.752+00	\N	\N	Tiktok-1.svg	image/svg+xml	2490	135	40	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
-13	تقارير تفصيلية عن أداء المشروع	\N	2025-03-21 10:47:43.815+00	2025-03-21 10:47:43.72+00	\N	\N	Container-1.png	image/png	389761	1249	960	50	50	\N	300	231	image/png	33410	Container-1-300x231.png	\N	500	500	image/png	93300	Container-1-500x500.png	\N	600	461	image/png	106150	Container-1-600x461.png	\N	900	692	image/png	228706	Container-1-900x692.png	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	1200	630	image/png	320319	Container-1-1200x630.png
-14	لوحة تحكم سهلة الإستخدام	\N	2025-03-21 10:47:43.909+00	2025-03-21 10:47:43.83+00	\N	\N	Container.png	image/png	211955	1249	960	50	50	\N	300	231	image/png	23958	Container-300x231.png	\N	500	500	image/png	48397	Container-500x500.png	\N	600	461	image/png	69105	Container-600x461.png	\N	900	692	image/png	138936	Container-900x692.png	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	1200	630	image/png	154133	Container-1200x630.png
+COPY "public"."media" ("id", "alt", "caption", "updated_at", "created_at", "url", "thumbnail_u_r_l", "filename", "mime_type", "filesize", "width", "height", "focal_x", "focal_y", "sizes_thumbnail_url", "sizes_thumbnail_width", "sizes_thumbnail_height", "sizes_thumbnail_mime_type", "sizes_thumbnail_filesize", "sizes_thumbnail_filename", "sizes_square_url", "sizes_square_width", "sizes_square_height", "sizes_square_mime_type", "sizes_square_filesize", "sizes_square_filename", "sizes_small_url", "sizes_small_width", "sizes_small_height", "sizes_small_mime_type", "sizes_small_filesize", "sizes_small_filename", "sizes_medium_url", "sizes_medium_width", "sizes_medium_height", "sizes_medium_mime_type", "sizes_medium_filesize", "sizes_medium_filename", "sizes_large_url", "sizes_large_width", "sizes_large_height", "sizes_large_mime_type", "sizes_large_filesize", "sizes_large_filename", "sizes_xlarge_url", "sizes_xlarge_width", "sizes_xlarge_height", "sizes_xlarge_mime_type", "sizes_xlarge_filesize", "sizes_xlarge_filename", "sizes_og_url", "sizes_og_width", "sizes_og_height", "sizes_og_mime_type", "sizes_og_filesize", "sizes_og_filename", "prefix") FROM stdin;
+15	Eshtarek	\N	2025-03-22 08:13:28.716+00	2025-03-22 08:13:28.216+00	\N	\N	Eshtarek.svg	image/svg+xml	8724	125	40	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	media
+16	NCNS	\N	2025-03-22 08:13:30.778+00	2025-03-22 08:13:30.26+00	\N	\N	NCNS.svg	image/svg+xml	82367	93	40	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	media
+17	Optimize	\N	2025-03-22 08:13:31.61+00	2025-03-22 08:13:31.396+00	\N	\N	Optimize.svg	image/svg+xml	7828	155	40	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	media
+18	Snapchat	\N	2025-03-22 08:13:32.747+00	2025-03-22 08:13:32.298+00	\N	\N	Snapchat.svg	image/svg+xml	11194	137	40	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	media
+19	Taqrer	\N	2025-03-22 08:13:33.678+00	2025-03-22 08:13:33.285+00	\N	\N	Taqrer.svg	image/svg+xml	7316	117	40	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	media
+20	TikTok	\N	2025-03-22 08:13:34.422+00	2025-03-22 08:13:34.183+00	\N	\N	Tiktok.svg	image/svg+xml	2490	135	40	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	media
+21	analytics	\N	2025-03-22 08:14:53.7+00	2025-03-22 08:14:51.523+00	\N	\N	analytics.png	image/png	389761	1249	960	50	50	\N	300	231	image/png	33270	analytics-300x231.png	\N	500	500	image/png	93579	analytics-500x500.png	\N	600	461	image/png	106403	analytics-600x461.png	\N	900	692	image/png	228627	analytics-900x692.png	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	1200	630	image/png	320861	analytics-1200x630.png	media
+22	dashboard	\N	2025-03-22 08:14:58.31+00	2025-03-22 08:14:56.488+00	\N	\N	dashboard.png	image/png	211955	1249	960	50	50	\N	300	231	image/png	23721	dashboard-300x231.png	\N	500	500	image/png	48281	dashboard-500x500.png	\N	600	461	image/png	68958	dashboard-600x461.png	\N	900	692	image/png	137610	dashboard-900x692.png	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	1200	630	image/png	154593	dashboard-1200x630.png	media
+23	hero	\N	2025-03-22 08:15:13.193+00	2025-03-22 08:15:11.543+00	\N	\N	hero.png	image/png	44210	1176	1176	50	50	\N	300	300	image/png	14199	hero-300x300.png	\N	500	500	image/png	28446	hero-500x500.png	\N	600	600	image/png	36085	hero-600x600.png	\N	900	900	image/png	63140	hero-900x900.png	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	1200	630	image/png	71057	hero-1200x630.png	media
+24	حلول رقمية متكاملة	\N	2025-03-22 08:19:31.838+00	2025-03-22 08:19:30.563+00	\N	\N	solutions.png	image/png	23117	750	750	50	50	\N	300	300	image/png	15892	solutions-300x300.png	\N	500	500	image/png	31230	solutions-500x500.png	\N	600	600	image/png	41383	solutions-600x600.png	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	1200	630	image/png	96301	solutions-1200x630.png	media
+25	تحقيق الاستدامة المالية للجمعية	\N	2025-03-22 08:19:33.923+00	2025-03-22 08:19:32.69+00	\N	\N	growth.png	image/png	26183	750	750	50	50	\N	300	300	image/png	22473	growth-300x300.png	\N	500	500	image/png	42190	growth-500x500.png	\N	600	600	image/png	56641	growth-600x600.png	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	1200	630	image/png	110175	growth-1200x630.png	media
+26	تحقيق الاستدامة المالية للجمعية	\N	2025-03-22 08:19:35.77+00	2025-03-22 08:19:34.565+00	\N	\N	crm.png	image/png	20871	750	750	50	50	\N	300	300	image/png	14421	crm-300x300.png	\N	500	500	image/png	26945	crm-500x500.png	\N	600	600	image/png	36355	crm-600x600.png	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	1200	630	image/png	65140	crm-1200x630.png	media
+27	يدينا بيديك	\N	2025-03-22 08:19:37.89+00	2025-03-22 08:19:36.544+00	\N	\N	handinhand.png	image/png	29452	750	750	50	50	\N	300	300	image/png	23206	handinhand-300x300.png	\N	500	500	image/png	44885	handinhand-500x500.png	\N	600	600	image/png	59324	handinhand-600x600.png	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	1200	630	image/png	139664	handinhand-1200x630.png	media
+28	دعم فني وتسويقي مستمر	\N	2025-03-22 08:19:39.828+00	2025-03-22 08:19:38.639+00	\N	\N	support.png	image/png	28718	750	750	50	50	\N	300	300	image/png	21658	support-300x300.png	\N	500	500	image/png	41230	support-500x500.png	\N	600	600	image/png	54265	support-600x600.png	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	1200	630	image/png	128348	support-1200x630.png	media
+29	جمعية الأعمال	\N	2025-03-24 10:58:12.896+00	2025-03-24 10:58:12.414+00	\N	\N	alaamal.svg	image/svg+xml	26709	131	32	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	media
+30	جمعية العناية	\N	2025-03-24 10:58:14.2+00	2025-03-24 10:58:13.726+00	\N	\N	alenayah.svg	image/svg+xml	39324	122	32	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	media
+31	جمعية إحسانكم	\N	2025-03-24 10:58:15.447+00	2025-03-24 10:58:14.913+00	\N	\N	ehsankom.svg	image/svg+xml	19160	33	32	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	media
+32	جمعية ثمرات	\N	2025-03-24 10:58:16.437+00	2025-03-24 10:58:16.008+00	\N	\N	thmarat.svg	image/svg+xml	4938	36	32	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	media
+33	جمعية يلملم	\N	2025-03-24 10:58:17.936+00	2025-03-24 10:58:17.117+00	\N	\N	yalamlam.svg	image/svg+xml	13863	44	32	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	media
+34	جمعية يقين	\N	2025-03-24 10:58:18.854+00	2025-03-24 10:58:18.429+00	\N	\N	yaqeen.svg	image/svg+xml	12705	38	32	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	media
 \.
 
 
@@ -5719,7 +6115,7 @@ COPY "public"."media" ("id", "alt", "caption", "updated_at", "created_at", "url"
 --
 
 COPY "public"."pages" ("id", "title", "hero_type", "published_at", "slug", "slug_lock", "updated_at", "created_at", "_status") FROM stdin;
-1	Home	highImpact	2025-03-21 08:46:14.743+00	home	t	2025-03-21 14:52:44.629+00	2025-03-21 08:44:07.555+00	published
+1	Home	highImpact	2025-03-21 08:46:14.743+00	home	t	2025-03-24 11:00:39.808+00	2025-03-21 08:44:07.555+00	published
 \.
 
 
@@ -5747,16 +6143,16 @@ COPY "public"."pages_blocks_content" ("_order", "_parent_id", "_path", "id", "va
 --
 
 COPY "public"."pages_blocks_content_list" ("_order", "_parent_id", "id", "size", "icon", "tag", "heading", "content", "media_id", "link_type", "link_new_tab", "link_url", "link_appearance") FROM stdin;
-1	67dd2a7dee9c04239ea1fea1	67dd2aa8ee9c04239ea1fea3	oneThird	\N	\N	حلول رقمية متكاملة	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لإنشاء وإدارة منصة التبرع الخاصة بالجمعية بسهولة وبشكل آني", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	4	reference	\N	\N	default
-2	67dd2a7dee9c04239ea1fea1	67dd2c29ee9c04239ea1fea5	oneThird	\N	\N	تحقيق الاستدامة المالية للجمعية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تنويع مصادر الدخل ، وخدمات زاد ليست حصرا على منصة التبرعات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	2	reference	\N	\N	default
-3	67dd2a7dee9c04239ea1fea1	67dd2c5eee9c04239ea1fea7	oneThird	\N	\N	مساندة الجمعية في إدارة العلاقة مع المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "مساندة الجمعية في إدارة العلاقة مع المتبرعين", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	6	reference	\N	\N	default
-4	67dd2a7dee9c04239ea1fea1	67dd2c7eee9c04239ea1fea9	oneThird	\N	\N	دعم فني وتسويقي مستمر	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "للمساهمة في رفع إيرادات الجمعية من جميع أنشطتها الترويجية والتسويقية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	5	reference	\N	\N	default
+1	67dd2a7dee9c04239ea1fea1	67dd2aa8ee9c04239ea1fea3	oneThird	\N	\N	حلول رقمية متكاملة	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لإنشاء وإدارة منصة التبرع الخاصة بالجمعية بسهولة وبشكل آني", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	24	reference	\N	\N	default
+2	67dd2a7dee9c04239ea1fea1	67dd2c29ee9c04239ea1fea5	oneThird	\N	\N	تحقيق الاستدامة المالية للجمعية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تنويع مصادر الدخل ، وخدمات زاد ليست حصرا على منصة التبرعات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	25	reference	\N	\N	default
+3	67dd2a7dee9c04239ea1fea1	67dd2c5eee9c04239ea1fea7	oneThird	\N	\N	مساندة الجمعية في إدارة العلاقة مع المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "مساندة الجمعية في إدارة العلاقة مع المتبرعين", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	26	reference	\N	\N	default
+4	67dd2a7dee9c04239ea1fea1	67dd2c7eee9c04239ea1fea9	oneThird	\N	\N	دعم فني وتسويقي مستمر	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "للمساهمة في رفع إيرادات الجمعية من جميع أنشطتها الترويجية والتسويقية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	28	reference	\N	\N	default
 1	67dd2eb8a896e469ebeae65b	67dd2ef2a896e469ebeae65d	oneThird	user-add-line	\N	أنشئ حسابك في دقائق	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "عبر تسجيل الدخول برقم الترخيص الصادر من مركز تنمية القطاع غير الربحي", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default
 2	67dd2eb8a896e469ebeae65b	67dd2f24a896e469ebeae65f	oneThird	store-2-line	\N	إعداد متجرك	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "أضف فرص التبرع بسهولة وعدل منصة الجمعية بأفضل ما يمكن", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default
 3	67dd2eb8a896e469ebeae65b	67dd2f3da896e469ebeae661	oneThird	broadcast-line	\N	جذب المتبرعين	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "استخدم أوبتمايز بلس لإدارة الحملات الترويجية في جميع منصات التواصل بسهولة", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default
 4	67dd2eb8a896e469ebeae65b	67dd2f5ba896e469ebeae663	oneThird	line-chart-line	\N	استدامة الجمعية المالية	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تتبع التبرعات وتحليل الأداء من خلال أدوات منصة زاد", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	\N	reference	\N	\N	default
-1	67dd41cca896e469ebeae665	67dd42c2a14b92b128ef217a	oneThird	\N	منصة متكاملة تقنيا	لوحة تحكم سهلة الإستخدام	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لوحة تحكم خاصة للجمعيات حيث يمكن للجمعية الاستفادة من لوحة تحكم باللغة العربية وقابلة للاستخدام دون الحاجة لخبرة برمجية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	14	reference	\N	\N	default
-2	67dd41cca896e469ebeae665	67dd42f7a14b92b128ef217c	oneThird	\N	إدارة ذكية لأعمالك	تقارير تفصيلية عن أداء المشروع	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "متابعة أداء المتجر بشكل عام، والحصول على تحليلات دقيقة بشكل واضح ومعرفة كافة التبرعات ومصادرها سواء لفرص أو منتجات التبرع ويمكن تصديرها بشكل مفصل.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	13	reference	\N	\N	default
+1	67dd41cca896e469ebeae665	67dd42c2a14b92b128ef217a	oneThird	\N	منصة متكاملة تقنيا	لوحة تحكم سهلة الإستخدام	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "لوحة تحكم خاصة للجمعيات حيث يمكن للجمعية الاستفادة من لوحة تحكم باللغة العربية وقابلة للاستخدام دون الحاجة لخبرة برمجية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	22	reference	\N	\N	default
+2	67dd41cca896e469ebeae665	67dd42f7a14b92b128ef217c	oneThird	\N	إدارة ذكية لأعمالك	تقارير تفصيلية عن أداء المشروع	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "متابعة أداء المتجر بشكل عام، والحصول على تحليلات دقيقة بشكل واضح ومعرفة كافة التبرعات ومصادرها سواء لفرص أو منتجات التبرع ويمكن تصديرها بشكل مفصل.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	21	reference	\N	\N	default
 \.
 
 
@@ -5765,14 +6161,26 @@ COPY "public"."pages_blocks_content_list" ("_order", "_parent_id", "id", "size",
 --
 
 COPY "public"."pages_blocks_content_list_locales" ("link_label", "id", "_locale", "_parent_id") FROM stdin;
-\N	1	en	67dd2aa8ee9c04239ea1fea3
-\N	2	ar	67dd2aa8ee9c04239ea1fea3
-\N	3	en	67dd2c29ee9c04239ea1fea5
-\N	4	ar	67dd2c29ee9c04239ea1fea5
-\N	5	en	67dd2c5eee9c04239ea1fea7
-\N	6	ar	67dd2c5eee9c04239ea1fea7
-\N	7	en	67dd2c7eee9c04239ea1fea9
-\N	8	ar	67dd2c7eee9c04239ea1fea9
+\N	49	en	67dd2aa8ee9c04239ea1fea3
+\N	50	ar	67dd2aa8ee9c04239ea1fea3
+\N	51	en	67dd2c29ee9c04239ea1fea5
+\N	52	ar	67dd2c29ee9c04239ea1fea5
+\N	53	en	67dd2c5eee9c04239ea1fea7
+\N	54	ar	67dd2c5eee9c04239ea1fea7
+\N	55	en	67dd2c7eee9c04239ea1fea9
+\N	56	ar	67dd2c7eee9c04239ea1fea9
+\N	57	en	67dd2ef2a896e469ebeae65d
+\N	58	ar	67dd2ef2a896e469ebeae65d
+\N	59	en	67dd2f24a896e469ebeae65f
+\N	60	ar	67dd2f24a896e469ebeae65f
+\N	61	en	67dd2f3da896e469ebeae661
+\N	62	ar	67dd2f3da896e469ebeae661
+\N	63	en	67dd2f5ba896e469ebeae663
+\N	64	ar	67dd2f5ba896e469ebeae663
+\N	65	en	67dd42c2a14b92b128ef217a
+\N	66	ar	67dd42c2a14b92b128ef217a
+\N	67	en	67dd42f7a14b92b128ef217c
+\N	68	ar	67dd42f7a14b92b128ef217c
 \.
 
 
@@ -5823,7 +6231,7 @@ COPY "public"."pages_blocks_faq_block_links" ("_order", "_parent_id", "id", "lin
 --
 
 COPY "public"."pages_blocks_faq_block_links_locales" ("link_label", "id", "_locale", "_parent_id") FROM stdin;
-تواصل معنا	1	ar	67dd7d2389b1617b0d62f87a
+تواصل معنا	5	ar	67dd7d2389b1617b0d62f87a
 \.
 
 
@@ -5842,20 +6250,6 @@ COPY "public"."pages_blocks_form_block" ("_order", "_parent_id", "_path", "id", 
 
 COPY "public"."pages_blocks_logo_block" ("_order", "_parent_id", "_path", "id", "caption", "block_name") FROM stdin;
 3	1	layout	67dd440da14b92b128ef217e	{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h3", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "شركاؤنا في دعم وتمكين المنظمات غير الربحية", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}], "direction": "rtl"}}	PARTNERS
-\.
-
-
---
--- Data for Name: pages_blocks_logo_block_list; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY "public"."pages_blocks_logo_block_list" ("_order", "_parent_id", "id", "media_id") FROM stdin;
-1	67dd440da14b92b128ef217e	67dd45d1a14b92b128ef2182	12
-2	67dd440da14b92b128ef217e	67dd45d7a14b92b128ef2184	11
-3	67dd440da14b92b128ef217e	67dd45dca14b92b128ef2186	10
-4	67dd440da14b92b128ef217e	67dd45e1a14b92b128ef2188	9
-5	67dd440da14b92b128ef217e	67dd45e6a14b92b128ef218a	8
-6	67dd440da14b92b128ef217e	67dd45eca14b92b128ef218c	7
 \.
 
 
@@ -5936,7 +6330,7 @@ COPY "public"."pages_hero_links" ("_order", "_parent_id", "id", "link_type", "li
 --
 
 COPY "public"."pages_hero_links_locales" ("link_label", "id", "_locale", "_parent_id") FROM stdin;
-إبدأ مع زاد الآن	2	ar	67dd2741ea208a05e1daa429
+إبدأ مع زاد الآن	5	ar	67dd2741ea208a05e1daa429
 \.
 
 
@@ -5945,8 +6339,8 @@ COPY "public"."pages_hero_links_locales" ("link_label", "id", "_locale", "_paren
 --
 
 COPY "public"."pages_locales" ("hero_rich_text", "hero_media_id", "meta_title", "meta_image_id", "meta_description", "id", "_locale", "_parent_id") FROM stdin;
-\N	\N	\N	\N	\N	3	en	1
-{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h1", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تعزيز العطاء الرقمي ونمو الجمعيات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "زاد منظومة خدمات متكاملة تمكن جمعيتك من تحقيق دخل متنوع ومستدام.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	1	\N	\N	\N	4	ar	1
+\N	\N	\N	\N	\N	9	en	1
+{"root": {"type": "root", "format": "", "indent": 0, "version": 1, "children": [{"tag": "h1", "type": "heading", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "تعزيز العطاء الرقمي ونمو الجمعيات", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl"}, {"type": "paragraph", "format": "", "indent": 0, "version": 1, "children": [{"mode": "normal", "text": "زاد منظومة خدمات متكاملة تمكن جمعيتك من تحقيق دخل متنوع ومستدام.", "type": "text", "style": "", "detail": 0, "format": 0, "version": 1}], "direction": "rtl", "textStyle": "", "textFormat": 0}], "direction": "rtl"}}	23	\N	\N	\N	10	ar	1
 \.
 
 
@@ -5954,16 +6348,36 @@ COPY "public"."pages_locales" ("hero_rich_text", "hero_media_id", "meta_title", 
 -- Data for Name: pages_rels; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public"."pages_rels" ("id", "order", "parent_id", "path", "pages_id", "posts_id", "categories_id", "faq_id") FROM stdin;
-2	\N	1	hero.links.0.link.reference	1	\N	\N	\N
-3	\N	1	layout.6.links.0.link.reference	1	\N	\N	\N
-4	1	1	layout.6.faqs	\N	\N	\N	1
-5	2	1	layout.6.faqs	\N	\N	\N	2
-6	3	1	layout.6.faqs	\N	\N	\N	3
-7	4	1	layout.6.faqs	\N	\N	\N	4
-8	5	1	layout.6.faqs	\N	\N	\N	5
-9	6	1	layout.6.faqs	\N	\N	\N	6
-10	7	1	layout.6.faqs	\N	\N	\N	7
+COPY "public"."pages_rels" ("id", "order", "parent_id", "path", "pages_id", "posts_id", "categories_id", "faq_id", "media_id") FROM stdin;
+26	\N	1	layout.8.links.0.link.reference	1	\N	\N	\N	\N
+27	1	1	layout.8.faqs	\N	\N	\N	1	\N
+28	2	1	layout.8.faqs	\N	\N	\N	2	\N
+29	3	1	layout.8.faqs	\N	\N	\N	3	\N
+30	4	1	layout.8.faqs	\N	\N	\N	4	\N
+31	5	1	layout.8.faqs	\N	\N	\N	5	\N
+32	6	1	layout.8.faqs	\N	\N	\N	6	\N
+33	7	1	layout.8.faqs	\N	\N	\N	7	\N
+49	\N	1	hero.links.0.link.reference	1	\N	\N	\N	\N
+50	1	1	hero.logos	\N	\N	\N	\N	29
+51	2	1	hero.logos	\N	\N	\N	\N	34
+52	3	1	hero.logos	\N	\N	\N	\N	33
+53	4	1	hero.logos	\N	\N	\N	\N	30
+54	5	1	hero.logos	\N	\N	\N	\N	31
+55	6	1	hero.logos	\N	\N	\N	\N	32
+56	1	1	layout.2.logos	\N	\N	\N	\N	15
+57	2	1	layout.2.logos	\N	\N	\N	\N	16
+58	3	1	layout.2.logos	\N	\N	\N	\N	17
+59	4	1	layout.2.logos	\N	\N	\N	\N	18
+60	5	1	layout.2.logos	\N	\N	\N	\N	19
+61	6	1	layout.2.logos	\N	\N	\N	\N	20
+62	\N	1	layout.6.links.0.link.reference	1	\N	\N	\N	\N
+63	1	1	layout.6.faqs	\N	\N	\N	1	\N
+64	2	1	layout.6.faqs	\N	\N	\N	2	\N
+65	3	1	layout.6.faqs	\N	\N	\N	3	\N
+66	4	1	layout.6.faqs	\N	\N	\N	4	\N
+67	5	1	layout.6.faqs	\N	\N	\N	5	\N
+68	6	1	layout.6.faqs	\N	\N	\N	6	\N
+69	7	1	layout.6.faqs	\N	\N	\N	7	\N
 \.
 
 
@@ -6004,7 +6418,8 @@ COPY "public"."payload_locked_documents_rels" ("id", "order", "parent_id", "path
 --
 
 COPY "public"."payload_migrations" ("id", "name", "batch", "updated_at", "created_at") FROM stdin;
-1	dev	-1	2025-03-21 18:48:52.494+00	2025-03-21 08:43:14.154+00
+2	20250321_213103_init	1	2025-03-22 12:25:47.458+00	2025-03-22 12:25:47.375+00
+3	20250322_103632_logos	1	2025-03-22 12:25:47.532+00	2025-03-22 12:25:47.53+00
 \.
 
 
@@ -6019,8 +6434,10 @@ COPY "public"."payload_preferences" ("id", "key", "value", "updated_at", "create
 3	pages-list	{}	2025-03-21 09:06:37.813+00	2025-03-21 09:06:37.814+00
 7	collection-forms-1	{"fields": {"fields": {"collapsed": ["67dd6bf4c06fe6cfef50c23c", "67dd6c18c06fe6cfef50c23e", "67dd6cc1c06fe6cfef50c240"]}}}	2025-03-21 13:58:21.692+00	2025-03-21 13:58:19.353+00
 4	faq-list	{"limit": 10}	2025-03-21 10:41:44.257+00	2025-03-21 10:41:18.723+00
-2	collection-pages-1	{"fields": {"layout": {"collapsed": ["67dd2a7dee9c04239ea1fea1", "67dd2eb8a896e469ebeae65b", "67dd440da14b92b128ef217e", "67dd462aa14b92b128ef218e", "67dd41cca896e469ebeae665", "67dd52363656a85f842b4237", "67dd6dcfc06fe6cfef50c242"]}, "_index-1": {"tabIndex": 1}, "hero.links": {"collapsed": ["67dd2741ea208a05e1daa429"]}, "layout.3.list": {"collapsed": []}, "layout.6.links": {"collapsed": ["67dd7d2389b1617b0d62f87a"]}, "layout.5.baseFeatures.features": {"collapsed": ["67dd55181a2c7d6139c33742", "67dd55881a2c7d6139c33745", "67dd55b91a2c7d6139c33747"]}, "layout.5.additionalFeatures.features": {"collapsed": ["67dd542b26f6d0eda1519c82", "67dd56dd1a2c7d6139c3374b", "67dd585e1a2c7d6139c33751", "67dd58831a2c7d6139c33753", "67dd59211a2c7d6139c33755"]}}}	2025-03-21 14:52:41.296+00	2025-03-21 08:56:52.713+00
 8	global-header	{"fields": {"navItems": {"collapsed": ["67dda46689b1617b0d62f87c", "67dda48489b1617b0d62f87e"]}}}	2025-03-21 17:40:41.178+00	2025-03-21 17:40:17.969+00
+9	posts-list	{}	2025-03-22 08:22:24.859+00	2025-03-22 08:22:24.866+00
+10	nav	{"open": true}	2025-03-22 08:22:28.086+00	2025-03-22 08:22:27.421+00
+2	collection-pages-1	{"fields": {"layout": {"collapsed": ["67dd2eb8a896e469ebeae65b", "67dd462aa14b92b128ef218e", "67dd52363656a85f842b4237", "67dd6dcfc06fe6cfef50c242"]}, "_index-1": {"tabIndex": 0}, "hero.links": {"collapsed": ["67dd2741ea208a05e1daa429"]}, "layout.2.list": {"collapsed": ["67dd45d1a14b92b128ef2182", "67dd45d7a14b92b128ef2184", "67dd45dca14b92b128ef2186", "67dd45e1a14b92b128ef2188", "67dd45e6a14b92b128ef218a", "67dd45eca14b92b128ef218c"]}, "layout.3.list": {"collapsed": []}, "layout.6.links": {"collapsed": ["67dd7d2389b1617b0d62f87a"]}, "layout.8.links": {"collapsed": []}, "layout.5.baseFeatures.features": {"collapsed": ["67dd55181a2c7d6139c33742", "67dd55881a2c7d6139c33745", "67dd55b91a2c7d6139c33747"]}, "layout.5.additionalFeatures.features": {"collapsed": ["67dd542b26f6d0eda1519c82", "67dd56dd1a2c7d6139c3374b", "67dd585e1a2c7d6139c33751", "67dd58831a2c7d6139c33753", "67dd59211a2c7d6139c33755"]}}}	2025-03-24 10:49:46.166+00	2025-03-21 08:56:52.713+00
 \.
 
 
@@ -6035,8 +6452,10 @@ COPY "public"."payload_preferences_rels" ("id", "order", "parent_id", "path", "u
 7	\N	3	user	1
 63	\N	7	user	1
 10	\N	4	user	1
-67	\N	2	user	1
 69	\N	8	user	1
+76	\N	9	user	1
+78	\N	10	user	1
+95	\N	2	user	1
 \.
 
 
@@ -6140,21 +6559,21 @@ SELECT pg_catalog.setval('"public"."_pages_v_blocks_archive_id_seq"', 1, false);
 -- Name: _pages_v_blocks_content_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_blocks_content_id_seq"', 2400, true);
+SELECT pg_catalog.setval('"public"."_pages_v_blocks_content_id_seq"', 2685, true);
 
 
 --
 -- Name: _pages_v_blocks_content_list_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_blocks_content_list_id_seq"', 7890, true);
+SELECT pg_catalog.setval('"public"."_pages_v_blocks_content_list_id_seq"', 8840, true);
 
 
 --
 -- Name: _pages_v_blocks_content_list_locales_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_blocks_content_list_locales_id_seq"', 6492, true);
+SELECT pg_catalog.setval('"public"."_pages_v_blocks_content_list_locales_id_seq"', 8392, true);
 
 
 --
@@ -6182,42 +6601,35 @@ SELECT pg_catalog.setval('"public"."_pages_v_blocks_cta_links_locales_id_seq"', 
 -- Name: _pages_v_blocks_faq_block_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_blocks_faq_block_id_seq"', 53, true);
+SELECT pg_catalog.setval('"public"."_pages_v_blocks_faq_block_id_seq"', 193, true);
 
 
 --
 -- Name: _pages_v_blocks_faq_block_links_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_blocks_faq_block_links_id_seq"', 20, true);
+SELECT pg_catalog.setval('"public"."_pages_v_blocks_faq_block_links_id_seq"', 131, true);
 
 
 --
 -- Name: _pages_v_blocks_faq_block_links_locales_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_blocks_faq_block_links_locales_id_seq"', 18, true);
+SELECT pg_catalog.setval('"public"."_pages_v_blocks_faq_block_links_locales_id_seq"', 123, true);
 
 
 --
 -- Name: _pages_v_blocks_form_block_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_blocks_form_block_id_seq"', 118, true);
+SELECT pg_catalog.setval('"public"."_pages_v_blocks_form_block_id_seq"', 213, true);
 
 
 --
 -- Name: _pages_v_blocks_logo_block_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_blocks_logo_block_id_seq"', 671, true);
-
-
---
--- Name: _pages_v_blocks_logo_block_list_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('"public"."_pages_v_blocks_logo_block_list_id_seq"', 3820, true);
+SELECT pg_catalog.setval('"public"."_pages_v_blocks_logo_block_id_seq"', 766, true);
 
 
 --
@@ -6231,70 +6643,70 @@ SELECT pg_catalog.setval('"public"."_pages_v_blocks_media_block_id_seq"', 1, fal
 -- Name: _pages_v_blocks_pricing_block_additional_features_featur_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_blocks_pricing_block_additional_features_featur_id_seq"', 1851, true);
+SELECT pg_catalog.setval('"public"."_pages_v_blocks_pricing_block_additional_features_featur_id_seq"', 2421, true);
 
 
 --
 -- Name: _pages_v_blocks_pricing_block_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_blocks_pricing_block_id_seq"', 527, true);
+SELECT pg_catalog.setval('"public"."_pages_v_blocks_pricing_block_id_seq"', 622, true);
 
 
 --
 -- Name: _pages_v_blocks_pricing_block_pricing_items_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_blocks_pricing_block_pricing_items_id_seq"', 1871, true);
+SELECT pg_catalog.setval('"public"."_pages_v_blocks_pricing_block_pricing_items_id_seq"', 2251, true);
 
 
 --
 -- Name: _pages_v_blocks_stats_block_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_blocks_stats_block_id_seq"', 600, true);
+SELECT pg_catalog.setval('"public"."_pages_v_blocks_stats_block_id_seq"', 695, true);
 
 
 --
 -- Name: _pages_v_blocks_stats_block_list_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_blocks_stats_block_list_id_seq"', 1750, true);
+SELECT pg_catalog.setval('"public"."_pages_v_blocks_stats_block_list_id_seq"', 2035, true);
 
 
 --
 -- Name: _pages_v_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_id_seq"', 5, true);
+SELECT pg_catalog.setval('"public"."_pages_v_id_seq"', 11, true);
 
 
 --
 -- Name: _pages_v_locales_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_locales_id_seq"', 1790, true);
+SELECT pg_catalog.setval('"public"."_pages_v_locales_id_seq"', 1980, true);
 
 
 --
 -- Name: _pages_v_rels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_rels_id_seq"', 1180, true);
+SELECT pg_catalog.setval('"public"."_pages_v_rels_id_seq"', 2667, true);
 
 
 --
 -- Name: _pages_v_version_hero_links_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_version_hero_links_id_seq"', 879, true);
+SELECT pg_catalog.setval('"public"."_pages_v_version_hero_links_id_seq"', 974, true);
 
 
 --
 -- Name: _pages_v_version_hero_links_locales_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."_pages_v_version_hero_links_locales_id_seq"', 877, true);
+SELECT pg_catalog.setval('"public"."_pages_v_version_hero_links_locales_id_seq"', 972, true);
 
 
 --
@@ -6476,28 +6888,28 @@ SELECT pg_catalog.setval('"public"."header_id_seq"', 1, true);
 -- Name: header_nav_items_locales_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."header_nav_items_locales_id_seq"', 4, true);
+SELECT pg_catalog.setval('"public"."header_nav_items_locales_id_seq"', 5, true);
 
 
 --
 -- Name: header_rels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."header_rels_id_seq"', 4, true);
+SELECT pg_catalog.setval('"public"."header_rels_id_seq"', 5, true);
 
 
 --
 -- Name: media_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."media_id_seq"', 14, true);
+SELECT pg_catalog.setval('"public"."media_id_seq"', 34, true);
 
 
 --
 -- Name: pages_blocks_content_list_locales_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."pages_blocks_content_list_locales_id_seq"', 8, true);
+SELECT pg_catalog.setval('"public"."pages_blocks_content_list_locales_id_seq"', 68, true);
 
 
 --
@@ -6511,14 +6923,14 @@ SELECT pg_catalog.setval('"public"."pages_blocks_cta_links_locales_id_seq"', 1, 
 -- Name: pages_blocks_faq_block_links_locales_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."pages_blocks_faq_block_links_locales_id_seq"', 1, true);
+SELECT pg_catalog.setval('"public"."pages_blocks_faq_block_links_locales_id_seq"', 5, true);
 
 
 --
 -- Name: pages_hero_links_locales_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."pages_hero_links_locales_id_seq"', 2, true);
+SELECT pg_catalog.setval('"public"."pages_hero_links_locales_id_seq"', 5, true);
 
 
 --
@@ -6532,14 +6944,14 @@ SELECT pg_catalog.setval('"public"."pages_id_seq"', 1, true);
 -- Name: pages_locales_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."pages_locales_id_seq"', 4, true);
+SELECT pg_catalog.setval('"public"."pages_locales_id_seq"', 10, true);
 
 
 --
 -- Name: pages_rels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."pages_rels_id_seq"', 10, true);
+SELECT pg_catalog.setval('"public"."pages_rels_id_seq"', 69, true);
 
 
 --
@@ -6553,35 +6965,35 @@ SELECT pg_catalog.setval('"public"."payload_jobs_id_seq"', 1, false);
 -- Name: payload_locked_documents_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."payload_locked_documents_id_seq"', 383, true);
+SELECT pg_catalog.setval('"public"."payload_locked_documents_id_seq"', 438, true);
 
 
 --
 -- Name: payload_locked_documents_rels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."payload_locked_documents_rels_id_seq"', 763, true);
+SELECT pg_catalog.setval('"public"."payload_locked_documents_rels_id_seq"', 872, true);
 
 
 --
 -- Name: payload_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."payload_migrations_id_seq"', 1, true);
+SELECT pg_catalog.setval('"public"."payload_migrations_id_seq"', 3, true);
 
 
 --
 -- Name: payload_preferences_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."payload_preferences_id_seq"', 8, true);
+SELECT pg_catalog.setval('"public"."payload_preferences_id_seq"', 10, true);
 
 
 --
 -- Name: payload_preferences_rels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."payload_preferences_rels_id_seq"', 69, true);
+SELECT pg_catalog.setval('"public"."payload_preferences_rels_id_seq"', 95, true);
 
 
 --
@@ -6733,14 +7145,6 @@ ALTER TABLE ONLY "public"."_pages_v_blocks_faq_block"
 
 ALTER TABLE ONLY "public"."_pages_v_blocks_form_block"
     ADD CONSTRAINT "_pages_v_blocks_form_block_pkey" PRIMARY KEY ("id");
-
-
---
--- Name: _pages_v_blocks_logo_block_list _pages_v_blocks_logo_block_list_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY "public"."_pages_v_blocks_logo_block_list"
-    ADD CONSTRAINT "_pages_v_blocks_logo_block_list_pkey" PRIMARY KEY ("id");
 
 
 --
@@ -7272,14 +7676,6 @@ ALTER TABLE ONLY "public"."pages_blocks_form_block"
 
 
 --
--- Name: pages_blocks_logo_block_list pages_blocks_logo_block_list_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY "public"."pages_blocks_logo_block_list"
-    ADD CONSTRAINT "pages_blocks_logo_block_list_pkey" PRIMARY KEY ("id");
-
-
---
 -- Name: pages_blocks_logo_block pages_blocks_logo_block_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -7709,27 +8105,6 @@ CREATE INDEX "_pages_v_blocks_form_block_path_idx" ON "public"."_pages_v_blocks_
 
 
 --
--- Name: _pages_v_blocks_logo_block_list_media_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX "_pages_v_blocks_logo_block_list_media_idx" ON "public"."_pages_v_blocks_logo_block_list" USING "btree" ("media_id");
-
-
---
--- Name: _pages_v_blocks_logo_block_list_order_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX "_pages_v_blocks_logo_block_list_order_idx" ON "public"."_pages_v_blocks_logo_block_list" USING "btree" ("_order");
-
-
---
--- Name: _pages_v_blocks_logo_block_list_parent_id_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX "_pages_v_blocks_logo_block_list_parent_id_idx" ON "public"."_pages_v_blocks_logo_block_list" USING "btree" ("_parent_id");
-
-
---
 -- Name: _pages_v_blocks_logo_block_order_idx; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -7909,6 +8284,13 @@ CREATE INDEX "_pages_v_rels_categories_id_idx" ON "public"."_pages_v_rels" USING
 --
 
 CREATE INDEX "_pages_v_rels_faq_id_idx" ON "public"."_pages_v_rels" USING "btree" ("faq_id");
+
+
+--
+-- Name: _pages_v_rels_media_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "_pages_v_rels_media_id_idx" ON "public"."_pages_v_rels" USING "btree" ("media_id");
 
 
 --
@@ -8976,27 +9358,6 @@ CREATE INDEX "pages_blocks_form_block_path_idx" ON "public"."pages_blocks_form_b
 
 
 --
--- Name: pages_blocks_logo_block_list_media_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX "pages_blocks_logo_block_list_media_idx" ON "public"."pages_blocks_logo_block_list" USING "btree" ("media_id");
-
-
---
--- Name: pages_blocks_logo_block_list_order_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX "pages_blocks_logo_block_list_order_idx" ON "public"."pages_blocks_logo_block_list" USING "btree" ("_order");
-
-
---
--- Name: pages_blocks_logo_block_list_parent_id_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX "pages_blocks_logo_block_list_parent_id_idx" ON "public"."pages_blocks_logo_block_list" USING "btree" ("_parent_id");
-
-
---
 -- Name: pages_blocks_logo_block_order_idx; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -9190,6 +9551,13 @@ CREATE INDEX "pages_rels_categories_id_idx" ON "public"."pages_rels" USING "btre
 --
 
 CREATE INDEX "pages_rels_faq_id_idx" ON "public"."pages_rels" USING "btree" ("faq_id");
+
+
+--
+-- Name: pages_rels_media_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "pages_rels_media_id_idx" ON "public"."pages_rels" USING "btree" ("media_id");
 
 
 --
@@ -9864,22 +10232,6 @@ ALTER TABLE ONLY "public"."_pages_v_blocks_form_block"
 
 
 --
--- Name: _pages_v_blocks_logo_block_list _pages_v_blocks_logo_block_list_media_id_media_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY "public"."_pages_v_blocks_logo_block_list"
-    ADD CONSTRAINT "_pages_v_blocks_logo_block_list_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE SET NULL;
-
-
---
--- Name: _pages_v_blocks_logo_block_list _pages_v_blocks_logo_block_list_parent_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY "public"."_pages_v_blocks_logo_block_list"
-    ADD CONSTRAINT "_pages_v_blocks_logo_block_list_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_logo_block"("id") ON DELETE CASCADE;
-
-
---
 -- Name: _pages_v_blocks_logo_block _pages_v_blocks_logo_block_parent_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -9989,6 +10341,14 @@ ALTER TABLE ONLY "public"."_pages_v_rels"
 
 ALTER TABLE ONLY "public"."_pages_v_rels"
     ADD CONSTRAINT "_pages_v_rels_faq_fk" FOREIGN KEY ("faq_id") REFERENCES "public"."faq"("id") ON DELETE CASCADE;
+
+
+--
+-- Name: _pages_v_rels _pages_v_rels_media_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "public"."_pages_v_rels"
+    ADD CONSTRAINT "_pages_v_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE CASCADE;
 
 
 --
@@ -10520,22 +10880,6 @@ ALTER TABLE ONLY "public"."pages_blocks_form_block"
 
 
 --
--- Name: pages_blocks_logo_block_list pages_blocks_logo_block_list_media_id_media_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY "public"."pages_blocks_logo_block_list"
-    ADD CONSTRAINT "pages_blocks_logo_block_list_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE SET NULL;
-
-
---
--- Name: pages_blocks_logo_block_list pages_blocks_logo_block_list_parent_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY "public"."pages_blocks_logo_block_list"
-    ADD CONSTRAINT "pages_blocks_logo_block_list_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_logo_block"("id") ON DELETE CASCADE;
-
-
---
 -- Name: pages_blocks_logo_block pages_blocks_logo_block_parent_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -10653,6 +10997,14 @@ ALTER TABLE ONLY "public"."pages_rels"
 
 ALTER TABLE ONLY "public"."pages_rels"
     ADD CONSTRAINT "pages_rels_faq_fk" FOREIGN KEY ("faq_id") REFERENCES "public"."faq"("id") ON DELETE CASCADE;
+
+
+--
+-- Name: pages_rels pages_rels_media_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "public"."pages_rels"
+    ADD CONSTRAINT "pages_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE CASCADE;
 
 
 --

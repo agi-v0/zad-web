@@ -32,7 +32,7 @@ export const FaqBlock: React.FC<FaqBlockProps> = async (props) => {
   })
 
   return (
-    <div className="bg-zad-beige-light w-full">
+    <div className="bg-background-subtle w-full">
       <div className="section space-y-site py-site">
         <div className="gap-md flex w-full flex-col items-center text-center">
           {richText && (
@@ -46,7 +46,7 @@ export const FaqBlock: React.FC<FaqBlockProps> = async (props) => {
                     <CMSLink
                       {...link}
                       size={'lg'}
-                      className="bg-zad-green hover:bg-zad-green/90 text-white"
+                      className="bg-zad-gold hover:bg-zad-gold/90 text-stone-950"
                     />
                   </li>
                 )

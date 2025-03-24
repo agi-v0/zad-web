@@ -16,7 +16,7 @@ export const Content02: React.FC<ContentBlock> = (props) => {
   )
 
   return (
-    <div className="bg-zad-beige-light w-full">
+    <div className="bg-background w-full">
       <div className="flex flex-col">
         {richText && (
           <div className="section pt-site w-full">
@@ -24,7 +24,7 @@ export const Content02: React.FC<ContentBlock> = (props) => {
           </div>
         )}
         {list && (
-          <div className="section gap-site py-site flex w-full flex-col lg:flex-row">
+          <div className="section gap-site py-site flex w-full flex-col overflow-hidden lg:flex-row">
             <AnimatePresence mode="wait">
               <motion.div
                 key={list.find((item) => item.id === activeAccordionId)?.id}
@@ -48,7 +48,7 @@ export const Content02: React.FC<ContentBlock> = (props) => {
                   key={item.id}
                   className={cn(
                     'flex w-full flex-col items-start gap-2 rounded-3xl p-6 text-start',
-                    activeAccordionId === item.id && 'bg-zad-beige',
+                    activeAccordionId === item.id && 'bg-background-subtle',
                   )}
                   onClick={() => setActiveAccordionId(String(item.id))}
                 >

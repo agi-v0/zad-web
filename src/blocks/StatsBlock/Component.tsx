@@ -11,7 +11,7 @@ import { Media } from '../../components/Media'
 export const StatsBlock: React.FC<StatsBlockProps> = (props) => {
   const { caption, list } = props
   return (
-    <div className="bg-zad-beige-light w-full">
+    <div className="bg-background-subtle w-full">
       <div className="flex flex-col">
         {caption && (
           <div className="section pt-site w-full">
@@ -30,7 +30,7 @@ export const StatsBlock: React.FC<StatsBlockProps> = (props) => {
               <div key={item.id} className="flex flex-col items-start">
                 <h3
                   className={cn(
-                    'text-foreground-primary text-start font-bold',
+                    'text-start font-bold text-(color:--color-zad-gold)',
                     list.length >= 4 ? 'text-h4' : 'text-h3',
                   )}
                 >

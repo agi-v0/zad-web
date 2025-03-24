@@ -2,7 +2,7 @@
 import type { FormFieldBlock, Form as FormType } from '@payloadcms/plugin-form-builder/types'
 
 import { useRouter } from 'next/navigation'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import RichText from '@/components/RichText'
 import { Button } from '@/components/ui/button'
@@ -10,6 +10,7 @@ import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical
 
 import { fields } from './fields'
 import { getClientSideURL } from '@/utilities/getURL'
+import { useHeaderTheme } from '@/providers/HeaderTheme'
 
 export type FormBlockType = {
   blockName?: string
@@ -112,13 +113,18 @@ export const FormBlock: React.FC<
     },
     [router, formID, redirect, confirmationType],
   )
+  const { setHeaderTheme } = useHeaderTheme()
+
+  useEffect(() => {
+    setHeaderTheme('light')
+  })
 
   return (
-    <div className="bg-zad-green">
+    <div className="bg-background-subtle" data-theme="light">
       <div className="section py-site">
         {enableHeading && richText && !hasSubmitted && (
           <RichText
-            className="prose-p:text-body-large prose-invert mb-lg mx-auto text-center"
+            className="prose-p:text-body-large -prose-invert mb-lg mx-auto text-center"
             data={richText}
             enableGutter={false}
           />
@@ -160,7 +166,7 @@ export const FormBlock: React.FC<
                   type="submit"
                   variant="default"
                   size="lg"
-                  className="mt-lg mx-auto text-center"
+                  className="mt-lg mx-auto text-center text-stone-950"
                 >
                   {submitButtonLabel}
                 </Button>

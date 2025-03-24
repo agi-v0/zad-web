@@ -11,7 +11,7 @@ export const Content03: React.FC<ContentBlock> = (props) => {
   const { richText, list } = props
 
   return (
-    <div className="bg-zad-beige-light relative">
+    <div className="bg-background-subtle relative">
       <motion.div
         initial="initial"
         whileInView="animate"
@@ -25,11 +25,10 @@ export const Content03: React.FC<ContentBlock> = (props) => {
             transition: { type: 'ease-in-out', duration: 0.5 },
           },
         }}
-        className=""
       >
         <motion.div
           variants={variants}
-          className="p-site gap-md flex flex-col items-center overflow-hidden bg-white"
+          className="p-site gap-md bg-background flex flex-col items-center overflow-hidden"
         >
           {richText && (
             <RichText className="mx-auto text-center" data={richText} enableGutter={false} />
@@ -42,7 +41,7 @@ export const Content03: React.FC<ContentBlock> = (props) => {
                     <div className="bg-zad-beige inline-flex w-fit rounded-full p-3">
                       <Icon
                         icon={`ri:${item.icon}`}
-                        className="text-foreground-primary text-3xl leading-none"
+                        className="text-zad-green text-3xl leading-none"
                       />
                     </div>
                   )}

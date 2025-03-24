@@ -13,27 +13,23 @@ import { InfiniteSlider } from '@/components/motion/infinite-slider'
 export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, logos, richText }) => {
   const { setHeaderTheme } = useHeaderTheme()
 
-  // useEffect(() => {
-  //   setHeaderTheme('dark')
-  // })
+  useEffect(() => {
+    setHeaderTheme('light')
+  })
 
   return (
-    <div className="bg-zad-green text-white">
+    <div className="bg-background-subtle text-foreground" data-theme="light">
       <div className="section relative flex min-h-[calc(100vh-var(--header-height))] flex-col items-center justify-center lg:flex-row">
         <div className="gap-md flex w-full basis-1/2 flex-col items-start overflow-hidden">
           {richText && (
-            <RichText
-              className="prose-p:text-body-large prose-invert"
-              data={richText}
-              enableGutter={false}
-            />
+            <RichText className="prose-p:text-body-large" data={richText} enableGutter={false} />
           )}
           {Array.isArray(links) && links.length > 0 && (
             <ul className="flex gap-4 max-md:w-full md:justify-center">
               {links.map(({ link }, i) => {
                 return (
                   <li key={i} className="w-full">
-                    <CMSLink {...link} size="lg" className="max-md:w-full" />
+                    <CMSLink {...link} size="lg" className="text-stone-950 max-md:w-full" />
                   </li>
                 )
               })}
@@ -42,7 +38,11 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, logos, ri
           {logos && (
             <InfiniteSlider gap={48} speed={56}>
               {logos.map((item, index) => (
-                <Media key={index} imgClassName={cn('h-10 w-auto')} resource={item} />
+                <Media
+                  key={index}
+                  imgClassName={cn('h-10 w-auto opacity-40 invert')}
+                  resource={item}
+                />
               ))}
             </InfiniteSlider>
           )}
