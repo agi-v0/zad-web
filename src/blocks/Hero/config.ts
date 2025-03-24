@@ -54,11 +54,26 @@ export const hero: Field = {
       label: false,
       localized: true,
     },
-    linkGroup({
-      overrides: {
-        maxRows: 2,
-      },
-    }),
+    {
+      type: 'collapsible',
+      label: 'Links',
+      fields: [
+        linkGroup({
+          overrides: {
+            maxRows: 2,
+          },
+        }),
+        {
+          name: 'linkText',
+          type: 'text',
+          label: 'Link Text',
+          admin: {
+            condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
+          },
+        },
+      ],
+    },
+
     {
       name: 'media',
       type: 'upload',

@@ -28,6 +28,16 @@ const graphik = localFont({
       style: 'normal',
     },
     {
+      path: '../../fonts/GraphikArabic-Medium.ttf',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../../fonts/GraphikArabic-Semibold.ttf',
+      weight: '600',
+      style: 'normal',
+    },
+    {
       path: '../../fonts/GraphikArabic-Bold.ttf',
       weight: '700',
       style: 'normal',

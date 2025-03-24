@@ -191,6 +191,7 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
+    linkText?: string | null;
     media?: (number | null) | Media;
     logos?: (number | Media)[] | null;
   };
@@ -1256,6 +1257,7 @@ export interface PagesSelect<T extends boolean = true> {
                   };
               id?: T;
             };
+        linkText?: T;
         media?: T;
         logos?: T;
       };
