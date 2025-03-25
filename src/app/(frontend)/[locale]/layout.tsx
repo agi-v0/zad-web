@@ -100,6 +100,3 @@ export const metadata: Metadata = {
     creator: '@zidappcom',
   },
 }
-export const viewport: Viewport = {
-  themeColor: '#27574F',
-}

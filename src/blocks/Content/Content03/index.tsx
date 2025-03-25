@@ -31,7 +31,11 @@ export const Content03: React.FC<ContentBlock> = (props) => {
           className="p-site gap-md bg-background flex flex-col items-center overflow-hidden"
         >
           {richText && (
-            <RichText className="mx-auto text-center" data={richText} enableGutter={false} />
+            <RichText
+              className="mt-site mx-auto text-center"
+              data={richText}
+              enableGutter={false}
+            />
           )}
           {list && (
             <div className="gap-md grid w-full max-w-[calc(100vw-(--spacing-(site)*4))] grid-cols-1 md:grid-cols-2 lg:grid-cols-4">

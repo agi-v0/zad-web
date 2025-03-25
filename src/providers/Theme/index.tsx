@@ -30,6 +30,9 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       setThemeState(themeToSet)
       window.localStorage.setItem(themeLocalStorageKey, themeToSet)
       document.documentElement.setAttribute('data-theme', themeToSet)
+      document
+        .querySelector("meta[name='theme-color']")
+        ?.setAttribute('content', themeToSet == 'light' ? '#fafaf9' : '#27574F')
     }
   }, [])
 

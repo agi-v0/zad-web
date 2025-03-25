@@ -53,11 +53,15 @@ export const LogoBlock: React.FC<ExtendedLogoBlockProps> = (props) => {
         )}
         {logos && (
           <AnimatedGroup
-            className="section py-site flex w-full flex-row justify-between gap-10"
+            className="section py-site md: grid w-full grid-cols-2 justify-between gap-10 sm:grid-cols-3 lg:flex lg:flex-row"
             preset="slide"
           >
             {logos.map((item, index) => (
-              <Media key={index} imgClassName={cn('h-10 w-auto', imgClassName)} resource={item} />
+              <Media
+                key={index}
+                imgClassName={cn('mx-auto h-10 w-auto', imgClassName)}
+                resource={item}
+              />
             ))}
           </AnimatedGroup>
         )}
