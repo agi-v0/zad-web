@@ -64,10 +64,14 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
 
   return (
     <div className="bg-background-subtle text-foreground" data-theme="light">
-      <div className="section relative flex min-h-[calc(100vh-var(--header-height))] flex-col items-center justify-center lg:flex-row">
-        <div className="gap-md mt-site flex w-full basis-1/2 flex-col items-start overflow-hidden lg:mt-0">
+      <div className="section pb-md lg:gap-site relative flex min-h-[calc(100vh-var(--header-height))] flex-col items-center justify-center overflow-y-hidden lg:h-[calc(100vh-var(--header-height))] lg:flex-row lg:items-start">
+        <div className="gap-md mt-site flex h-full w-full basis-1/2 flex-col items-start overflow-hidden lg:mt-0 lg:justify-center">
           {richText && (
-            <RichText className="prose-p:text-body-large" data={richText} enableGutter={false} />
+            <RichText
+              className="prose-p:text-body-large max-w-3xl text-balance"
+              data={richText}
+              enableGutter={false}
+            />
           )}
           <div className="flex flex-col gap-4">
             {Array.isArray(links) && links.length > 0 && (
@@ -87,7 +91,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
             )}
             {linkText && (
               <p className="text-foreground-tertiary text-sm font-medium">
-                <span className="text-foreground-tertiary rounded-full bg-stone-950/5 px-2 py-1 text-sm font-medium">
+                <span className="text-foreground-secondary rounded-full bg-stone-950/5 px-2 py-1 text-sm font-medium">
                   حصريا
                 </span>{' '}
                 {linkText}
@@ -95,20 +99,24 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
             )}
           </div>
           {logos && (
-            <InfiniteSlider gap={48} speed={56}>
-              {logos.map((item, index) => (
-                <Media
-                  key={index}
-                  imgClassName={cn('h-10 w-auto opacity-50 dark:invert')}
-                  resource={item}
-                />
-              ))}
-            </InfiniteSlider>
+            <div className="relative w-full">
+              <div className="from-background-subtle absolute top-0 left-0 z-10 h-full w-12 bg-gradient-to-r to-transparent" />
+              <div className="from-background-subtle absolute top-0 right-0 z-10 h-full w-12 bg-gradient-to-l to-transparent" />
+              <InfiniteSlider gap={48} speed={56}>
+                {logos.map((item, index) => (
+                  <Media
+                    key={index}
+                    imgClassName={cn('h-10 w-auto opacity-50 dark:invert')}
+                    resource={item}
+                  />
+                ))}
+              </InfiniteSlider>
+            </div>
           )}
         </div>
-        <div className="py-site lg:ps-site h-auto w-full basis-1/2 select-none lg:pt-0">
-          <div className="relative w-full">
-            <AnimatePresence mode="wait">
+        <div className="py-site h-full w-full basis-1/2 flex-col justify-center select-none lg:flex lg:p-0">
+          <AnimatePresence mode="wait">
+            <div className="bg-zad-lime/10 relative mx-auto aspect-square h-full w-full max-w-[500px] xl:h-[500px]">
               <motion.div
                 key={currentIndex + 'front'}
                 initial={{ x: 100, opacity: 0 }}
@@ -144,27 +152,31 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
                   priority
                 />
               </motion.div>
-              <motion.div
-                key={currentIndex + 'text'}
-                style={{
-                  transformOrigin: 'center',
-                  marginTop: 'var(--spacing-md)',
-                }}
-                initial={{ y: 40, rotate: -3, opacity: 0 }}
-                animate={{ y: 0, rotate: 0, opacity: 1, transition: { duration: 0.25 } }}
-                exit={{ y: -40, rotate: 3, opacity: 0, transition: { duration: 0.25 } }}
-                className="flex flex-col items-center gap-2 text-center"
-              >
-                <p className="text-body-large font-medium">{content[currentIndex]?.title}</p>
-                <p className="text-foreground-tertiary text-body-main">
-                  {content[currentIndex]?.description}
-                </p>
-              </motion.div>
-            </AnimatePresence>
-            {/* {media && typeof media === 'object' && (
+            </div>
+          </AnimatePresence>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex + 'text'}
+              style={{
+                transformOrigin: 'center',
+                marginTop: 'var(--spacing-md)',
+              }}
+              initial={{ y: 40, rotate: -3, opacity: 0 }}
+              animate={{ y: 0, rotate: 0, opacity: 1, transition: { duration: 0.25 } }}
+              exit={{ y: -40, rotate: 3, opacity: 0, transition: { duration: 0.25 } }}
+              className="flex flex-col items-center gap-2 text-center"
+            >
+              <p className="text-body-large text-zad-green-light dark:text-zad-gold font-bold">
+                {content[currentIndex]?.title}
+              </p>
+              <p className="text-foreground-tertiary text-body-main">
+                {content[currentIndex]?.description}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+          {/* {media && typeof media === 'object' && (
             <Media imgClassName="z-10 object-cover" priority resource={media} />
             )} */}
-          </div>
         </div>
       </div>
     </div>
