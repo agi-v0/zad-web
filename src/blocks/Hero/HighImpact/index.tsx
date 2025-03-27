@@ -112,26 +112,36 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
               <motion.div
                 key={currentIndex + 'front'}
                 initial={{ x: 100, opacity: 0 }}
-                animate={{ x: 0, opacity: 1, transition: { duration: 0.4, delay: 0.2 } }}
-                exit={{ x: 100, opacity: 0, transition: { duration: 0.4, delay: 0.2 } }}
+                animate={{
+                  x: 0,
+                  opacity: 1,
+                  transition: { duration: 0.4, delay: 0.2, ease: 'easeOut' },
+                }}
+                exit={{
+                  x: 100,
+                  opacity: 0,
+                  transition: { duration: 0.4, delay: 0.2, ease: 'easeOut' },
+                }}
                 className="absolute inset-0 z-10 aspect-square h-auto w-full"
               >
                 <Image
                   src={content[currentIndex]?.frontImage}
                   alt={content[currentIndex]?.title || ''}
                   className="aspect-square h-auto w-full object-contain"
+                  priority
                 />
               </motion.div>
               <motion.div
                 key={currentIndex + 'back'}
                 initial={{ x: 100, opacity: 0 }}
-                animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
-                exit={{ x: 100, opacity: 0, transition: { duration: 0.5 } }}
+                animate={{ x: 0, opacity: 1, transition: { duration: 0.4, ease: 'easeOut' } }}
+                exit={{ x: 100, opacity: 0, transition: { duration: 0.4, ease: 'easeOut' } }}
               >
                 <Image
                   src={content[currentIndex]?.backImage}
                   alt={content[currentIndex]?.title || ''}
                   className="aspect-square h-auto w-full object-contain"
+                  priority
                 />
               </motion.div>
               <motion.div
@@ -141,12 +151,12 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
                   marginTop: 'var(--spacing-md)',
                 }}
                 initial={{ y: 40, rotate: -3, opacity: 0 }}
-                animate={{ y: 0, rotate: 0, opacity: 1 }}
-                exit={{ y: -40, rotate: 3, opacity: 0 }}
+                animate={{ y: 0, rotate: 0, opacity: 1, transition: { duration: 0.25 } }}
+                exit={{ y: -40, rotate: 3, opacity: 0, transition: { duration: 0.25 } }}
                 className="flex flex-col items-center gap-2 text-center"
               >
                 <p className="text-body-large font-medium">{content[currentIndex]?.title}</p>
-                <p className="text-foreground-tertiary text-body-small">
+                <p className="text-foreground-tertiary text-body-main">
                   {content[currentIndex]?.description}
                 </p>
               </motion.div>
