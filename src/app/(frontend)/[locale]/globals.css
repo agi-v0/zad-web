@@ -43,7 +43,11 @@
     @apply border-border;
   }
   html {
-    scroll-padding-top: clamp(4rem /* 64px */, 1.86rem /* 29.76px */ + 5.36vw, 7rem /* 112px */);
+    scroll-padding-top: var(--header-height);
+    overscroll-behavior: none;
+    scroll-behavior: smooth;
+    accent-color: var(--zad-green);
+    caret-color: var(--zad-green);
     overscroll-behavior: none;
     scroll-behavior: smooth;
   }

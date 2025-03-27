@@ -83,6 +83,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
       type: 'text',
       admin: {
         condition: (_, siblingData) => siblingData?.type === 'custom',
+        rtl: false,
       },
       label: 'Custom URL',
       required: true,

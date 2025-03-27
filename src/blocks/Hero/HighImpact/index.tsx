@@ -116,7 +116,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
         </div>
         <div className="py-site h-full w-full basis-1/2 flex-col justify-center select-none lg:flex lg:p-0">
           <AnimatePresence mode="wait">
-            <div className="bg-zad-lime/10 relative mx-auto aspect-square h-full w-full max-w-[500px] xl:h-[500px]">
+            <div className="relative mx-auto aspect-square h-full w-full max-w-[500px] xl:h-[500px]">
               <motion.div
                 key={currentIndex + 'front'}
                 initial={{ x: 100, opacity: 0 }}
