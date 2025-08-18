@@ -11,12 +11,9 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+RUN corepack enable \
+ && corepack prepare pnpm@10.3.0 --activate \
+ && pnpm install --frozen-lockfile
 
 
 # Rebuild the source code only when needed
@@ -30,12 +27,32 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN \
-  if [ -f yarn.lock ]; then yarn run build; \
-  elif [ -f package-lock.json ]; then npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+# Build-time secrets/env for static generation
+ARG NEXT_PUBLIC_SERVER_URL
+ARG DATABASE_URI
+ARG PAYLOAD_SECRET
+ARG CRON_SECRET
+ARG PREVIEW_SECRET
+ARG S3_BUCKET
+ARG S3_ACCESS_KEY_ID
+ARG S3_SECRET_ACCESS_KEY
+ARG S3_REGION
+ARG S3_ENDPOINT
+
+ENV NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
+ENV DATABASE_URI=${DATABASE_URI}
+ENV PAYLOAD_SECRET=${PAYLOAD_SECRET}
+ENV CRON_SECRET=${CRON_SECRET}
+ENV PREVIEW_SECRET=${PREVIEW_SECRET}
+ENV S3_BUCKET=${S3_BUCKET}
+ENV S3_ACCESS_KEY_ID=${S3_ACCESS_KEY_ID}
+ENV S3_SECRET_ACCESS_KEY=${S3_SECRET_ACCESS_KEY}
+ENV S3_REGION=${S3_REGION}
+ENV S3_ENDPOINT=${S3_ENDPOINT}
+
+RUN corepack enable \
+ && corepack prepare pnpm@10.3.0 --activate \
+ && pnpm run ci
 
 # Production image, copy all the files and run next
 FROM base AS runner
