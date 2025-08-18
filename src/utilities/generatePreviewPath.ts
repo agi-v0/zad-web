@@ -23,6 +23,5 @@ export const generatePreviewPath = ({ collection, slug, locale }: Props) => {
   })
 
   const url = `/next/preview?${encodedParams.toString()}`
-
   return url
 }

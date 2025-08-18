@@ -118,17 +118,17 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
           <AnimatePresence mode="wait">
             <div className="relative mx-auto aspect-square h-full w-full max-w-[500px] xl:h-[500px]">
               <motion.div
-                key={currentIndex + 'front'}
+                key={`${currentIndex}_front`}
                 initial={{ x: 100, opacity: 0 }}
                 animate={{
                   x: 0,
                   opacity: 1,
-                  transition: { duration: 0.4, delay: 0.2, ease: 'easeOut' },
+                  transition: { duration: 0.4, delay: 0.2, ease: 'easeInOut' },
                 }}
                 exit={{
                   x: 100,
                   opacity: 0,
-                  transition: { duration: 0.4, delay: 0.2, ease: 'easeOut' },
+                  transition: { duration: 0.4, delay: 0.2, ease: 'easeInOut' },
                 }}
                 className="absolute inset-0 z-10 aspect-square h-auto w-full"
               >
@@ -140,10 +140,10 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
                 />
               </motion.div>
               <motion.div
-                key={currentIndex + 'back'}
+                key={`${currentIndex}_back`}
                 initial={{ x: 100, opacity: 0 }}
-                animate={{ x: 0, opacity: 1, transition: { duration: 0.4, ease: 'easeOut' } }}
-                exit={{ x: 100, opacity: 0, transition: { duration: 0.4, ease: 'easeOut' } }}
+                animate={{ x: 0, opacity: 1, transition: { duration: 0.4, ease: 'easeInOut' } }}
+                exit={{ x: 100, opacity: 0, transition: { duration: 0.4, ease: 'easeInOut' } }}
               >
                 <Image
                   src={content[currentIndex]?.backImage}

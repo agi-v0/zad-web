@@ -28,7 +28,7 @@ services:
   #     driver: none
 
   db:
-    image: "postgres:17.4"
+    image: "postgres:17.5"
     container_name: "zad_web"
     environment:
       POSTGRES_PASSWORD: "0000"
@@ -42,3 +42,4 @@ services:
 volumes:
   data:
   # node_modules:
+
