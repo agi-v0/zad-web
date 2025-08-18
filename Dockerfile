@@ -11,9 +11,7 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-RUN corepack enable \
- && corepack prepare pnpm@10.3.0 --activate \
- && pnpm install --frozen-lockfile
+RUN npm install -g corepack@latest && corepack enable pnpm && pnpm install --frozen-lockfile
 
 
 # Rebuild the source code only when needed
@@ -50,9 +48,7 @@ ENV S3_SECRET_ACCESS_KEY=${S3_SECRET_ACCESS_KEY}
 ENV S3_REGION=${S3_REGION}
 ENV S3_ENDPOINT=${S3_ENDPOINT}
 
-RUN corepack enable \
- && corepack prepare pnpm@10.3.0 --activate \
- && pnpm run ci
+RUN corepack enable pnpm && pnpm run ci
 
 # Production image, copy all the files and run next
 FROM base AS runner
