@@ -22,7 +22,7 @@ export const Content03: React.FC<ContentBlock> = (props) => {
           },
           animate: {
             padding: 'var(--spacing-site)',
-            transition: { type: 'ease-in-out', duration: 0.5 },
+            transition: { duration: 0.5, ease: 'easeInOut' },
           },
         }}
       >

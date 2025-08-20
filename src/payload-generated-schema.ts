@@ -6,6 +6,7 @@
  * and re-run `payload generate:db-schema` to regenerate this file.
  */
 
+import type {} from '@payloadcms/db-postgres'
 import {
   pgTable,
   index,
@@ -21,8 +22,8 @@ import {
   timestamp,
   type AnyPgColumn,
   pgEnum,
-} from '@payloadcms/db-vercel-postgres/drizzle/pg-core'
-import { sql, relations } from '@payloadcms/db-vercel-postgres/drizzle'
+} from '@payloadcms/db-postgres/drizzle/pg-core'
+import { sql, relations } from '@payloadcms/db-postgres/drizzle'
 export const enum__locales = pgEnum('enum__locales', ['en', 'ar'])
 export const enum_pages_hero_links_link_type = pgEnum('enum_pages_hero_links_link_type', [
   'reference',
@@ -657,6 +658,7 @@ export const pages = pgTable(
     id: serial('id').primaryKey(),
     title: varchar('title'),
     hero_type: enum_pages_hero_type('hero_type').default('lowImpact'),
+    hero_linkText: varchar('hero_link_text'),
     publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
     slug: varchar('slug'),
     slugLock: boolean('slug_lock').default(true),
@@ -1270,6 +1272,7 @@ export const _pages_v = pgTable(
     }),
     version_title: varchar('version_title'),
     version_hero_type: enum__pages_v_version_hero_type('version_hero_type').default('lowImpact'),
+    version_hero_linkText: varchar('version_hero_link_text'),
     version_publishedAt: timestamp('version_published_at', {
       mode: 'string',
       withTimezone: true,
@@ -1700,6 +1703,7 @@ export const media = pgTable(
     id: serial('id').primaryKey(),
     alt: varchar('alt'),
     caption: jsonb('caption'),
+    prefix: varchar('prefix').default('media'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -1876,6 +1880,30 @@ export const faq_locales = pgTable(
   }),
 )
 
+export const users_sessions = pgTable(
+  'users_sessions',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+    id: varchar('id').primaryKey(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }),
+    expiresAt: timestamp('expires_at', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }).notNull(),
+  },
+  (columns) => ({
+    _orderIdx: index('users_sessions_order_idx').on(columns._order),
+    _parentIDIdx: index('users_sessions_parent_id_idx').on(columns._parentID),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [users.id],
+      name: 'users_sessions_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const users = pgTable(
   'users',
   {
@@ -1921,7 +1949,7 @@ export const redirects = pgTable(
       .notNull(),
   },
   (columns) => ({
-    redirects_from_idx: index('redirects_from_idx').on(columns.from),
+    redirects_from_idx: uniqueIndex('redirects_from_idx').on(columns.from),
     redirects_updated_at_idx: index('redirects_updated_at_idx').on(columns.updatedAt),
     redirects_created_at_idx: index('redirects_created_at_idx').on(columns.createdAt),
   }),
@@ -2435,7 +2463,7 @@ export const forms_emails = pgTable(
 export const forms_emails_locales = pgTable(
   'forms_emails_locales',
   {
-    subject: varchar('subject').notNull().default("You''ve received a new message."),
+    subject: varchar('subject').notNull().default("You've received a new message."),
     message: jsonb('message'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
@@ -3886,7 +3914,18 @@ export const relations_faq = relations(faq, ({ many }) => ({
     relationName: '_locales',
   }),
 }))
-export const relations_users = relations(users, () => ({}))
+export const relations_users_sessions = relations(users_sessions, ({ one }) => ({
+  _parentID: one(users, {
+    fields: [users_sessions._parentID],
+    references: [users.id],
+    relationName: 'sessions',
+  }),
+}))
+export const relations_users = relations(users, ({ many }) => ({
+  sessions: many(users_sessions, {
+    relationName: 'sessions',
+  }),
+}))
 export const relations_redirects_rels = relations(redirects_rels, ({ one }) => ({
   parent: one(redirects, {
     fields: [redirects_rels.parent],
@@ -4539,6 +4578,7 @@ type DatabaseSchema = {
   categories: typeof categories
   faq: typeof faq
   faq_locales: typeof faq_locales
+  users_sessions: typeof users_sessions
   users: typeof users
   redirects: typeof redirects
   redirects_rels: typeof redirects_rels
@@ -4646,6 +4686,7 @@ type DatabaseSchema = {
   relations_categories: typeof relations_categories
   relations_faq_locales: typeof relations_faq_locales
   relations_faq: typeof relations_faq
+  relations_users_sessions: typeof relations_users_sessions
   relations_users: typeof relations_users
   relations_redirects_rels: typeof relations_redirects_rels
   relations_redirects: typeof relations_redirects
@@ -4696,7 +4737,7 @@ type DatabaseSchema = {
   relations_footer: typeof relations_footer
 }
 
-declare module '@payloadcms/db-vercel-postgres/types' {
+declare module '@payloadcms/db-postgres' {
   export interface GeneratedDatabaseSchema {
     schema: DatabaseSchema
   }
